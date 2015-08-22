@@ -50,3 +50,18 @@
 	<de>Drück</de>
 	<en>Press</en>
 </ability_Use>
+
+<computer>
+	<de>elektronische Rechenmaschine</de>
+	<en>Computer</en>
+	<fr>Ordinateur</fr>
+</computer>
+<security_door>
+	<de>Sicherheitstür</de>
+	<en>Security Door</en>
+</security_door>
+
+<idLogger_display>
+	<de>WARNUNG: Zeitstempel defekt.\nFolgende Personen benuzten diese </de>
+	<en>WARNING: Timestamps corrupted.\nFollowing persons used this </en>
+</idLogger_display>
