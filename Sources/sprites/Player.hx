@@ -66,7 +66,6 @@ class Player extends DestructibleSprite {
 		lookRight = true;
 		killed = false;
 		jumpcount = 0;
-		crosshair = new Vector2(1, 0);
 		isRepairable = true;
 		hitSound = Loader.the.getSound("hit");
 		zzzzz = Loader.the.getImage("zzzzz");
@@ -170,9 +169,6 @@ class Player extends DestructibleSprite {
 		}
 		if (jumpcount > 0) --jumpcount;
 		super.update();
-		if (Player.currentPlayer == this) {
-			updateCrosshair();
-		}
 	}
 	
 	public function setUp() {
@@ -275,41 +271,6 @@ class Player extends DestructibleSprite {
 		return super.set_health(value);
 	}
 	
-	// Crosshair:
-	var isCrosshairVisible : Bool = false;
-	var crosshair : Vector2;
-	
-	public function updateCrosshair() {
-		if (Player.current() != null) {
-			var v = center;
-			v.x = TenUp5.the.mouseX - v.x;
-			v.y = TenUp5.the.mouseY - v.y;
-			//v.y += 0.1 * height;
-			if (lookRight) {
-				if (v.x < 0) {
-					v.x = 0;
-				}
-			} else {
-				if ( v.x > 0) {
-					v.x = 0;
-				}
-			}
-			
-			var vl = v.length;
-			if (vl < 0.001) {
-				return;
-			}
-			crosshair = v.div( vl );
-		}
-		updateMuzzlePoint();
-	}
-	
-	private function updateMuzzlePoint(): Void {
-		muzzlePoint = center;
-		muzzlePoint.x += 0.6 * crosshair.x * width;
-		muzzlePoint.y += 0.6 * crosshair.y * height;
-	}
-	
 	override public function render(g: Graphics): Void {
 		if (isSleeping()) {
 			g.color = Color.White;
@@ -328,24 +289,6 @@ class Player extends DestructibleSprite {
 		}
 		else {
 			super.render(g);
-			if (isCrosshairVisible) {
-				g.color = kha.Color.fromBytes(255, 0, 0, 150);
-				
-				var px = muzzlePoint.x + 50 * crosshair.x;
-				var py = muzzlePoint.y + 50 * crosshair.y;
-				g.drawLine( px - 10 * crosshair.x, py - 10 * crosshair.y, px - 2 * crosshair.x, py - 2 * crosshair.y, 2 );
-				g.drawLine( px + 10 * crosshair.x, py + 10 * crosshair.y, px + 2 * crosshair.x, py + 2 * crosshair.y, 2 );
-				g.drawLine( px - 10 * crosshair.y, py + 10 * crosshair.x, px - 2 * crosshair.y, py + 2 * crosshair.x, 2 );
-				g.drawLine( px + 10 * crosshair.y, py - 10 * crosshair.x, px + 2 * crosshair.y, py - 2 * crosshair.x, 2 );
-				
-				/*var rect = collisionRect();
-				var c = center;
-				painter.drawRect( rect.x, rect.y, rect.width, rect.height );
-				painter.fillRect( c.x - 4, c.y - 4, 9, 9);
-					
-				painter.drawLine( muzzlePoint.x, muzzlePoint.y, muzzlePoint.x + 50 * crosshair.x, muzzlePoint.y + 50 * crosshair.y);
-				painter.fillRect( muzzlePoint.x - 4, muzzlePoint.y - 4, 9, 9);//*/
-			}
 		}
 		/*painter.setColor( kha.Color.fromBytes(255,0,0) );
 		var rect = collisionRect();
@@ -358,7 +301,8 @@ class Player extends DestructibleSprite {
 	
 	public var usesElevator:Bool = false;
 	public function use() {
-		var touse = Level.the.interactiveSprites.filter(function(sprite:InteractiveSprite):Bool { return sprite.playerCanUseIt; } );
+		//var touse = Level.the.interactiveSprites.filter(function(sprite:InteractiveSprite):Bool { return sprite.playerCanUseIt; } );
+		var touse = new Array<InteractiveSprite>(); // TODO: fixme!
 		var px = x + 0.5 * tempcollider.width;
 		for (ias in touse) {
 			if (px > ias.x + 0.5 * ias.tempcollider.width) {

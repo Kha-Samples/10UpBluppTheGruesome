@@ -30,9 +30,9 @@ class Action implements DialogueItem {
 			counter = 0;
 			switch(type) {
 				case ActionType.FADE_TO_BLACK:
-					counter = TenUp5.the.overlayColor.Ab;
+					counter = Empty.the.overlayColor.Ab;
 				case ActionType.FADE_FROM_BLACK:
-					counter = TenUp5.the.overlayColor.Ab;
+					counter = Empty.the.overlayColor.Ab;
 				case ActionType.PAUSE:
 					counter = 0;
 				case ActionType.AWAKE:
@@ -81,18 +81,18 @@ class Action implements DialogueItem {
 			switch(type) {
 				case ActionType.FADE_TO_BLACK:
 					counter += 4;
-					if (!TenUp5.the.renderOverlay || counter >= 256) {
+					if (!Empty.the.renderOverlay || counter >= 256) {
 						actionFinished(dlg);
 					} else {
-						TenUp5.the.overlayColor.Ab = counter;
+						Empty.the.overlayColor.Ab = counter;
 					}
 				case ActionType.FADE_FROM_BLACK:
 					counter -= 4;
-					if (!TenUp5.the.renderOverlay || counter <= 0) {
-						TenUp5.the.renderOverlay = false;
+					if (!Empty.the.renderOverlay || counter <= 0) {
+						Empty.the.renderOverlay = false;
 						actionFinished(dlg);
 					} else {
-						TenUp5.the.overlayColor.Ab = counter;
+						Empty.the.overlayColor.Ab = counter;
 					}
 				case ActionType.PAUSE:
 					++counter;
