@@ -36,7 +36,6 @@ import kha2d.Tile;
 import kha2d.Tilemap;
 import localization.Keys_text;
 import sprites.Computer;
-import sprites.Player;
 
 import dialogue.*;
 
@@ -53,13 +52,17 @@ class Empty extends Game {
 	private var originalmap : Array<Array<Int>>;
 	private var font: Font;
 	private var backbuffer: Image;
-	private var player: Player;
+	private var monsterPlayer : Player;
+	private var agentPlayer : Player;
+	private var elevator: Elevator;
 	
 	public var mode(default, null) : Mode;
 	
 	public var renderOverlay : Bool;
 	public var overlayColor : Color;
 	public var dlg : Dialogue;
+	
+	private var elevatorOffset: Float = 10;
 	
 	public function new() {
 		super("10Up");
@@ -120,7 +123,9 @@ class Empty extends Game {
 			sprites.push(blob.readS32BE());
 			sprites.push(blob.readS32BE());
 		}
-		//player = new Player(); TODO: FIXME! @see keyboardUp mode = TitleScreen
+		monsterPlayer = new Player();
+		agentPlayer = new Player();
+		elevator = new Elevator();
 		startGame(spriteCount, sprites);
 	}
 	
@@ -176,7 +181,8 @@ class Empty extends Game {
 			computers.remove(pos);
 		}
 		
-		//Scene.the.addHero(player); // TODO: fixme!
+		setMainPlayer(monsterPlayer);
+		Scene.the.addOther(elevator);
 		
 		if (Keyboard.get() != null) Keyboard.get().notify(keyboardDown, keyboardUp);
 		if (Gamepad.get() != null) Gamepad.get().notify(axisListener, buttonListener);
@@ -208,6 +214,14 @@ class Empty extends Game {
 		{
 			initTitleScreen();
 		}
+	}
+	
+	private function setMainPlayer(player : Player) {
+		if (Player.current() != null) {
+			Scene.the.removeHero(Player.current());
+		}
+		player.setCurrent();
+		Scene.the.addHero(player);
 	}
 	
 	private static function isCollidable(tilenumber: Int): Bool {
@@ -252,6 +266,9 @@ class Empty extends Game {
 		Scene.the.camx = 0;
 		Scene.the.camy = 0;
 		Scene.the.update();
+		if (Math.abs(Player.current().x - elevator.x) < elevatorOffset) {
+			Player.current().y = elevator.y;
+		}
 		
 		dlg.update();
 	}
@@ -359,11 +376,11 @@ class Empty extends Game {
 	private function keyboardDown(key: Key, char: String): Void {
 		switch (key) {
 			case LEFT:
-				player.left = true;
-				player.right = false;
+				Player.current().left = true;
+				Player.current().right = false;
 			case RIGHT:
-				player.right = true;
-				player.left = false;
+				Player.current().right = true;
+				Player.current().left = false;
 			default:
 				
 		}
@@ -373,12 +390,21 @@ class Empty extends Game {
 		switch (mode) {
 		case Game:
 			switch (key) {
-				case LEFT:
-					player.left = false;
-				case RIGHT:
-					player.right = false;
-				default:
-					
+			case LEFT:
+				Player.current().left = false;
+			case RIGHT:
+				Player.current().right = false;
+			case UP:
+				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
+				elevator.goup();
+				}
+			case DOWN:
+				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
+				elevator.godown();	
+				}
+
+			default:
+				
 			}
 		case StartScreen:
 			switch (key) {

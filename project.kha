@@ -150,6 +150,12 @@
 			"type": "image"
 		},
 		{
+			"file": "Arial.ttf",
+			"name": "Arial",
+			"type": "font",
+			"size": "12"
+		},
+		{
 			"file": "10up-logo.png",
 			"name": "10up-logo",
 			"type": "image"
