@@ -159,8 +159,6 @@ class Empty extends Game {
 			sprites.push(blob.readS32BE());
 			sprites.push(blob.readS32BE());
 		}
-		monsterPlayer = new Fishman(50, 50);
-		agentPlayer = new Agent(50, 50);
 		elevator = new Elevator();
 		startGame(spriteCount, sprites);
 	}
@@ -207,6 +205,9 @@ class Empty extends Game {
 			var sprite : kha2d.Sprite = null;
 			switch (sprites[i * 3]) {
 			case 0:
+				monsterPlayer = new Fishman(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				agentPlayer = new Agent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+			case 2:
 				computers.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			}
 		}
@@ -233,8 +234,8 @@ class Empty extends Game {
 	}
 	
 	private static function isCollidable(tilenumber: Int): Bool {
-		/*switch (tilenumber) {
-		case 1: return true;
+		switch (tilenumber) {
+		/*case 1: return true;
 		case 6: return true;
 		case 7: return true;
 		case 8: return true;
@@ -248,10 +249,11 @@ class Empty extends Game {
 		case 56: return true;
 		case 60: return true;
 		case 61: return true;
-		case 62: return true;
+		case 62: return true;*/
 		case 63: return true;
 		case 64: return true;
 		case 65: return true;
+		case 66: return true;
 		case 67: return true;
 		case 68: return true;
 		case 70: return true;
@@ -264,8 +266,7 @@ class Empty extends Game {
 		case 87: return true;
 		default:
 			return false;
-		}*/
-		return tilenumber != 0;
+		}
 	}
 	
 	public override function update() {
