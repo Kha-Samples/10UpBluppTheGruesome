@@ -1,17 +1,13 @@
 {
-	"format": 1,
-	"game":
-	{
+	"format": 3,
+	"game": {
 		"name": "Empty",
 		"width": 640,
 		"height": 480
 	},
-	"assets":
-	[
-
+	"libraries": [
+		"Kha2D"
 	],
-	"rooms":
-	[
-
-	]
+	"assets": [],
+	"rooms": []
 }
