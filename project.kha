@@ -173,6 +173,19 @@
 	],
 	"rooms": [
 		{
+			"name": "titlescreen",
+			"parent": null,
+			"neighbours": ["testlevel"],
+			"assets": [
+				"localizations",
+				"text",
+				"10up-logo",
+				"Liberation Sans20.kravur",
+				"arial34.kravur",
+				"Arial12.kravur"
+			]
+		},
+		{
 			"name": "testlevel",
 			"parent": null,
 			"neighbours": [],
@@ -194,9 +207,9 @@
 				"8",
 				"9",
 				"elevator",
-				"10up-logo",
 				"Liberation Sans20.kravur",
-				"arial34.kravur"
+				"arial34.kravur",
+				"Arial12.kravur"
 			]
 		}
 	]
