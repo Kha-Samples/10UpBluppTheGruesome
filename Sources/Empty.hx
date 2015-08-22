@@ -14,6 +14,7 @@ import kha.graphics4.TextureFormat;
 import kha.HighscoreList;
 import kha.Image;
 import kha.input.Gamepad;
+import kha.input.Keyboard;
 import kha.Key;
 import kha.Loader;
 import kha.LoadingScreen;
@@ -111,7 +112,8 @@ class Empty extends Game {
 		
 		Scene.the.addHero(player);
 		
-		if (Gamepad.get(0) != null) Gamepad.get(0).notify(axisListener, buttonListener);
+		if (Keyboard.get() != null) Keyboard.get().notify(keyboardDown, keyboardUp);
+		if (Gamepad.get() != null) Gamepad.get().notify(axisListener, buttonListener);
 		
 		Configuration.setScreen(this);
 	}
@@ -214,5 +216,29 @@ class Empty extends Game {
 					Jumpman.getInstance().left = false;
 				}
 		}*/
+	}
+	
+	private function keyboardDown(key: Key, char: String): Void {
+		switch (key) {
+			case LEFT:
+				player.left = true;
+				player.right = false;
+			case RIGHT:
+				player.right = true;
+				player.left = false;
+			default:
+				
+		}
+	}
+	
+	private function keyboardUp(key: Key, char: String): Void {
+		switch (key) {
+			case LEFT:
+				player.left = false;
+			case RIGHT:
+				player.right = false;
+			default:
+				
+		}
 	}
 }

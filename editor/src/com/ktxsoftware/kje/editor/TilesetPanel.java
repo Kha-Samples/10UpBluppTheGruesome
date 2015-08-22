@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 public class TilesetPanel extends JPanel implements MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
 	
-	public static final int PANEL_WIDTH = 800;
+	public static final int PANEL_WIDTH = 512;
 	public static final int PANEL_HEIGHT = 352;
 	
 	private static TilesetPanel instance;

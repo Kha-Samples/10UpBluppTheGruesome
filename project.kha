@@ -65,9 +65,14 @@
 			"type": "image"
 		},
 		{
-			"file": "ZornigeFrau.png",
-			"name": "ZornigeFrau",
-			"type": "image"
+			"file": "localizations.xml",
+			"name": "localizations",
+			"type": "blob"
+		},
+		{
+			"file": "text.xml",
+			"name": "text",
+			"type": "blob"
 		}
 	],
 	"rooms": [
@@ -78,7 +83,9 @@
 			"assets": [
 				"testlevel.map",
 				"tileset",
-				"nullachtsechzehnmann"
+				"nullachtsechzehnmann",
+				"localizations",
+				"text"
 			]
 		}
 	]
