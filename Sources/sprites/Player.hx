@@ -39,10 +39,6 @@ class Player extends DestructibleSprite {
 	public static var currentPlayer: Player = null;
 	
 	public var id: Int;
-	public var aimx: Float;
-	public var aimy: Float;
-	public var ataimx: Bool = true;
-	public var ataimy: Bool = true;
 	
 	var muzzlePoint : Vector2;
 	
@@ -87,51 +83,6 @@ class Player extends DestructibleSprite {
 	
 	private var baseSpeed = 4.0;
 	public override function update(): Void {
-		if (!ataimx) {
-			if (isSleeping()) {
-				x = aimx;
-				ataimx = true;
-			}
-			else {
-				if (Math.abs(x - aimx) < baseSpeed) {
-					left = false;
-					right = false;
-					ataimx = true;
-				}
-				else if (aimx < x) {
-					left = true;
-					right = false;
-				}
-				else if (aimx > x) {
-					right = true;
-					left = false;
-				}
-				else {
-					left = false;
-					right = false;
-					ataimx = true;
-				}
-			}
-		}
-		if (!ataimy) {
-			if (isSleeping()) {
-				y = aimy;
-				ataimy = true;
-			}
-			else {
-				if (aimy < y) {
-					setUp();
-				}
-				else if (aimy > y) {
-					up = false;
-				}
-				else {
-					up = false;
-					ataimy = true;
-				}
-			}
-		}
-		
 		walking = false;
 		if (lastupcount > 0) --lastupcount;
 		if (killed) {
@@ -156,6 +107,9 @@ class Player extends DestructibleSprite {
 			else {
 				if (standing) setAnimation(lookRight ? standRight : standLeft);
 				speedx = 0;
+			}
+			if (up) {
+				trace("hallo ingo");
 			}
 			if (up && standing) {
 				setAnimation(lookRight ? jumpRight : jumpLeft);
@@ -290,13 +244,13 @@ class Player extends DestructibleSprite {
 		else {
 			super.render(g);
 		}
-		/*painter.setColor( kha.Color.fromBytes(255,0,0) );
+		g.set_color( kha.Color.fromBytes(255,0,0) );
 		var rect = collisionRect();
-		painter.drawRect( rect.x, rect.y, rect.width, rect.height );
-		painter.setColor( kha.Color.ColorBlack );
-		painter.drawRect( x - collider.x, y - collider.y, width, height );
-		painter.setColor( kha.Color.fromBytes(0,255,0) );
-		painter.fillRect( x - 2, y - 2, 5, 5 );*/
+		g.drawRect( rect.x, rect.y, rect.width, rect.height );
+		g.color = Color.Black;
+		g.drawRect( x - collider.x, y - collider.y, width, height );
+		g.color = Color.fromBytes(0,255,0);
+		g.fillRect( x - 2, y - 2, 5, 5 );
 	}
 	
 	public var usesElevator:Bool = false;

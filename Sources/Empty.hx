@@ -386,6 +386,8 @@ class Empty extends Game {
 	}
 	
 	private function keyboardDown(key: Key, char: String): Void {
+		if (mode != Game) return;
+		
 		switch (key) {
 			case LEFT:
 				Player.current().left = true;
@@ -393,6 +395,8 @@ class Empty extends Game {
 			case RIGHT:
 				Player.current().right = true;
 				Player.current().left = false;
+			case UP:
+				Player.current().setUp();
 			default:
 				if (char == "f") setMainPlayer(monsterPlayer);
 				else if (char == "g") setMainPlayer(agentPlayer);
@@ -410,6 +414,9 @@ class Empty extends Game {
 			case UP:
 				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
 				elevator.goup();
+				}
+				else {
+					Player.current().up = false;
 				}
 			case DOWN:
 				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {

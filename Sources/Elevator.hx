@@ -31,7 +31,7 @@ class Elevator extends Sprite {
 	var playerIsIn : Bool = false;
 	
 	//IN ORDER FOR THE ELEVATOR TO WORK, THE FLOOR COORDINATE DIFFERENCES HAVE TO BE A MULTIPLE OF THE SPEED (f.e. if speed is 5, coordinates must end in 0 or 5)
-	var elevatorx : Int = 100;
+	var elevatorx : Int = 250;
 	var floor1 : Int = 512;
 	var floor2 : Int = 462;
 	var floor3 : Int = 412;
