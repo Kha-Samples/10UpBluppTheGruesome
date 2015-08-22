@@ -15,7 +15,7 @@ class Fishman extends Player {
 		walkLeft = Animation.createRange(1, 8, 4);
 		walkRight = Animation.createRange(10, 17, 4);
 		setAnimation(walkLeft);
-		collider = new Rectangle(16, 32, 32, 32);
+		collider = new Rectangle(20, 5, (594 * 2 / 9) - 40, ((146 * 2 / 2) - 1) - 5);
 	}
 	
 	override public function hitFrom(dir: Direction): Void {

@@ -76,7 +76,39 @@ class Empty extends Game {
 	public override function init(): Void {
 		Configuration.setScreen(new LoadingScreen());
 		Random.init(Std.int(kha.Sys.getTime() * 100));
-		Loader.the.loadRoom("testlevel", initLevel);
+		Loader.the.loadRoom("titlescreen", initFirst);
+	}
+	
+	function initFirst() {
+		backbuffer = Image.createRenderTarget(1024, 768);
+		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
+		
+		Configuration.setScreen(this);
+		
+		font = Loader.the.loadFont("arial", FontStyle.Default, 34);
+		Localization.init("localizations");
+		
+		Cfg.init();
+		
+		if (Cfg.language == null) {
+			var msg = "Please select your language:";
+			var choices = new Array<Array<DialogueItem>>();
+			var i = 1;
+			for (l in Localization.availableLanguages.keys()) {
+				choices.push([new StartDialogue(function() { Cfg.language = l; } )]);
+				msg += '\n($i): ${Localization.availableLanguages[l]}';
+				++i;
+			}
+			dlg.set( [
+				new BlaWithChoices(msg, null, choices)
+				, new StartDialogue(Cfg.save)
+				, new StartDialogue(initTitleScreen)
+			] );
+		}
+		else
+		{
+			initTitleScreen();
+		}
 	}
 	
 	@:access(dialogue.BlaBox) 
@@ -93,11 +125,12 @@ class Empty extends Game {
 		Scene.the.setBackgroundColor(Color.fromBytes(0, 0, 0));
 		Scene.the.addHero( logo );
 		Configuration.setScreen(this);
+		
+		if (Keyboard.get() != null) Keyboard.get().notify(keyboardDown, keyboardUp);
+		if (Gamepad.get() != null) Gamepad.get().notify(axisListener, buttonListener);
 	}
 
 	public function initLevel(): Void {
-		backbuffer = Image.createRenderTarget(1024, 768);
-		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
 		tileColissions = new Array<Tile>();
 		for (i in 0...512) {
 			tileColissions.push(new Tile(i, isCollidable(i)));
@@ -126,13 +159,12 @@ class Empty extends Game {
 			sprites.push(blob.readS32BE());
 			sprites.push(blob.readS32BE());
 		}
-		monsterPlayer = new Fishman(50, 50);
-		agentPlayer = new Agent(50, 50);
 		elevator = new Elevator();
 		startGame(spriteCount, sprites);
 	}
 	
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
+		mode = Game; 
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
 		var tilemap = new Tilemap("tileset", 32, 32, map, tileColissions);
@@ -173,6 +205,9 @@ class Empty extends Game {
 			var sprite : kha2d.Sprite = null;
 			switch (sprites[i * 3]) {
 			case 0:
+				monsterPlayer = new Fishman(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				agentPlayer = new Agent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+			case 1:
 				computers.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			}
 		}
@@ -187,36 +222,7 @@ class Empty extends Game {
 		setMainPlayer(monsterPlayer);
 		Scene.the.addOther(elevator);
 		
-		if (Keyboard.get() != null) Keyboard.get().notify(keyboardDown, keyboardUp);
-		if (Gamepad.get() != null) Gamepad.get().notify(axisListener, buttonListener);
-		
 		Configuration.setScreen(this);
-		
-		
-		font = Loader.the.loadFont("arial", FontStyle.Default, 34);
-		Localization.init("localizations");
-		
-		Cfg.init();
-		
-		if (Cfg.language == null) {
-			var msg = "Please select your language:";
-			var choices = new Array<Array<DialogueItem>>();
-			var i = 1;
-			for (l in Localization.availableLanguages.keys()) {
-				choices.push([new StartDialogue(function() { Cfg.language = l; } )]);
-				msg += '\n($i): ${Localization.availableLanguages[l]}';
-				++i;
-			}
-			dlg.set( [
-				new BlaWithChoices(msg, null, choices)
-				, new StartDialogue(Cfg.save)
-				, new StartDialogue(initTitleScreen)
-			] );
-		}
-		else
-		{
-			initTitleScreen();
-		}
 	}
 	
 	private function setMainPlayer(player : Player) {
@@ -228,8 +234,8 @@ class Empty extends Game {
 	}
 	
 	private static function isCollidable(tilenumber: Int): Bool {
-		/*switch (tilenumber) {
-		case 1: return true;
+		switch (tilenumber) {
+		/*case 1: return true;
 		case 6: return true;
 		case 7: return true;
 		case 8: return true;
@@ -243,10 +249,11 @@ class Empty extends Game {
 		case 56: return true;
 		case 60: return true;
 		case 61: return true;
-		case 62: return true;
+		case 62: return true;*/
 		case 63: return true;
 		case 64: return true;
 		case 65: return true;
+		case 66: return true;
 		case 67: return true;
 		case 68: return true;
 		case 70: return true;
@@ -259,8 +266,7 @@ class Empty extends Game {
 		case 87: return true;
 		default:
 			return false;
-		}*/
-		return tilenumber != 0;
+		}
 	}
 	
 	public override function update() {
@@ -269,8 +275,12 @@ class Empty extends Game {
 		Scene.the.camx = 0;
 		Scene.the.camy = 0;
 		Scene.the.update();
-		if (Math.abs(Player.current().x - elevator.x) < elevatorOffset) {
-			Player.current().y = elevator.y;
+		
+		if (mode != StartScreen)
+		{
+			if (Math.abs(Player.current().x - elevator.x) < elevatorOffset) {
+				Player.current().y = elevator.y;
+			}
 		}
 		
 		dlg.update();
@@ -377,6 +387,8 @@ class Empty extends Game {
 	}
 	
 	private function keyboardDown(key: Key, char: String): Void {
+		if (mode != Game) return;
+		
 		switch (key) {
 			case LEFT:
 				Player.current().left = true;
@@ -384,6 +396,8 @@ class Empty extends Game {
 			case RIGHT:
 				Player.current().right = true;
 				Player.current().left = false;
+			case UP:
+				Player.current().setUp();
 			default:
 				if (char == "f") setMainPlayer(monsterPlayer);
 				else if (char == "g") setMainPlayer(agentPlayer);
@@ -402,6 +416,9 @@ class Empty extends Game {
 				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
 				elevator.goup();
 				}
+				else {
+					Player.current().up = false;
+				}
 			case DOWN:
 				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
 				elevator.godown();	
@@ -416,7 +433,10 @@ class Empty extends Game {
 				Dialogues.escMenu();
 			default:
 				dlg.set([new Action(null, ActionType.FADE_TO_BLACK)
-						/*, new StartDialogue(enterLevel.bind(1)) TODO: implement game start*/]);
+						, new StartDialogue(function() {
+							Configuration.setScreen(new LoadingScreen());
+							Loader.the.loadRoom("testlevel", initLevel);
+						}) ]);
 			}
 		default:
 			switch (key) {

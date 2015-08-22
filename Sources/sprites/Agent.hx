@@ -8,16 +8,16 @@ import kha2d.Direction;
 class Agent extends Player {
 	
 	public function new(x: Float, y: Float) {
-		super(1, x, y, "nullachtsechzehnmann", 16 * 4, 16 * 4, 0);
+		super(1, x, y, "agent", Std.int(410 / 10) * 2, Std.int(455 / 7) * 2, 0);
 		standing = false;
-		walkLeft = new Animation([2, 3, 4, 3], 6);
-		walkRight = new Animation([7, 8, 9, 8], 6);
-		standLeft = Animation.create(5);
-		standRight = Animation.create(6);
-		jumpLeft = Animation.create(1);
-		jumpRight = Animation.create(10);
+		walkLeft = Animation.createRange(11, 18, 4);
+		walkRight = Animation.createRange(1, 8, 4);
+		standLeft = Animation.create(10);
+		standRight = Animation.create(0);
+		jumpLeft = Animation.create(31);
+		jumpRight = Animation.create(30);
 		setAnimation(jumpRight);
-		collider = new Rectangle(16, 32, 32, 32);
+		collider = new Rectangle(20, 30, 41 * 2 - 40, (65 - 1) * 2 - 30);
 	}
 	
 	override public function hitFrom(dir: Direction): Void {
