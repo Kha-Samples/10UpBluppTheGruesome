@@ -34,6 +34,8 @@ import kha2d.Tile;
 import kha2d.Tilemap;
 import sprites.Computer;
 
+import dialogue.*;
+
 class Empty extends Game {
 	private var tileColissions: Array<Tile>;
 	private var map : Array<Array<Int>>;
@@ -144,6 +146,28 @@ class Empty extends Game {
 		if (Gamepad.get() != null) Gamepad.get().notify(axisListener, buttonListener);
 		
 		Configuration.setScreen(this);
+		
+		
+		Localization.init("localizations");
+		
+		Cfg.init();
+		/*Dialogues.the = new Dialogue();
+		if (Cfg.language == null) {
+			var msg = "Please select your language:";
+			var choices = new Array<Array<DialogueItem>>();
+			var i = 1;
+			for (l in Localization.availableLanguages.keys()) {
+				choices.push([new StartDialogue(function() { Cfg.language = l; } )]);
+				msg += '\n($i): ${Localization.availableLanguages[l]}';
+				++i;
+			}
+			Dialogues.the.set( [
+				new BlaWithChoices(msg, null, choices)
+				, new StartDialogue(Cfg.save)
+				//, new StartDialogue(initTitleScreen) TODO: game initialization?
+			] );
+		}
+		*/// TODO: fixme!
 	}
 	
 	private static function isCollidable(tilenumber: Int): Bool {
