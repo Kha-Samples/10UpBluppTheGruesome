@@ -67,7 +67,7 @@
 		{
 			"file": "localizations.xml",
 			"name": "localizations",
-			"type": "image"
+			"type": "blob"
 		},
 		{
 			"file": "text.xml",
