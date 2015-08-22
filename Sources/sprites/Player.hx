@@ -171,7 +171,7 @@ class Player extends DestructibleSprite {
 		if (jumpcount > 0) --jumpcount;
 		super.update();
 		if (Player.currentPlayer == this) {
-			updateCrosshair();
+			//updateCrosshair();
 		}
 	}
 	
@@ -279,11 +279,11 @@ class Player extends DestructibleSprite {
 	var isCrosshairVisible : Bool = false;
 	var crosshair : Vector2;
 	
-	public function updateCrosshair() {
+	/*public function updateCrosshair() {
 		if (Player.current() != null) {
 			var v = center;
-			v.x = TenUp5.the.mouseX - v.x;
-			v.y = TenUp5.the.mouseY - v.y;
+			v.x = Empty.the.mouseX - v.x;
+			v.y = Empty.the.mouseY - v.y;
 			//v.y += 0.1 * height;
 			if (lookRight) {
 				if (v.x < 0) {
@@ -302,7 +302,7 @@ class Player extends DestructibleSprite {
 			crosshair = v.div( vl );
 		}
 		updateMuzzlePoint();
-	}
+	}*/
 	
 	private function updateMuzzlePoint(): Void {
 		muzzlePoint = center;
@@ -358,7 +358,8 @@ class Player extends DestructibleSprite {
 	
 	public var usesElevator:Bool = false;
 	public function use() {
-		var touse = Level.the.interactiveSprites.filter(function(sprite:InteractiveSprite):Bool { return sprite.playerCanUseIt; } );
+		//var touse = Level.the.interactiveSprites.filter(function(sprite:InteractiveSprite):Bool { return sprite.playerCanUseIt; } );
+		var touse = new Array<InteractiveSprite>(); // TODO: fixme!
 		var px = x + 0.5 * tempcollider.width;
 		for (ias in touse) {
 			if (px > ias.x + 0.5 * ias.tempcollider.width) {

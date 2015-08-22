@@ -12,8 +12,6 @@ import sprites.Player;
 using Lambda;
 
 class Dialogues {
-	static public var the : Dialogue;
-		
 	static public function escMenu() {
 		if (Player.current() != null) {
 			Player.current().left = false;
@@ -32,7 +30,7 @@ class Dialogues {
 		}
 		msg += '\n($i): Back"';
 		choices.push( [] );
-		TenUp5.the.dlg.insert( [
+		Empty.the.dlg.insert( [
 			new BlaWithChoices(msg, null, choices)
 			, new StartDialogue(Cfg.save)
 			, new StartDialogue(function () { Localization.language = Cfg.language; } )
