@@ -43,6 +43,9 @@ class Empty extends Game {
 	private var font: Font;
 	private var backbuffer: Image;
 	private var player: Player;
+	private var elevator: Elevator;
+	
+	private var elevatorOffset: Float = 10;
 	
 	public function new() {
 		super("10Up");
@@ -86,6 +89,7 @@ class Empty extends Game {
 			sprites.push(blob.readS32BE());
 		}
 		player = new Player();
+		elevator = new Elevator();
 		startGame(spriteCount, sprites);
 	}
 	
@@ -142,6 +146,7 @@ class Empty extends Game {
 		}
 		
 		Scene.the.addHero(player);
+		Scene.the.addOther(elevator);
 		
 		if (Keyboard.get() != null) Keyboard.get().notify(keyboardDown, keyboardUp);
 		if (Gamepad.get() != null) Gamepad.get().notify(axisListener, buttonListener);
@@ -213,6 +218,9 @@ class Empty extends Game {
 		Scene.the.camx = 0;
 		Scene.the.camy = 0;
 		Scene.the.update();
+		if (Math.abs(player.x - elevator.x) < elevatorOffset) {
+			player.y = elevator.y;
+		}
 	}
 	
 	public override function render(frame: Framebuffer) {
@@ -290,6 +298,14 @@ class Empty extends Game {
 				player.left = false;
 			case RIGHT:
 				player.right = false;
+			case UP:
+				if (Math.abs(player.x-elevator.x)<elevatorOffset && elevator.canMove) {
+				elevator.goup();
+				}
+			case DOWN:
+				if (Math.abs(player.x-elevator.x)<elevatorOffset && elevator.canMove) {
+				elevator.godown();	
+				}
 			default:
 				
 		}
