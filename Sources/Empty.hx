@@ -228,8 +228,8 @@ class Empty extends Game {
 		Scene.the.camx = 0;
 		Scene.the.camy = 0;
 		Scene.the.update();
-		if (Math.abs(player.x - elevator.x) < elevatorOffset) {
-			player.y = elevator.y;
+		if (Math.abs(Player.current().x - elevator.x) < elevatorOffset) {
+			Player.current().y = elevator.y;
 		}
 	}
 	
@@ -309,11 +309,11 @@ class Empty extends Game {
 			case RIGHT:
 				Player.current().right = false;
 			case UP:
-				if (Math.abs(player.x-elevator.x)<elevatorOffset && elevator.canMove) {
+				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
 				elevator.goup();
 				}
 			case DOWN:
-				if (Math.abs(player.x-elevator.x)<elevatorOffset && elevator.canMove) {
+				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
 				elevator.godown();	
 				}
 			default:
