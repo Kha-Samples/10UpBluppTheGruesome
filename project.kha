@@ -73,6 +73,76 @@
 			"file": "text.xml",
 			"name": "text",
 			"type": "blob"
+		},
+		{
+			"file": "localizations.xml",
+			"name": "localizations.xml",
+			"type": "blob"
+		},
+		{
+			"file": "text.xml",
+			"name": "text.xml",
+			"type": "blob"
+		},
+		{
+			"file": "wache.png",
+			"name": "wache",
+			"type": "image"
+		},
+		{
+			"file": "ZornigeFrau.png",
+			"name": "ZornigeFrau",
+			"type": "image"
+		},
+		{
+			"file": "0.png",
+			"name": "0",
+			"type": "image"
+		},
+		{
+			"file": "1.png",
+			"name": "1",
+			"type": "image"
+		},
+		{
+			"file": "2.png",
+			"name": "2",
+			"type": "image"
+		},
+		{
+			"file": "3.png",
+			"name": "3",
+			"type": "image"
+		},
+		{
+			"file": "4.png",
+			"name": "4",
+			"type": "image"
+		},
+		{
+			"file": "5.png",
+			"name": "5",
+			"type": "image"
+		},
+		{
+			"file": "6.png",
+			"name": "6",
+			"type": "image"
+		},
+		{
+			"file": "7.png",
+			"name": "7",
+			"type": "image"
+		},
+		{
+			"file": "8.png",
+			"name": "8",
+			"type": "image"
+		},
+		{
+			"file": "9.png",
+			"name": "9",
+			"type": "image"
 		}
 	],
 	"rooms": [
@@ -85,7 +155,17 @@
 				"tileset",
 				"nullachtsechzehnmann",
 				"localizations",
-				"text"
+				"text",
+				"0",
+				"1",
+				"2",
+				"3",
+				"4",
+				"5",
+				"6",
+				"7",
+				"8",
+				"9"
 			]
 		}
 	]
