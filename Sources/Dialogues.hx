@@ -12,6 +12,7 @@ import sprites.Player;
 using Lambda;
 
 class Dialogues {
+	static public var the : Dialogue;
 		
 	static public function escMenu() {
 		if (Player.current() != null) {

@@ -143,6 +143,17 @@
 			"file": "9.png",
 			"name": "9",
 			"type": "image"
+		},
+		{
+			"file": "elevator.png",
+			"name": "elevator",
+			"type": "image"
+		},
+		{
+			"file": "Arial.ttf",
+			"name": "Arial",
+			"type": "font",
+			"size": "12"
 		}
 	],
 	"rooms": [
@@ -165,7 +176,8 @@
 				"6",
 				"7",
 				"8",
-				"9"
+				"9",
+				"elevator"
 			]
 		}
 	]

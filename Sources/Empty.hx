@@ -34,6 +34,8 @@ import kha2d.Tile;
 import kha2d.Tilemap;
 import sprites.Computer;
 
+import dialogue.*;
+
 class Empty extends Game {
 	private var tileColissions: Array<Tile>;
 	private var map : Array<Array<Int>>;
@@ -42,6 +44,9 @@ class Empty extends Game {
 	private var backbuffer: Image;
 	private var monsterPlayer : Player;
 	private var agentPlayer : Player;
+	private var elevator: Elevator;
+	
+	private var elevatorOffset: Float = 10;
 	
 	public function new() {
 		super("10Up");
@@ -86,6 +91,7 @@ class Empty extends Game {
 		}
 		monsterPlayer = new Player();
 		agentPlayer = new Player();
+		elevator = new Elevator();
 		startGame(spriteCount, sprites);
 	}
 	
@@ -142,11 +148,34 @@ class Empty extends Game {
 		}
 		
 		setMainPlayer(monsterPlayer);
+		Scene.the.addOther(elevator);
 		
 		if (Keyboard.get() != null) Keyboard.get().notify(keyboardDown, keyboardUp);
 		if (Gamepad.get() != null) Gamepad.get().notify(axisListener, buttonListener);
 		
 		Configuration.setScreen(this);
+		
+		
+		Localization.init("localizations");
+		
+		Cfg.init();
+		/*Dialogues.the = new Dialogue();
+		if (Cfg.language == null) {
+			var msg = "Please select your language:";
+			var choices = new Array<Array<DialogueItem>>();
+			var i = 1;
+			for (l in Localization.availableLanguages.keys()) {
+				choices.push([new StartDialogue(function() { Cfg.language = l; } )]);
+				msg += '\n($i): ${Localization.availableLanguages[l]}';
+				++i;
+			}
+			Dialogues.the.set( [
+				new BlaWithChoices(msg, null, choices)
+				, new StartDialogue(Cfg.save)
+				//, new StartDialogue(initTitleScreen) TODO: game initialization?
+			] );
+		}
+		*/// TODO: fixme!
 	}
 	
 	private function setMainPlayer(player : Player) {
@@ -199,6 +228,9 @@ class Empty extends Game {
 		Scene.the.camx = 0;
 		Scene.the.camy = 0;
 		Scene.the.update();
+		if (Math.abs(player.x - elevator.x) < elevatorOffset) {
+			player.y = elevator.y;
+		}
 	}
 	
 	public override function render(frame: Framebuffer) {
@@ -276,6 +308,14 @@ class Empty extends Game {
 				Player.current().left = false;
 			case RIGHT:
 				Player.current().right = false;
+			case UP:
+				if (Math.abs(player.x-elevator.x)<elevatorOffset && elevator.canMove) {
+				elevator.goup();
+				}
+			case DOWN:
+				if (Math.abs(player.x-elevator.x)<elevatorOffset && elevator.canMove) {
+				elevator.godown();	
+				}
 			default:
 				
 		}
