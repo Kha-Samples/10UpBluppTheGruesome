@@ -36,7 +36,7 @@ class Player extends DestructibleSprite {
 	var jumpRight : Animation;
 	public var mini : Image;
 	private var hitSound: Sound;
-	private static var currentPlayer: Player = null;
+	public static var currentPlayer: Player = null;
 	
 	public var id: Int;
 	public var aimx: Float;

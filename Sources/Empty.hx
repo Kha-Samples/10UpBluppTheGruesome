@@ -40,7 +40,8 @@ class Empty extends Game {
 	private var originalmap : Array<Array<Int>>;
 	private var font: Font;
 	private var backbuffer: Image;
-	private var player: Player;
+	private var monsterPlayer : Player;
+	private var agentPlayer : Player;
 	
 	public function new() {
 		super("10Up");
@@ -83,7 +84,8 @@ class Empty extends Game {
 			sprites.push(blob.readS32BE());
 			sprites.push(blob.readS32BE());
 		}
-		player = new Player();
+		monsterPlayer = new Player();
+		agentPlayer = new Player();
 		startGame(spriteCount, sprites);
 	}
 	
@@ -139,12 +141,20 @@ class Empty extends Game {
 			computers.remove(pos);
 		}
 		
-		Scene.the.addHero(player);
+		setMainPlayer(monsterPlayer);
 		
 		if (Keyboard.get() != null) Keyboard.get().notify(keyboardDown, keyboardUp);
 		if (Gamepad.get() != null) Gamepad.get().notify(axisListener, buttonListener);
 		
 		Configuration.setScreen(this);
+	}
+	
+	private function setMainPlayer(player : Player) {
+		if (Player.current() != null) {
+			Scene.the.removeHero(Player.current());
+		}
+		player.setCurrent();
+		Scene.the.addHero(player);
 	}
 	
 	private static function isCollidable(tilenumber: Int): Bool {
@@ -250,11 +260,11 @@ class Empty extends Game {
 	private function keyboardDown(key: Key, char: String): Void {
 		switch (key) {
 			case LEFT:
-				player.left = true;
-				player.right = false;
+				Player.current().left = true;
+				Player.current().right = false;
 			case RIGHT:
-				player.right = true;
-				player.left = false;
+				Player.current().right = true;
+				Player.current().left = false;
 			default:
 				
 		}
@@ -263,9 +273,9 @@ class Empty extends Game {
 	private function keyboardUp(key: Key, char: String): Void {
 		switch (key) {
 			case LEFT:
-				player.left = false;
+				Player.current().left = false;
 			case RIGHT:
-				player.right = false;
+				Player.current().right = false;
 			default:
 				
 		}

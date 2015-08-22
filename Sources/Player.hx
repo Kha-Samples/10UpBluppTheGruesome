@@ -23,6 +23,7 @@ class Player extends Sprite {
 	var standRight : Animation;
 	var jumpLeft : Animation;
 	var jumpRight : Animation;
+	public static var currentPlayer: Player = null;
 	
 	public function new() {
 		super(Loader.the.getImage("nullachtsechzehnmann"), 16 * 4, 16 * 4, 0);
@@ -42,6 +43,14 @@ class Player extends Sprite {
 		lookRight = true;
 		killed = false;
 		jumpcount = 0;
+	}
+	
+	public static inline function current(): Player {
+		return currentPlayer;
+	}
+	
+	public function setCurrent(): Void {
+		currentPlayer = this;
 	}
 	
 	public override function update() {
