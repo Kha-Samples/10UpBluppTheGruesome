@@ -19,8 +19,11 @@ import kha.Key;
 import kha.Loader;
 import kha.LoadingScreen;
 import kha.math.Matrix3;
+import kha.math.Random;
+import kha.math.Vector2;
 import kha.Music;
 import kha.Scaler;
+import kha.Scheduler;
 import kha.ScreenCanvas;
 import kha2d.Scene;
 import kha.Score;
@@ -29,6 +32,7 @@ import kha.ScreenRotation;
 import kha.Storage;
 import kha2d.Tile;
 import kha2d.Tilemap;
+import sprites.Computer;
 
 class Empty extends Game {
 	private var tileColissions: Array<Tile>;
@@ -44,6 +48,7 @@ class Empty extends Game {
 	
 	public override function init(): Void {
 		Configuration.setScreen(new LoadingScreen());
+		Random.init(Std.int(Scheduler.realTime() * 100));
 		Loader.the.loadRoom("testlevel", initLevel);
 	}
 
@@ -71,11 +76,18 @@ class Empty extends Game {
 				map[x].push(0);
 			}
 		}
+		var spriteCount = blob.readS32BE();
+		var sprites = new Array<Int>();
+		for (i in 0...spriteCount) {
+			sprites.push(blob.readS32BE());
+			sprites.push(blob.readS32BE());
+			sprites.push(blob.readS32BE());
+		}
 		player = new Player();
-		startGame();
+		startGame(spriteCount, sprites);
 	}
 	
-	public function startGame() {
+	public function startGame(spriteCount: Int, sprites: Array<Int>) {
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
 		var tilemap = new Tilemap("tileset", 32, 32, map, tileColissions);
@@ -108,6 +120,22 @@ class Empty extends Game {
 					map[x][y] = originalmap[x][y];
 				}
 			}
+		}
+		
+		var computerCount : Int = 2;
+		var computers : Array<Vector2> = new Array<Vector2>();
+		for (i in 0...spriteCount) {
+			var sprite : kha2d.Sprite = null;
+			switch (sprites[i * 3]) {
+			case 0:
+				computers.push(new Vector2(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2));
+			}
+		}
+		for (i in 0...computerCount) {
+			if (computers.length <= 0) break;
+			
+			var pos : Vector2 = computers[Random.getIn(0, computers.length - 1)];
+			Scene.the.addOther(new Computer(pos.x * TILE_WIDTH, pos.y * TILE_HEIGHT));
 		}
 		
 		Scene.the.addHero(player);
