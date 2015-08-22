@@ -35,7 +35,10 @@ import kha2d.Sprite;
 import kha2d.Tile;
 import kha2d.Tilemap;
 import localization.Keys_text;
+import sprites.Agent;
 import sprites.Computer;
+import sprites.Fishman;
+import sprites.Player;
 
 import dialogue.*;
 
@@ -123,8 +126,8 @@ class Empty extends Game {
 			sprites.push(blob.readS32BE());
 			sprites.push(blob.readS32BE());
 		}
-		monsterPlayer = new Player();
-		agentPlayer = new Player();
+		monsterPlayer = new Fishman(50, 50);
+		agentPlayer = new Agent(50, 50);
 		elevator = new Elevator();
 		startGame(spriteCount, sprites);
 	}
@@ -382,7 +385,8 @@ class Empty extends Game {
 				Player.current().right = true;
 				Player.current().left = false;
 			default:
-				
+				if (char == "f") setMainPlayer(monsterPlayer);
+				else if (char == "g") setMainPlayer(agentPlayer);
 		}
 	}
 	
