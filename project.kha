@@ -2,12 +2,83 @@
 	"format": 3,
 	"game": {
 		"name": "Empty",
-		"width": 640,
-		"height": 480
+		"width": 1024,
+		"height": 768
 	},
 	"libraries": [
 		"Kha2D"
 	],
-	"assets": [],
-	"rooms": []
+	"assets": [
+		{
+			"file": "Backfrau.png",
+			"name": "Backfrau",
+			"type": "image"
+		},
+		{
+			"file": "boss.png",
+			"name": "boss",
+			"type": "image"
+		},
+		{
+			"file": "boss_hurt.png",
+			"name": "boss_hurt",
+			"type": "image"
+		},
+		{
+			"file": "fishy.png",
+			"name": "fishy",
+			"type": "image"
+		},
+		{
+			"file": "mechanic.png",
+			"name": "mechanic",
+			"type": "image"
+		},
+		{
+			"file": "nullachtfuenfzehnmann.png",
+			"name": "nullachtfuenfzehnmann",
+			"type": "image"
+		},
+		{
+			"file": "nullachtsechzehnmann.png",
+			"name": "nullachtsechzehnmann",
+			"type": "image"
+		},
+		{
+			"file": "old_boss.png",
+			"name": "old_boss",
+			"type": "image"
+		},
+		{
+			"file": "professor.png",
+			"name": "professor",
+			"type": "image"
+		},
+		{
+			"file": "testlevel.map",
+			"name": "testlevel.map",
+			"type": "blob"
+		},
+		{
+			"file": "tileset.png",
+			"name": "tileset",
+			"type": "image"
+		},
+		{
+			"file": "ZornigeFrau.png",
+			"name": "ZornigeFrau",
+			"type": "image"
+		}
+	],
+	"rooms": [
+		{
+			"name": "testlevel",
+			"parent": null,
+			"neighbours": [],
+			"assets": [
+				"testlevel.map",
+				"tileset"
+			]
+		}
+	]
 }
