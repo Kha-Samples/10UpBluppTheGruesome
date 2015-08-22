@@ -8,7 +8,7 @@ import kha2d.Direction;
 class Agent extends Player {
 	
 	public function new(x: Float, y: Float) {
-		super(1, x, y, "nullachtsechzehnmann", 16 * 4, 16 * 4, 0);
+		super(1, x, y, "agent", 16 * 4, 16 * 4, 0);
 		standing = false;
 		walkLeft = new Animation([2, 3, 4, 3], 6);
 		walkRight = new Animation([7, 8, 9, 8], 6);

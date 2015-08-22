@@ -30,6 +30,11 @@
 			"type": "image"
 		},
 		{
+			"file": "agent.png",
+			"name": "agent",
+			"type": "image"
+		},
+		{
 			"file": "mechanic.png",
 			"name": "mechanic",
 			"type": "image"
@@ -183,6 +188,7 @@
 				"localizations",
 				"text",
 				"fishy",
+				"agent",
 				"0",
 				"1",
 				"2",
