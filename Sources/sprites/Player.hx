@@ -306,9 +306,9 @@ class Player extends DestructibleSprite {
 		var px = x + 0.5 * tempcollider.width;
 		for (ias in touse) {
 			if (px > ias.x + 0.5 * ias.tempcollider.width) {
-				ias.useFrom(Direction.RIGHT);
+				ias.useFrom(Direction.RIGHT, this);
 			} else {
-				ias.useFrom(Direction.LEFT);
+				ias.useFrom(Direction.LEFT, this);
 			}
 		}
 	}

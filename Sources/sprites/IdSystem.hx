@@ -19,10 +19,10 @@ class IdCard
 		var skip = Random.getUpTo(10);
 		for (i in 0...skip) rand.Get();
 		
-		this.id = "ID";
+		this.Id = "ID";
 		for(i in 0...5) {
 			var hex = rand.GetUpTo(16);
-			this.id += (hex < 10) ? String.fromCharCode('0'.code + hex) : String.fromCharCode('A'.code + hex-10);
+			this.Id += (hex < 10) ? String.fromCharCode('0'.code + hex) : String.fromCharCode('A'.code + hex-10);
 		}
 		this.Name = name;
 	}
@@ -56,11 +56,11 @@ class IdLogger
 		
 		var list : String = Localization.getText(Keys_text.IDLOGGER_DISPLAY);
 		list += Localization.getText(txtKey);
-		for (id in toDisplay)
+		for (id in toDisplay.keys())
 		{
 			list += "\n" + id + ": " + toDisplay[id];
 		}
-		Dialogues.the.insert([new Bla(list,null)]);
+		Empty.the.dlg.insert([new Bla(list,null)]);
 	}
 	
 	public function newDay()
@@ -68,4 +68,9 @@ class IdLogger
 		loggedIDs.splice(0, currendDayIndex);
 		currendDayIndex = loggedIDs.length;
 	}
+}
+
+interface IdCardOwner
+{
+	var IdCard(default, never): IdCard;
 }

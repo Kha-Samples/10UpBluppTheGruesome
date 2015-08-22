@@ -28,7 +28,7 @@ class InteractiveSprite extends Sprite {
 		return new Vector2(Math.round(x - collider.x) + 0.5 * width, Math.round(y - collider.y) + 0.5 * height);
 	}
 	
-	public function useFrom( dir : Direction ) { }
+	public function useFrom( dir : Direction, user: Dynamic ) { }
 	
 	override public function update():Void 
 	{
@@ -46,6 +46,7 @@ class InteractiveSprite extends Sprite {
 		if (isUseable && sprite == Player.current()) {
 			playerCanUseIt = true;
 			playerCanUseItClear = false;
+			// TODO: inform HUMAN about the possibility to USE this
 		}
 	}
 }
