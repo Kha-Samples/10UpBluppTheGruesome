@@ -148,6 +148,12 @@
 			"file": "elevator.png",
 			"name": "elevator",
 			"type": "image"
+		},
+		{
+			"file": "Arial.ttf",
+			"name": "Arial",
+			"type": "font",
+			"size": "12"
 		}
 	],
 	"rooms": [
