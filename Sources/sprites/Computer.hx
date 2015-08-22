@@ -13,7 +13,7 @@ class Computer extends InteractiveSprite {
 	public function new(x: Float, y: Float ) {
 		super(Loader.the.getImage("computer"), 46 * 2, 60 * 2, 0);
 		this.x = x;
-		this.y = y;
+		this.y = y - 90;
 		
 		this.isUseable = true;
 	}

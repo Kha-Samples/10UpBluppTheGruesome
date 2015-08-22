@@ -207,7 +207,7 @@ class Empty extends Game {
 			case 0:
 				monsterPlayer = new Fishman(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 				agentPlayer = new Agent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
-			case 2:
+			case 1:
 				computers.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			}
 		}
