@@ -1,0 +1,52 @@
+<!-- 
+	The DefaultLanguage tag specifies the 
+	fallback language of this file.
+	All keys that don't have an other language will
+	use the default language instead.
+	I.e. the original language of this file
+-->
+<DefaultLanguage>de</DefaultLanguage>
+
+<Mechanic>
+	<de>Ms. M</de>
+	<en>Ms. M</en>
+</Mechanic>
+<Professor>
+	<de>Professor</de>
+	<en>Professor</en>
+</Professor>
+<Fischmensch>
+	<de>Blupp der Grausame</de>
+	<en>Blupp the Cruel</en>
+</Fischmensch>
+
+
+
+<click_to_start>
+	<de>Klicke zum Starten</de>
+	<en>Click to start</en>
+</click_to_start>
+
+
+
+<!-- Abilities -->
+<ability_Punch>
+	<de>Schlagen</de>
+	<en>Punch</en>
+</ability_Punch>
+<ability_Lift>
+	<de>Heben</de>
+	<en>Lift</en>
+</ability_Lift>
+<ability_Dance>
+	<de>Tanzen</de>
+	<en>Dance</en>
+</ability_Dance>
+<ability_Repair>
+	<de>Reparieren</de>
+	<en>Repair</en>
+</ability_Repair>
+<ability_Use>
+	<de>Drück</de>
+	<en>Press</en>
+</ability_Use>
