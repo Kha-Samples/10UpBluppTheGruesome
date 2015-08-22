@@ -21,7 +21,7 @@ class Dialogue {
 		next();
 	}
 	
-	public function insert(insert: Array<DialogueItem>, argl = false) {
+	public function insert(insert: Array<DialogueItem>, toFront = false) {
 		if (items == null) {
 			set(insert);
 		} else if (index < 0) {
@@ -31,13 +31,13 @@ class Dialogue {
 			items = insert;
 		} else {
 			var newItems = new Array<DialogueItem>();
-			if (!argl) {
+			if (!toFront) {
 				newItems.push(items[index]);
 			}
 			for (item in insert) {
 				newItems.push(item);
 			}
-			if (!argl) {
+			if (!toFront) {
 				++index;
 			}
 			while (index < items.length) {
