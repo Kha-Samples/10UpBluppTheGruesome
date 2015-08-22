@@ -77,7 +77,8 @@
 			"neighbours": [],
 			"assets": [
 				"testlevel.map",
-				"tileset"
+				"tileset",
+				"nullachtsechzehnmann"
 			]
 		}
 	]

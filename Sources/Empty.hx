@@ -35,6 +35,7 @@ class Empty extends Game {
 	private var originalmap : Array<Array<Int>>;
 	private var font: Font;
 	private var backbuffer: Image;
+	private var player: Player;
 	
 	public function new() {
 		super("10Up");
@@ -69,6 +70,7 @@ class Empty extends Game {
 				map[x].push(0);
 			}
 		}
+		player = new Player();
 		startGame();
 	}
 	
@@ -80,10 +82,10 @@ class Empty extends Game {
 		Scene.the.addBackgroundTilemap(tilemap, 1);
 		var TILE_WIDTH: Int = 32;
 		var TILE_HEIGHT: Int = 32;
-		/*for (x in 0...originalmap.length) {
+		for (x in 0...originalmap.length) {
 			for (y in 0...originalmap[0].length) {
 				switch (originalmap[x][y]) {
-				case 15:
+				/*case 15:
 					map[x][y] = 0;
 					Scene.the.addEnemy(new Gumba(x * TILE_WIDTH, y * TILE_HEIGHT));
 				case 16:
@@ -100,13 +102,14 @@ class Empty extends Game {
 					Scene.the.addEnemy(new Exit(x * TILE_WIDTH, y * TILE_HEIGHT));
 				case 56:
 					map[x][y] = 1;
-					Scene.the.addEnemy(new BonusBlock(x * TILE_WIDTH, y * TILE_HEIGHT));
+					Scene.the.addEnemy(new BonusBlock(x * TILE_WIDTH, y * TILE_HEIGHT));*/
 				default:
 					map[x][y] = originalmap[x][y];
 				}
 			}
-		}*/
-		//Scene.the.addHero(Jumpman.getInstance());
+		}
+		
+		Scene.the.addHero(player);
 		
 		if (Gamepad.get(0) != null) Gamepad.get(0).notify(axisListener, buttonListener);
 		
@@ -152,6 +155,8 @@ class Empty extends Game {
 	public override function update() {
 		super.update();
 		//Scene.the.camx = Std.int(Jumpman.getInstance().x) + Std.int(Jumpman.getInstance().width / 2);
+		Scene.the.camx = 0;
+		Scene.the.camy = 0;
 		Scene.the.update();
 	}
 	
