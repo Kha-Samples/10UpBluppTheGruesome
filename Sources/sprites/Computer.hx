@@ -8,6 +8,5 @@ class Computer extends Sprite {
 		super(Loader.the.getImage("0"), 46 * 2, 60 * 2, 0);
 		this.x = x;
 		this.y = y;
-		trace(x + " " + y);
 	}	
 }

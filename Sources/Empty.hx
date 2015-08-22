@@ -50,7 +50,7 @@ class Empty extends Game {
 	
 	public override function init(): Void {
 		Configuration.setScreen(new LoadingScreen());
-		Random.init(Std.int(Scheduler.realTime() * 100));
+		Random.init(Std.int(kha.Sys.getTime() * 100));
 		Loader.the.loadRoom("testlevel", initLevel);
 	}
 
@@ -130,14 +130,15 @@ class Empty extends Game {
 			var sprite : kha2d.Sprite = null;
 			switch (sprites[i * 3]) {
 			case 0:
-				computers.push(new Vector2(sprites[i * 3 + 1] * 2, sprites[i * 3 + 2] * 2));
+				computers.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			}
 		}
 		for (i in 0...computerCount) {
 			if (computers.length <= 0) break;
 			
 			var pos : Vector2 = computers[Random.getIn(0, computers.length - 1)];
-			Scene.the.addOther(new Computer(pos.x * TILE_WIDTH, pos.y * TILE_HEIGHT));
+			Scene.the.addOther(new Computer(pos.x, pos.y));
+			computers.remove(pos);
 		}
 		
 		Scene.the.addHero(player);
