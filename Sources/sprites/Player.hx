@@ -301,7 +301,8 @@ class Player extends DestructibleSprite {
 	
 	public var usesElevator:Bool = false;
 	public function use() {
-		var touse = Level.the.interactiveSprites.filter(function(sprite:InteractiveSprite):Bool { return sprite.playerCanUseIt; } );
+		//var touse = Level.the.interactiveSprites.filter(function(sprite:InteractiveSprite):Bool { return sprite.playerCanUseIt; } );
+		var touse = new Array<InteractiveSprite>(); // TODO: fixme!
 		var px = x + 0.5 * tempcollider.width;
 		for (ias in touse) {
 			if (px > ias.x + 0.5 * ias.tempcollider.width) {

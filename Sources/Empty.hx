@@ -18,6 +18,7 @@ import kha.input.Keyboard;
 import kha.Key;
 import kha.Loader;
 import kha.LoadingScreen;
+import kha.math.FastMatrix3;
 import kha.math.Matrix3;
 import kha.math.Random;
 import kha.math.Vector2;
@@ -30,8 +31,10 @@ import kha.Score;
 import kha.Configuration;
 import kha.ScreenRotation;
 import kha.Storage;
+import kha2d.Sprite;
 import kha2d.Tile;
 import kha2d.Tilemap;
+import localization.Keys_text;
 import sprites.Agent;
 import sprites.Computer;
 import sprites.Fishman;
@@ -39,7 +42,14 @@ import sprites.Player;
 
 import dialogue.*;
 
+enum Mode {
+	StartScreen;
+	Game;
+	Menu;
+}
+
 class Empty extends Game {
+	public static var the(default, null): Empty;
 	private var tileColissions: Array<Tile>;
 	private var map : Array<Array<Int>>;
 	private var originalmap : Array<Array<Int>>;
@@ -49,16 +59,40 @@ class Empty extends Game {
 	private var agentPlayer : Player;
 	private var elevator: Elevator;
 	
+	public var mode(default, null) : Mode;
+	
+	public var renderOverlay : Bool;
+	public var overlayColor : Color;
+	public var dlg : Dialogue;
+	
 	private var elevatorOffset: Float = 10;
 	
 	public function new() {
 		super("10Up");
+		the = this;
+		dlg = new Dialogue();
 	}
 	
 	public override function init(): Void {
 		Configuration.setScreen(new LoadingScreen());
 		Random.init(Std.int(kha.Sys.getTime() * 100));
 		Loader.the.loadRoom("testlevel", initLevel);
+	}
+	
+	@:access(dialogue.BlaBox) 
+	function initTitleScreen() {
+		mode = StartScreen;
+		
+		Localization.language = Cfg.language;
+		Localization.buildKeys("../Assets/text.xml","text");
+		
+		var logo = new Sprite( Loader.the.getImage( "10up-logo" ) );
+		logo.x = 0.5 * width - 0.5 * logo.width;
+		logo.y = 0.5 * height - 0.5 * logo.height;
+		Scene.the.clear();
+		Scene.the.setBackgroundColor(Color.fromBytes(0, 0, 0));
+		Scene.the.addHero( logo );
+		Configuration.setScreen(this);
 	}
 
 	public function initLevel(): Void {
@@ -159,10 +193,11 @@ class Empty extends Game {
 		Configuration.setScreen(this);
 		
 		
+		font = Loader.the.loadFont("arial", FontStyle.Default, 34);
 		Localization.init("localizations");
 		
 		Cfg.init();
-		/*Dialogues.the = new Dialogue();
+		
 		if (Cfg.language == null) {
 			var msg = "Please select your language:";
 			var choices = new Array<Array<DialogueItem>>();
@@ -172,13 +207,16 @@ class Empty extends Game {
 				msg += '\n($i): ${Localization.availableLanguages[l]}';
 				++i;
 			}
-			Dialogues.the.set( [
+			dlg.set( [
 				new BlaWithChoices(msg, null, choices)
 				, new StartDialogue(Cfg.save)
-				//, new StartDialogue(initTitleScreen) TODO: game initialization?
+				, new StartDialogue(initTitleScreen)
 			] );
 		}
-		*/// TODO: fixme!
+		else
+		{
+			initTitleScreen();
+		}
 	}
 	
 	private function setMainPlayer(player : Player) {
@@ -234,13 +272,59 @@ class Empty extends Game {
 		if (Math.abs(Player.current().x - elevator.x) < elevatorOffset) {
 			Player.current().y = elevator.y;
 		}
+		
+		dlg.update();
 	}
 	
 	public override function render(frame: Framebuffer) {
 		var g = backbuffer.g2;
 		g.begin();
-		//g.font = font;	
-		Scene.the.render(g);
+		switch (mode) {
+		/*case GameOver:
+			var congrat = Loader.the.getImage("gameover");
+			g.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);
+		case Congratulations:
+			var congrat = Loader.the.getImage("congratulations");
+			g.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);*/
+		case Game, Menu:
+			Scene.the.render(g);
+			/*g.transformation = FastMatrix3.identity();
+			g.color = Color.Black;
+			for (door in Level.the.doors) {
+				if (!door.opened && door.health > 0) {
+					if (door.x < Player.current().x) {
+						var doorXscreen = door.x - Scene.the.screenOffsetX; 
+						if (doorXscreen > 0 && doorXscreen < width) {
+							g.fillRect(0, 0, doorXscreen, height);
+						}
+					} else {
+						var doorXscreen = door.x + 0.5 * door.width - Scene.the.screenOffsetX; 
+						if (doorXscreen > 0 && doorXscreen < width) {
+							g.fillRect(doorXscreen, 0, width - doorXscreen, height);
+						}
+					}
+				}
+			}*/
+			//if (Player.current() != null) drawPlayerInfo(g);
+		case StartScreen:
+			Scene.the.render(g);
+			g.font = font;
+			g.color = Color.Magenta;
+			g.pushTransformation(g.transformation.multmat(FastMatrix3.scale(3, 3)));
+			g.drawString("MONSTER", 180 + 10 * Math.cos(0.3 * kha.Sys.getTime()), 140 + 10 * Math.sin(0.6 * kha.Sys.getTime()));
+			g.popTransformation();
+			var b = Math.round(100 + 125 * Math.pow(Math.sin(0.5 * kha.Sys.getTime()),2));
+			g.color = Color.fromBytes(b, b, b);
+			var str = Localization.getText(Keys_text.CLICK_TO_START);
+			g.drawString(str, 0.5 * (width - font.stringWidth(str)), 650);
+		}
+		g.end();
+		
+		g.transformation = FastMatrix3.identity();
+		for (box in BlaBox.boxes) {
+			g.color = Color.White;
+			box.render(g);
+		}
 		g.end();
 		
 		startRender(frame);
@@ -307,7 +391,9 @@ class Empty extends Game {
 	}
 	
 	private function keyboardUp(key: Key, char: String): Void {
-		switch (key) {
+		switch (mode) {
+		case Game:
+			switch (key) {
 			case LEFT:
 				Player.current().left = false;
 			case RIGHT:
@@ -320,8 +406,24 @@ class Empty extends Game {
 				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
 				elevator.godown();	
 				}
+
 			default:
 				
+			}
+		case StartScreen:
+			switch (key) {
+			case Key.ESC:
+				Dialogues.escMenu();
+			default:
+				dlg.set([new Action(null, ActionType.FADE_TO_BLACK)
+						/*, new StartDialogue(enterLevel.bind(1)) TODO: implement game start*/]);
+			}
+		default:
+			switch (key) {
+			case Key.ESC:
+				Dialogues.escMenu();
+			default:
+			}
 		}
 	}
 }

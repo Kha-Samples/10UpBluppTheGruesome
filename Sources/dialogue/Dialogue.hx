@@ -1,6 +1,6 @@
 package dialogue;
 
-import TenUp5.Mode;
+import Empty.Mode;
 import kha2d.Scene;
 
 
