@@ -76,7 +76,39 @@ class Empty extends Game {
 	public override function init(): Void {
 		Configuration.setScreen(new LoadingScreen());
 		Random.init(Std.int(kha.Sys.getTime() * 100));
-		Loader.the.loadRoom("testlevel", initLevel);
+		Loader.the.loadRoom("titlescreen", initFirst);
+	}
+	
+	function initFirst() {
+		backbuffer = Image.createRenderTarget(1024, 768);
+		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
+		
+		Configuration.setScreen(this);
+		
+		font = Loader.the.loadFont("arial", FontStyle.Default, 34);
+		Localization.init("localizations");
+		
+		Cfg.init();
+		
+		if (Cfg.language == null) {
+			var msg = "Please select your language:";
+			var choices = new Array<Array<DialogueItem>>();
+			var i = 1;
+			for (l in Localization.availableLanguages.keys()) {
+				choices.push([new StartDialogue(function() { Cfg.language = l; } )]);
+				msg += '\n($i): ${Localization.availableLanguages[l]}';
+				++i;
+			}
+			dlg.set( [
+				new BlaWithChoices(msg, null, choices)
+				, new StartDialogue(Cfg.save)
+				, new StartDialogue(initTitleScreen)
+			] );
+		}
+		else
+		{
+			initTitleScreen();
+		}
 	}
 	
 	@:access(dialogue.BlaBox) 
@@ -93,11 +125,12 @@ class Empty extends Game {
 		Scene.the.setBackgroundColor(Color.fromBytes(0, 0, 0));
 		Scene.the.addHero( logo );
 		Configuration.setScreen(this);
+		
+		if (Keyboard.get() != null) Keyboard.get().notify(keyboardDown, keyboardUp);
+		if (Gamepad.get() != null) Gamepad.get().notify(axisListener, buttonListener);
 	}
 
 	public function initLevel(): Void {
-		backbuffer = Image.createRenderTarget(1024, 768);
-		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
 		tileColissions = new Array<Tile>();
 		for (i in 0...512) {
 			tileColissions.push(new Tile(i, isCollidable(i)));
@@ -133,6 +166,7 @@ class Empty extends Game {
 	}
 	
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
+		mode = Game; 
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
 		var tilemap = new Tilemap("tileset", 32, 32, map, tileColissions);
@@ -187,36 +221,7 @@ class Empty extends Game {
 		setMainPlayer(monsterPlayer);
 		Scene.the.addOther(elevator);
 		
-		if (Keyboard.get() != null) Keyboard.get().notify(keyboardDown, keyboardUp);
-		if (Gamepad.get() != null) Gamepad.get().notify(axisListener, buttonListener);
-		
 		Configuration.setScreen(this);
-		
-		
-		font = Loader.the.loadFont("arial", FontStyle.Default, 34);
-		Localization.init("localizations");
-		
-		Cfg.init();
-		
-		if (Cfg.language == null) {
-			var msg = "Please select your language:";
-			var choices = new Array<Array<DialogueItem>>();
-			var i = 1;
-			for (l in Localization.availableLanguages.keys()) {
-				choices.push([new StartDialogue(function() { Cfg.language = l; } )]);
-				msg += '\n($i): ${Localization.availableLanguages[l]}';
-				++i;
-			}
-			dlg.set( [
-				new BlaWithChoices(msg, null, choices)
-				, new StartDialogue(Cfg.save)
-				, new StartDialogue(initTitleScreen)
-			] );
-		}
-		else
-		{
-			initTitleScreen();
-		}
 	}
 	
 	private function setMainPlayer(player : Player) {
@@ -269,8 +274,12 @@ class Empty extends Game {
 		Scene.the.camx = 0;
 		Scene.the.camy = 0;
 		Scene.the.update();
-		if (Math.abs(Player.current().x - elevator.x) < elevatorOffset) {
-			Player.current().y = elevator.y;
+		
+		if (mode != StartScreen)
+		{
+			if (Math.abs(Player.current().x - elevator.x) < elevatorOffset) {
+				Player.current().y = elevator.y;
+			}
 		}
 		
 		dlg.update();
@@ -416,7 +425,10 @@ class Empty extends Game {
 				Dialogues.escMenu();
 			default:
 				dlg.set([new Action(null, ActionType.FADE_TO_BLACK)
-						/*, new StartDialogue(enterLevel.bind(1)) TODO: implement game start*/]);
+						, new StartDialogue(function() {
+							Configuration.setScreen(new LoadingScreen());
+							Loader.the.loadRoom("testlevel", initLevel);
+						}) ]);
 			}
 		default:
 			switch (key) {
