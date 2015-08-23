@@ -199,8 +199,9 @@ class Empty extends Game {
 			}
 		}
 		
-		var computerCount : Int = 2;
+		var computerCount : Int = 4;
 		var computers : Array<Vector2> = new Array<Vector2>();
+		var elevatorPositions : Array<Vector2> = new Array<Vector2>();
 		for (i in 0...spriteCount) {
 			var sprite : kha2d.Sprite = null;
 			switch (sprites[i * 3]) {
@@ -209,6 +210,8 @@ class Empty extends Game {
 				agentPlayer = new Agent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 			case 1:
 				computers.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+			case 2:
+				elevatorPositions.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			}
 		}
 		for (i in 0...computerCount) {
@@ -218,6 +221,7 @@ class Empty extends Game {
 			Scene.the.addOther(new Computer(pos.x, pos.y));
 			computers.remove(pos);
 		}
+		elevator.addPositions(elevatorPositions);
 		
 		setMainPlayer(monsterPlayer);
 		Scene.the.addOther(elevator);
