@@ -15,12 +15,12 @@ public class Sprite {
 	public int height;
 	public boolean selected = false;
 	
-	public Sprite(String imagename, int index, int width, int height) {
+	public Sprite(String imagename, int index) {
 		try {
 			this.index = index;
-			this.width = width;
-			this.height = height;
 			img = ImageIO.read(new File(imagename));
+			this.width = img.getWidth(null);
+			this.height = img.getHeight(null);
 		}
 		catch (IOException e) {
 			e.printStackTrace();
