@@ -33,7 +33,7 @@ class ElevatorManager
 		while (i >= 0) {
 			var elevator = sprites[i];
 			if (sprite.y > elevator.y + elevator.height) {
-				return i - 1;
+				return i + 1;
 			}
 			--i;
 		}
