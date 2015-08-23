@@ -275,9 +275,12 @@ class Empty extends Game {
 	
 	public override function update() {
 		super.update();
-		//Scene.the.camx = Std.int(Jumpman.getInstance().x) + Std.int(Jumpman.getInstance().width / 2);
-		Scene.the.camx = 0;
-		Scene.the.camy = 0;
+		
+		var player = Player.current();
+		if (player != null) {
+			Scene.the.camx = Std.int(player.x) + Std.int(player.width / 2);
+			Scene.the.camy = Std.int(player.y + player.height + 80 - 0.5 * height);
+		}
 		Scene.the.update();
 		
 		if (mode != StartScreen)
