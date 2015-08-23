@@ -21,13 +21,12 @@ class Elevator extends IdLoggerSprite {
 	public var open(default, set_open) : Bool;
 	
 	public function new(x : Float, y : Float, level : Int) {
-		super(Keys_text.ELEVATOR, Loader.the.getImage("elevator"), 64 * 2, 78 * 2, 0);
+		super(Keys_text.ELEVATOR, Loader.the.getImage("elevator"), 64 * 2, 62 * 2, 0);
 		this.x = x - 64 * 2 / 2;
 		this.y = y - 78 - 14;
 		this.level = level;
 		openAnimation = Animation.create(1);
 		closedAnimation = Animation.create(0);
-		collider = new Rectangle(0, 0, 64 * 2, 78 * 2);
 		accy = 0;
 		this.collides = false;
 		
