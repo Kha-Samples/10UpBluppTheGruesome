@@ -5,6 +5,7 @@ import dialogue.BlaWithChoices;
 import dialogue.DialogueItem;
 import dialogue.StartDialogue;
 import kha.Loader;
+import kha2d.Animation;
 import kha2d.Direction;
 import kha2d.Sprite;
 import localization.Keys_text;
@@ -13,6 +14,8 @@ import sprites.IdSystem;
 
 class Computer extends IdLoggerSprite {
 	var currentUser: IdCardOwner;
+	var onAnimation: Animation;
+	var offAnimation: Animation;
 	
 	public function new(x: Float, y: Float ) {
 		super(Keys_text.COMPUTER, Loader.the.getImage("computer"), 46 * 2, 60 * 2, 0);
@@ -20,6 +23,8 @@ class Computer extends IdLoggerSprite {
 		this.y = y - 90;
 		
 		this.isUseable = true;
+		offAnimation = Animation.create(0);
+		onAnimation = Animation.create(1);
 	}
 	
 	function searchCriticalFiles(): Void {
@@ -47,6 +52,8 @@ class Computer extends IdLoggerSprite {
 		{
 			if (currentUser == null) currentUser = cast user;
 			
+			setAnimation(onAnimation);
+			
 			if (user == Player.current())
 			{
 				useComputerDialogue();
@@ -59,5 +66,6 @@ class Computer extends IdLoggerSprite {
 	override public function stopUsing():Void 
 	{
 		currentUser = null;
+		setAnimation(offAnimation);
 	}
 }
