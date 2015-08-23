@@ -296,33 +296,13 @@
 			}
 		},
 		{
-			"file": "Martin/fishwork-kpaint-a.png",
-			"name": "Martin/fishwork-kpaint-a",
+			"file": "broetchen1.png",
+			"name": "broetchen1",
 			"type": "image"
 		},
 		{
-			"file": "Martin/fishwork-kpaint.png",
-			"name": "Martin/fishwork-kpaint",
-			"type": "image"
-		},
-		{
-			"file": "Martin/fishwork.png",
-			"name": "Martin/fishwork",
-			"type": "image"
-		},
-		{
-			"file": "Martin/monster.png",
-			"name": "Martin/monster",
-			"type": "image"
-		},
-		{
-			"file": "Martin/monster2.png",
-			"name": "Martin/monster2",
-			"type": "image"
-		},
-		{
-			"file": "Martin/monster3.png",
-			"name": "Martin/monster3",
+			"file": "broetchen2.png",
+			"name": "broetchen2",
 			"type": "image"
 		}
 	],
@@ -373,7 +353,9 @@
 				"elevatorbuttons",
 				"floorlevel",
 				"door",
-				"zzzzz"
+				"zzzzz",
+				"broetchen1",
+				"broetchen2"
 			]
 		}
 	]
