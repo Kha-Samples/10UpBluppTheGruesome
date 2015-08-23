@@ -220,7 +220,7 @@ class Empty extends Game {
 			case 2:
 				elevatorPositions.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			case 3:
-				var door : Door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2], 1);
+				var door : Door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]-96);
 				Scene.the.addOther(door);
 				interactiveSprites.push(door);
 			}
