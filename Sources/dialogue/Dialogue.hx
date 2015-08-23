@@ -18,10 +18,7 @@ class Dialogue {
 		if (items != null)
 		{
 			if (index > 0) items.splice(0, index);
-			for (i in 0...items.length)
-			{
-				items[0].cancel(this);
-			}
+			for (item in items) item.cancel(this);
 			items = null;
 		}
 		index = -1;
@@ -31,7 +28,6 @@ class Dialogue {
 		cancel();
 		items = newItems;
 		index = -1;
-		next();
 	}
 	
 	public function insert(insert: Array<DialogueItem>, toFront = false) {

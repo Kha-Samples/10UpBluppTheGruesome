@@ -76,8 +76,6 @@ class Action implements DialogueItem {
 		case ActionType.PAUSE:
 		case ActionType.AWAKE:
 		}
-		autoAdvance = false;
-		actionFinished(dlg);
 	}
 	
 	function actionFinished(dlg: Dialogue) {

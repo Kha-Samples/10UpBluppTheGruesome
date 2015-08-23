@@ -30,9 +30,7 @@ class BlaWithChoices extends Bla {
 		var choice = char.fastCodeAt(0) - '1'.fastCodeAt(0);
 		if (choice >= 0 && choice < choices.length) {
 			Keyboard.get().remove(null, keyUpListener);
-			this.finished = true;
-			/*BlaBox.boxes.remove(dlg.blaBox);
-			dlg.blaBox = null;*/
+			finished = true;
 			Empty.the.mode = lastMode;
 			dlg.insert(choices[choice]);
 			dlg.next();
@@ -54,7 +52,6 @@ class BlaWithChoices extends Bla {
 	override public function cancel(dlg:Dialogue):Void 
 	{
 		super.cancel(dlg);
-		dlg.insert(choices[0]);
-		if (lastMode != null) Empty.the.mode = lastMode;
+		for (item in choices[0]) item.cancel(dlg);
 	}
 }
