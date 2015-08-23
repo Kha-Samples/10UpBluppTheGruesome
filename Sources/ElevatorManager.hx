@@ -27,19 +27,20 @@ class ElevatorManager
 		return sprites;
 	}
 	
-	public function getIn(sprite : Sprite, atPosition : Int, toPosition : Int) : Bool {
+	public function getIn(sprite : Sprite, atPosition : Int, toPosition : Int, callback : Void -> Void) : Bool {
 		if (!sprites[atPosition].open) return false;
 		
 		sprite.visible = false;
 		sprite.collides = false;
 		sprites[atPosition].open = false;
-		Scheduler.addTimeTask(getOut.bind(sprite, toPosition), Math.abs(atPosition - toPosition) * 3 + 1);
+		Scheduler.addTimeTask(getOut.bind(sprite, toPosition, callback), Math.abs(atPosition - toPosition) * 3 + 1);
 		return true;
 	}
 	
-	private function getOut(sprite : Sprite, atPosition : Int) {
+	private function getOut(sprite : Sprite, atPosition : Int, callback : Void -> Void) {
 		sprite.visible = true;
 		sprite.collides = true;
 		sprites[atPosition].open = true;
+		callback();
 	}
 }
