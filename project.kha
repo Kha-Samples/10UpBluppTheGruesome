@@ -13,42 +13,66 @@
 			"file": "Backfrau.png",
 			"name": "Backfrau",
 			"type": "image",
-			"scale": 2.0,
-			"background": {"red" : 255, "green" : 174, "blue" : 201}
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
 			"file": "boss.png",
 			"name": "boss",
 			"type": "image",
-			"scale": 2.0,
-			"background": {"red" : 255, "green" : 174, "blue" : 201}
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
 			"file": "boss_hurt.png",
 			"name": "boss_hurt",
 			"type": "image",
-			"scale": 2.0,
-			"background": {"red" : 255, "green" : 174, "blue" : 201}
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
 			"file": "fishy.png",
 			"name": "fishy",
 			"type": "image",
-			"background": {"red" : 255, "green" : 174, "blue" : 201}
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
 			"file": "agent.png",
 			"name": "agent",
 			"type": "image",
-			"scale": 2.0,
-			"background": {"red" : 255, "green" : 174, "blue" : 201}
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
 			"file": "mechanic.png",
 			"name": "mechanic",
 			"type": "image",
-			"scale": 2.0,
-			"background": {"red" : 255, "green" : 174, "blue" : 201}
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
 			"file": "nullachtsechzehnmann.png",
@@ -60,22 +84,34 @@
 			"file": "old_boss.png",
 			"name": "old_boss",
 			"type": "image",
-			"scale": 2.0,
-			"background": {"red" : 255, "green" : 174, "blue" : 201}
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
 			"file": "professor.png",
 			"name": "professor",
 			"type": "image",
-			"scale": 2.0,
-			"background": {"red" : 255, "green" : 174, "blue" : 201}
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
 			"file": "rowdy.png",
 			"name": "rowdy",
 			"type": "image",
-			"scale": 2.0,
-			"background": {"red" : 255, "green" : 174, "blue" : 201}
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
 			"file": "testlevel.map",
@@ -197,15 +233,61 @@
 			"file": "computer.png",
 			"name": "computer",
 			"type": "image",
-			"scale": 2.0,
-			"background": {"red" : 255, "green" : 174, "blue" : 201}
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "door.png",
+			"name": "door",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "elevatorbuttons.png",
+			"name": "elevatorbuttons",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "floorlevel.png",
+			"name": "floorlevel",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "zzzzz.png",
+			"name": "zzzzz",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		}
 	],
 	"rooms": [
 		{
 			"name": "titlescreen",
 			"parent": null,
-			"neighbours": ["testlevel"],
+			"neighbours": [
+				"testlevel"
+			],
 			"assets": [
 				"localizations",
 				"text",
@@ -241,7 +323,11 @@
 				"Liberation Sans20.kravur",
 				"arial34.kravur",
 				"Arial12.kravur",
-				"computer"
+				"computer",
+				"elevatorbuttons",
+				"floorlevel",
+				"door",
+				"zzzzz"
 			]
 		}
 	]

@@ -58,18 +58,26 @@ class Localization
 		}
 	}
 	
-	static public function getText(key : String) {
+	static public function getText(key : String, paramKeys: Array<String> = null) {
+		var text = key;
 		if (texts != null) {
 			var t = texts[key];
 			if (t != null) {
 				if (t.exists(language)) {
-					return t[language];
+					text = t[language];
 				} else if (t.exists(fallbackLanguage)) {
-					return t[fallbackLanguage];
+					text = t[fallbackLanguage];
 				}
 			}
 		}
-		return key;
+		if (paramKeys != null)
+		{
+			for (i in 0...paramKeys.length)
+			{
+				text = StringTools.replace(text, '{$i}', getText(key));
+			}
+		}
+		return text;
 	}
 #end
 

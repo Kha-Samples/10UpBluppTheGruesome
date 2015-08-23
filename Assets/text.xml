@@ -7,6 +7,10 @@
 -->
 <DefaultLanguage>de</DefaultLanguage>
 
+<Agent>
+	<de>Mr. S</de>
+	<en>Mr. S</en>
+</Agent>
 <Mechanic>
 	<de>Ms. M</de>
 	<en>Ms. M</en>
@@ -62,6 +66,24 @@
 </security_door>
 
 <idLogger_display>
-	<de>WARNUNG: Zeitstempel defekt.\nFolgende Personen benuzten diese </de>
-	<en>WARNING: Timestamps corrupted.\nFollowing persons used this </en>
+	<de>WARNUNG: Zeitstempel defekt.\nFolgende Personen benuzten diese {0}</de>
+	<en>WARNING: Timestamps corrupted.\nFollowing persons used this {0}</en>
 </idLogger_display>
+
+<computer_hello>
+	<de>Hallo {0},\n\nWas machen wir jetzt?</de>
+	<en>Hello {0},\n\nWhat do we do now?</en>
+</computer_hello>
+<computer_show_users>
+	<de>Wer haddn dat Ding o'gschalt?</de>
+	<en>List recent users</en>
+</computer_show_users>
+<computer_search>
+	<de>Suche nach sicherheitskritischen Geheiminformationen.</de>
+	<en>Search secret files. Only the most security compromising ones.</en>
+</computer_search>
+<computer_logout>
+	<de>Abmelden</de>
+	<en>Logout</en>
+	<sprache_des_grauen>Nfteg Ftha</sprache_des_grauen>
+</computer_logout>
