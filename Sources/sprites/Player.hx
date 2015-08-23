@@ -54,7 +54,7 @@ class Player extends DestructibleSprite {
 		standRight = Animation.create(0);
 		jumpLeft = Animation.create(0);
 		jumpRight = Animation.create(0);
-		setAnimation(jumpRight);
+		setAnimation(standRight);
 		collider = null;
 		up = false;
 		right = false;
@@ -245,6 +245,7 @@ class Player extends DestructibleSprite {
 		else {
 			super.render(g);
 		}
+		#if debug
 		g.set_color( kha.Color.fromBytes(255,0,0) );
 		var rect = collisionRect();
 		g.drawRect( rect.x, rect.y, rect.width, rect.height );
@@ -252,6 +253,7 @@ class Player extends DestructibleSprite {
 		g.drawRect( x - collider.x, y - collider.y, width, height );
 		g.color = Color.fromBytes(0,255,0);
 		g.fillRect( x - 2, y - 2, 5, 5 );
+		#end
 	}
 	
 	public var usesElevator:Bool = false;

@@ -219,12 +219,10 @@ class Empty extends Game {
 			}
 		}
 		
-		var computerCount : Int = 8;
-		var bookshelfCount : Int = 4;
-		var importantBookshelfCount : Int = 2;
 		var computers : Array<Vector2> = new Array<Vector2>();
 		var bookshelves : Array<Vector2> = new Array<Vector2>();
 		var elevatorPositions : Array<Vector2> = new Array<Vector2>();
+		var npcSpawns : Array<Vector2> = new Array<Vector2>();
 		interactiveSprites = new Array();
 		for (i in 0...spriteCount) {
 			var sprite : kha2d.Sprite = null;
@@ -242,17 +240,18 @@ class Empty extends Game {
 				interactiveSprites.push(door);
 			case 4:
 				bookshelves.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+			case 5:
+				npcSpawns.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			}
 		}
-		for (i in 0...computerCount) {
-			if (computers.length <= 0) break;
-			
-			var pos : Vector2 = computers[Random.getIn(0, computers.length - 1)];
+		ElevatorManager.the.initSprites(elevatorPositions);
+		populateRandom(8, computers, function(pos : Vector2) {
 			var computer = new Computer(pos.x, pos.y);
 			interactiveSprites.push(computer);
-			Scene.the.addOther(computer);
-			computers.remove(pos);
-		}
+			Scene.the.addOther(computer); } );
+			
+		var bookshelfCount : Int = 4;
+		var importantBookshelfCount : Int = 2;
 		for (i in 0...bookshelfCount) {
 			if (bookshelves.length <= 0) break;
 			
@@ -263,12 +262,11 @@ class Empty extends Game {
 			bookshelves.remove(pos);
 		}
 		
-		ElevatorManager.the.initSprites(elevatorPositions);
-		
-		var guy = new RandomGuy(monsterPlayer, interactiveSprites);
-		guy.x = 64;
-		guy.y = 64;
-		Scene.the.addOther(guy);
+		populateRandom(4, npcSpawns, function(pos : Vector2) {
+			var guy = new RandomGuy(monsterPlayer, interactiveSprites);
+			guy.x = pos.x;
+			guy.y = pos.y;
+			Scene.the.addOther(guy); } );
 		
 		setMainPlayer(agentPlayer);
 		
@@ -276,6 +274,16 @@ class Empty extends Game {
 		
 		nextDayChangeTime = -1;
 		overlayColor = Color.Black;
+	}
+	
+	private function populateRandom(count : Int, positions : Array<Vector2>, creationFunction : Vector2->Void) {
+		for (i in 0...count) {
+			if (positions.length <= 0) break;
+			
+			var pos : Vector2 = positions[Random.getIn(0, positions.length - 1)];
+			creationFunction(pos);
+			positions.remove(pos);
+		}
 	}
 	
 	public function setMainPlayer(player : Player) {

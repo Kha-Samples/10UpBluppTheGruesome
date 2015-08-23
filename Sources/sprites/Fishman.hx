@@ -21,6 +21,10 @@ class Fishman extends Player implements IdCardOwner {
 		speedx = -3;
 		walkLeft = Animation.createRange(1, 8, 4);
 		walkRight = Animation.createRange(10, 17, 4);
+		standLeft = Animation.create(0);
+		standRight = Animation.create(9);
+		jumpLeft = Animation.create(8);
+		jumpRight = Animation.create(17);
 		setAnimation(walkLeft);
 		collider = new Rectangle(20, 25, (594 * 2 / 9) - 40, ((146 * 2 / 2) - 1) - 25);
 		attackImage = Loader.the.getImage("fishy_attack");

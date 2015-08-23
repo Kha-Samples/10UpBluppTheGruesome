@@ -61,12 +61,16 @@
 	<en>back</en>
 </back>
 <dawn>
-	<de>Zum nächsten Morgengrauen ...</de>
-	<en>At next dawn ...</en>
+	<de>Zum nächsten Morgengrauen ...
+[Bitte den Spieler wechseln und eine Taste drücken]</de>
+	<en>At next dawn ...
+[Please change the player and then press any key]</en>
 </dawn>
 <dusk>
-	<de>Zum nächsten Abendrot ...</de>
-	<en>At next dusk ...</en>
+	<de>Zum nächsten Abendrot ...
+[Bitte den Spieler wechseln und eine Taste drücken]</de>
+	<en>At next dusk ...
+[Please change the player and then press any key]</en>
 </dusk>
 
 <!-- Elevator -->
