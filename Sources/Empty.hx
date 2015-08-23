@@ -237,7 +237,7 @@ class Empty extends Game {
 		guy.y = 64;
 		Scene.the.addOther(guy);
 		
-		setMainPlayer(monsterPlayer);
+		setMainPlayer(agentPlayer);
 		
 		Configuration.setScreen(this);
 		
@@ -435,8 +435,7 @@ class Empty extends Game {
 			case UP:
 				Player.current().setUp();
 			default:
-				if (char == "f") setMainPlayer(monsterPlayer);
-				else if (char == "g") setMainPlayer(agentPlayer);
+				
 		}
 	}
 	
