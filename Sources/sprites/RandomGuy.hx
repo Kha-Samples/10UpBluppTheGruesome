@@ -26,7 +26,7 @@ class RandomGuy extends Sprite {
 		setAnimation(standRight);
 		
 		schedule = new schedule.Schedule();
-		schedule.add(new WaitTask(this, 2));
+		schedule.add(new WaitTask(this, 20));
 		schedule.add(new MoveTask(this, monster));
 	}
 	

@@ -74,7 +74,7 @@ class Localization
 		{
 			for (i in 0...paramKeys.length)
 			{
-				text = StringTools.replace(text, '{$i}', getText(key));
+				text = StringTools.replace(text, '{$i}', getText(paramKeys[i]));
 			}
 		}
 		return text;

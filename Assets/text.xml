@@ -66,13 +66,19 @@
 </security_door>
 
 <idLogger_display>
-	<de>WARNUNG: Zeitstempel defekt.\nFolgende Personen benuzten diese {0}</de>
-	<en>WARNING: Timestamps corrupted.\nFollowing persons used this {0}</en>
+	<de>WARNUNG: Zeitstempel defekt.
+Folgende Personen benuzten diese {0}:</de>
+	<en>WARNING: Timestamps corrupted.
+Following persons used this {0}:</en>
 </idLogger_display>
 
 <computer_hello>
-	<de>Hallo {0},\n\nWas machen wir jetzt?</de>
-	<en>Hello {0},\n\nWhat do we do now?</en>
+	<de>Hallo {0},
+
+Was machen wir jetzt?</de>
+	<en>Hello {0},
+
+hat do we do now?</en>
 </computer_hello>
 <computer_show_users>
 	<de>Wer haddn dat Ding o'gschalt?</de>
@@ -87,3 +93,7 @@
 	<en>Logout</en>
 	<sprache_des_grauen>Nfteg Ftha</sprache_des_grauen>
 </computer_logout>
+<computer_just_leave>
+	<de>[Einfach weggehen]</de>
+	<en>[just leave]</en>
+</computer_just_leave>
