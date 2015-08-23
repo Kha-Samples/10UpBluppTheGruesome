@@ -46,4 +46,9 @@ class BooleanBranch implements Branch {
 		}
 		dlg.next();
 	}
+	
+	public function cancel(dlg: Dialogue) : Void
+	{
+		dlg.insert(onTrue);
+	}
 }

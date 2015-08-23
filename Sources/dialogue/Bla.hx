@@ -22,4 +22,9 @@ class Bla implements DialogueItem {
 			finished = !Lambda.has(BlaBox.boxes, dlg.blaBox);
 		}
 	}
+	
+	public function cancel(dlg: Dialogue) : Void
+	{
+		BlaBox.boxes.remove(dlg.blaBox);
+	}
 }

@@ -91,7 +91,6 @@ class ElevatorManager
 	private function moveTo(toPosition : Int, load : Sprite, callback : Void -> Void) {
 		Scheduler.removeTimeTask(waitingTaskId);
 		
-		// TODO: Ingo, please implement cancel elevator usage here
 		
 		elevators[currentPosition].open = false;
 		
@@ -122,12 +121,7 @@ class ElevatorManager
 		
 		elevators[atPosition].open = true;
 		
-		if (queue.indexOf(atPosition) >= 0) {
-			wait();
-		}
-		else {
-			onIdle();
-		}
+		wait();
 		
 		if (callback != null) callback();
 	}

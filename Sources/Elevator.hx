@@ -37,7 +37,7 @@ class Elevator extends IdLoggerSprite {
 		open = value;
 		setAnimation(open ? openAnimation : closedAnimation);
 		if (!open) {
-			dlg.set(null);
+			dlg.set([]); // TODO: only if entering
 		}
 		return open;
 	}
@@ -49,12 +49,14 @@ class Elevator extends IdLoggerSprite {
 		{
 			var text : String = "";
 			var choices = new Array<Array<DialogueItem>>();
-			for (i in 0...ElevatorManager.the.levels)
+			for (i in 1...ElevatorManager.the.levels)
 			{
-				var to: Int = ElevatorManager.the.levels - i;
-				choices.push([new StartDialogue(ElevatorManager.the.getIn.bind(user, level, i, null))]);
-				text += '$to. ' + Localization.getText(Keys_text.FLOOR) + "\n";
+				var to = ElevatorManager.the.levels - i;
+				choices.push([new StartDialogue(ElevatorManager.the.getIn.bind(user, level, to, null))]);
+				text += '$i: ' + Localization.getText(Keys_text.FLOOR) + ' $to\n';
 			}
+			choices.push([new StartDialogue(ElevatorManager.the.getIn.bind(user, level, 0, null))]);
+			text += '${ElevatorManager.the.levels}: ' + Localization.getText(Keys_text.FLOOR_0) + "\n";
 			dlg.insert([new BlaWithChoices(text, this, choices)]);
 		}
 		else

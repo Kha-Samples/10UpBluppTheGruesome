@@ -1,5 +1,6 @@
 package dialogue;
 
+import dialogue.Dialogue;
 import Dialogues;
 import kha.input.Keyboard;
 import kha.Key;
@@ -56,5 +57,13 @@ class BlaWithChoices extends Bla {
 			case BlaWithChoicesStatus.CHOICE:
 				// just wait for input
 		}
+	}
+	
+	@:access(Empty.mode)
+	override public function cancel(dlg:Dialogue):Void 
+	{
+		super.cancel(dlg);
+		dlg.insert(choices[0]);
+		if (lastMode != null) Empty.the.mode = lastMode;
 	}
 }
