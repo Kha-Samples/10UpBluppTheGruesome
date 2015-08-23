@@ -76,8 +76,12 @@
 </Elevator>
 <Floor>
 	<de>Stockwerk</de>
-	<en>floor</en>
+	<en>Floor</en>
 </Floor>
+<Floor_0>
+	<de>Luftgeschosss</de>
+	<en>Ground floor</en>
+</Floor_0>
 	
 	
 <!-- Computer -->

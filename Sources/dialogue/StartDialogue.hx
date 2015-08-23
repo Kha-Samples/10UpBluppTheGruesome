@@ -17,4 +17,8 @@ class StartDialogue implements DialogueItem
 		func();
 		dlg.next();
 	}
+	
+	public function cancel(dlg: Dialogue) : Void
+	{
+	}
 }
