@@ -40,6 +40,7 @@ import sprites.Computer;
 import sprites.Fishman;
 import sprites.InteractiveSprite;
 import sprites.Player;
+import sprites.RandomGuy;
 
 import dialogue.*;
 
@@ -58,7 +59,6 @@ class Empty extends Game {
 	private var backbuffer: Image;
 	private var monsterPlayer : Player;
 	private var agentPlayer : Player;
-	private var elevator: Elevator;
 	private var interactiveSprites: Array<InteractiveSprite>;
 	
 	public var mode(default, null) : Mode;
@@ -161,7 +161,7 @@ class Empty extends Game {
 			sprites.push(blob.readS32BE());
 			sprites.push(blob.readS32BE());
 		}
-		elevator = new Elevator();
+		ElevatorManager.init(new ElevatorManager());
 		startGame(spriteCount, sprites);
 	}
 	
@@ -226,10 +226,17 @@ class Empty extends Game {
 			Scene.the.addOther(computer);
 			computers.remove(pos);
 		}
-		elevator.addPositions(elevatorPositions);
+		var elevatorSprites = ElevatorManager.the.setPositions(elevatorPositions);
+		for (sprite in elevatorSprites) {
+			Scene.the.addOther(sprite);
+		}
+		
+		var guy = new RandomGuy(monsterPlayer);
+		guy.x = 64;
+		guy.y = 64;
+		Scene.the.addOther(guy);
 		
 		setMainPlayer(monsterPlayer);
-		Scene.the.addOther(elevator);
 		
 		Configuration.setScreen(this);
 	}
@@ -287,13 +294,6 @@ class Empty extends Game {
 			Scene.the.camy = Std.int(player.y + player.height + 80 - 0.5 * height);
 		}
 		Scene.the.update();
-		
-		if (mode != StartScreen)
-		{
-			if (Math.abs(Player.current().x - elevator.x) < elevatorOffset) {
-				Player.current().y = elevator.y;
-			}
-		}
 		
 		dlg.update();
 	}
@@ -425,16 +425,16 @@ class Empty extends Game {
 			case RIGHT:
 				Player.current().right = false;
 			case UP:
-				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
+				/*if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
 				elevator.goup();
 				}
-				else {
+				else {*/
 					Player.current().up = false;
-				}
+				//}
 			case DOWN:
-				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
+				/*if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
 				elevator.godown();	
-				}
+				}*/
 			case Key.CHAR:
 				switch(char) {
 				case "e":
