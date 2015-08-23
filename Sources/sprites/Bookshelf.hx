@@ -40,7 +40,7 @@ class Bookshelf extends InteractiveSprite {
 			destroyed = true;
 			
 			var text = Localization.getText(Keys_text.ITEMFOUND, [ fk.name ]);
-			dlg.insert([new Bla(text, this)]);
+			dlg.insert([new Bla(text, this, true)]);
 		}
 	}
 	
