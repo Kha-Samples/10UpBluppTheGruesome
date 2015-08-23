@@ -52,8 +52,8 @@ class Elevator extends IdLoggerSprite {
 			for (i in 0...ElevatorManager.the.levels)
 			{
 				var to: Int = ElevatorManager.the.levels - i;
-				choices.push([new StartDialogue(ElevatorManager.the.getIn.bind(user, level, to, null))]);
-				text += '\n$to. ' + Localization.getText(Keys_text.FLOOR);
+				choices.push([new StartDialogue(ElevatorManager.the.getIn.bind(user, level, to-1, null))]);
+				text += '$to. ' + Localization.getText(Keys_text.FLOOR) + "\n";
 			}
 			dlg.insert([new BlaWithChoices(text, this, choices)]);
 		}
