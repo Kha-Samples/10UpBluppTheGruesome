@@ -198,6 +198,10 @@ class Player extends DestructibleSprite {
 		
 	}
 	
+	public function attack(): Void {
+		
+	}
+	
 	override private function set_health(value:Int):Int {
 		if ( value <= 0 ) {
 			if ( value < _health ) {

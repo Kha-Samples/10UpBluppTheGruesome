@@ -78,7 +78,11 @@
 			"file": "nullachtsechzehnmann.png",
 			"name": "nullachtsechzehnmann",
 			"type": "image",
-			"background": {"red" : 255, "green" : 174, "blue" : 201}
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
 			"file": "old_boss.png",
@@ -207,7 +211,7 @@
 			"file": "elevator.png",
 			"name": "elevator",
 			"type": "image",
-			"scale": 2.0
+			"scale": 2
 		},
 		{
 			"file": "Arial.ttf",
@@ -280,6 +284,46 @@
 				"green": 174,
 				"blue": 201
 			}
+		},
+		{
+			"file": "fishy_attack.png",
+			"name": "fishy_attack",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "Martin/fishwork-kpaint-a.png",
+			"name": "Martin/fishwork-kpaint-a",
+			"type": "image"
+		},
+		{
+			"file": "Martin/fishwork-kpaint.png",
+			"name": "Martin/fishwork-kpaint",
+			"type": "image"
+		},
+		{
+			"file": "Martin/fishwork.png",
+			"name": "Martin/fishwork",
+			"type": "image"
+		},
+		{
+			"file": "Martin/monster.png",
+			"name": "Martin/monster",
+			"type": "image"
+		},
+		{
+			"file": "Martin/monster2.png",
+			"name": "Martin/monster2",
+			"type": "image"
+		},
+		{
+			"file": "Martin/monster3.png",
+			"name": "Martin/monster3",
+			"type": "image"
 		}
 	],
 	"rooms": [
@@ -309,6 +353,7 @@
 				"localizations",
 				"text",
 				"fishy",
+				"fishy_attack",
 				"agent",
 				"0",
 				"1",
