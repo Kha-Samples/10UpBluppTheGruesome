@@ -35,8 +35,10 @@ class Computer extends IdLoggerSprite {
 			choices.push([new Bla(idLogger.displayUsers(), this), new StartDialogue(useComputerDialogue)]);
 			text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_SHOW_USERS);
 		}
-		choices.push([]);
+		choices.push([new StartDialogue(stopUsing)]);
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_LOGOUT);
+		choices.push([]);
+		text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_JUST_LEAVE);
 		Empty.the.dlg.insert([new BlaWithChoices( text, this, choices)]);
 	}
 	override public function useFrom(dir:Direction, user:Dynamic): Bool 

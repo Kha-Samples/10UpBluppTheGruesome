@@ -18,4 +18,5 @@ class Keys_text {
 	static public var COMPUTER_SHOW_USERS = "computer_show_users";
 	static public var COMPUTER_SEARCH = "computer_search";
 	static public var COMPUTER_LOGOUT = "computer_logout";
+	static public var COMPUTER_JUST_LEAVE = "computer_just_leave";
 }

@@ -38,6 +38,7 @@ import localization.Keys_text;
 import sprites.Agent;
 import sprites.Computer;
 import sprites.Fishman;
+import sprites.InteractiveSprite;
 import sprites.Player;
 
 import dialogue.*;
@@ -58,6 +59,7 @@ class Empty extends Game {
 	private var monsterPlayer : Player;
 	private var agentPlayer : Player;
 	private var elevator: Elevator;
+	private var interactiveSprites: Array<InteractiveSprite>;
 	
 	public var mode(default, null) : Mode;
 	
@@ -202,6 +204,7 @@ class Empty extends Game {
 		var computerCount : Int = 4;
 		var computers : Array<Vector2> = new Array<Vector2>();
 		var elevatorPositions : Array<Vector2> = new Array<Vector2>();
+		interactiveSprites = new Array();
 		for (i in 0...spriteCount) {
 			var sprite : kha2d.Sprite = null;
 			switch (sprites[i * 3]) {
@@ -218,7 +221,9 @@ class Empty extends Game {
 			if (computers.length <= 0) break;
 			
 			var pos : Vector2 = computers[Random.getIn(0, computers.length - 1)];
-			Scene.the.addOther(new Computer(pos.x, pos.y));
+			var computer = new Computer(pos.x, pos.y);
+			interactiveSprites.push(computer);
+			Scene.the.addOther(computer);
 			computers.remove(pos);
 		}
 		elevator.addPositions(elevatorPositions);
@@ -430,7 +435,11 @@ class Empty extends Game {
 				if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
 				elevator.godown();	
 				}
-
+			case Key.CHAR:
+				switch(char) {
+				case "e":
+					Player.current().use();
+				}
 			default:
 				
 			}
