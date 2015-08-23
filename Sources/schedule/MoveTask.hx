@@ -6,7 +6,6 @@ class MoveTask extends Task {
 	private var target: Sprite;
 	private var targetLevel: Int;
 	private var step: Int;
-	private var buttonPushed: Bool;
 	private var inElevator: Bool;
 	private static inline var speed: Float = 2;
 	
@@ -14,7 +13,6 @@ class MoveTask extends Task {
 		super(sprite);
 		this.target = target;
 		step = 0;
-		buttonPushed = false;
 		inElevator = false;
 	}
 	
@@ -43,13 +41,9 @@ class MoveTask extends Task {
 					inElevator = ElevatorManager.the.getIn(sprite, ElevatorManager.the.getLevel(sprite.y), ElevatorManager.the.getLevel(target.y), function () {
 						++step;
 						inElevator = false;
-						buttonPushed = false;
 					});
 					if (!inElevator) {
-						if (!buttonPushed) {
-							buttonPushed = true;
-							ElevatorManager.the.callTo(ElevatorManager.the.getLevel(sprite.y));
-						}
+						ElevatorManager.the.callTo(ElevatorManager.the.getLevel(sprite.y));
 					}
 				}
 			case 2:
