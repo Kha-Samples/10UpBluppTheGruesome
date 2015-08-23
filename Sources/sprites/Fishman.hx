@@ -18,7 +18,7 @@ class Fishman extends Player implements IdCardOwner {
 		walkLeft = Animation.createRange(1, 8, 4);
 		walkRight = Animation.createRange(10, 17, 4);
 		setAnimation(walkLeft);
-		collider = new Rectangle(20, 5, (594 * 2 / 9) - 40, ((146 * 2 / 2) - 1) - 5);
+		collider = new Rectangle(20, 25, (594 * 2 / 9) - 40, ((146 * 2 / 2) - 1) - 25);
 		
 		IdCard = new IdCard(Keys_text.FISCHMENSCH);
 	}

@@ -65,8 +65,8 @@ class ElevatorManager
 			Scene.the.addOther(indicator);
 		}
 		
-		currentPosition = Random.getUpTo(positions.length - 1);
-		currentY = elevators[currentPosition].y;
+		currentPosition = 4; // Random.getUpTo(positions.length - 1);
+		targetY = currentY = elevators[currentPosition].y;
 		elevators[currentPosition].open = true;
 		
 		return elevators;
@@ -74,6 +74,8 @@ class ElevatorManager
 	
 	private var queue : Array<Int> = new Array<Int>();
 	public function callTo(toPosition : Int) {
+		if (targetY == elevators[toPosition].y) return;
+		
 		if (state == Idle) {
 			if (toPosition == currentPosition) {
 				wait();

@@ -34,7 +34,6 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		walkRight = Animation.createRange(1, 8, 4);
 		lookLeft = false;
 		setAnimation(standRight);
-		accy = 0;
 		
 		this.monster = monster;
 		this.stuff = stuff;
