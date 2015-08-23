@@ -50,8 +50,7 @@ class ElevatorManager
 		the = instance;
 	}
 	
-	public function initSprites(positions : Array<Vector2>) : Array<Elevator>
-	{
+	public function initSprites(positions : Array<Vector2>) : Array<Elevator> {
 		positions.sort(function(pos1 : Vector2, pos2 : Vector2) { return Std.int(pos2.y - pos1.y); } );
 		elevators = new Array<Elevator>();
 		for (i in 0...positions.length) {
@@ -65,8 +64,8 @@ class ElevatorManager
 			Scene.the.addOther(indicator);
 		}
 		
-		currentPosition = Random.getUpTo(positions.length - 1);
-		currentY = elevators[currentPosition].y;
+		currentPosition = 4; // Random.getUpTo(positions.length - 1);
+		targetY = currentY = elevators[currentPosition].y;
 		elevators[currentPosition].open = true;
 		
 		return elevators;
@@ -74,6 +73,8 @@ class ElevatorManager
 	
 	private var queue : Array<Int> = new Array<Int>();
 	public function callTo(toPosition : Int) {
+		if (targetY == elevators[toPosition].y) return;
+		
 		if (state == Idle) {
 			if (toPosition == currentPosition) {
 				wait();
@@ -89,6 +90,8 @@ class ElevatorManager
 	
 	private function moveTo(toPosition : Int, load : Sprite, callback : Void -> Void) {
 		Scheduler.removeTimeTask(waitingTaskId);
+		
+		// TODO: Ingo, please implement cancel elevator usage here
 		
 		elevators[currentPosition].open = false;
 		

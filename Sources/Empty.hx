@@ -36,6 +36,7 @@ import kha2d.Tile;
 import kha2d.Tilemap;
 import sprites.Agent;
 import sprites.Computer;
+import sprites.Door;
 import sprites.Fishman;
 import sprites.InteractiveSprite;
 import sprites.Player;
@@ -218,6 +219,10 @@ class Empty extends Game {
 				computers.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			case 2:
 				elevatorPositions.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+			case 3:
+				var door : Door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2], 1);
+				Scene.the.addOther(door);
+				interactiveSprites.push(door);
 			}
 		}
 		for (i in 0...computerCount) {
