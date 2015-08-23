@@ -49,6 +49,6 @@ class BooleanBranch implements Branch {
 	
 	public function cancel(dlg: Dialogue) : Void
 	{
-		dlg.insert(onTrue);
+		for (item in onTrue) item.cancel(dlg);
 	}
 }

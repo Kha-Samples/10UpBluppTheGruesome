@@ -292,6 +292,7 @@ class Empty extends Game {
 		}
 		player.setCurrent();
 		Scene.the.addHero(player);
+		nextDayChangeTime = Scheduler.time() + 60.0;
 	}
 	
 	private static function isCollidable(tilenumber: Int): Bool {
@@ -348,7 +349,7 @@ class Empty extends Game {
 			if (Scheduler.time() >= nextDayChangeTime)
 			{
 				isDay = !isDay;
-				nextDayChangeTime = Scheduler.time() + 60.0;
+				nextDayChangeTime = Math.NaN;
 				if (isDay) Dialogues.dawn();
 				else Dialogues.dusk();
 			}

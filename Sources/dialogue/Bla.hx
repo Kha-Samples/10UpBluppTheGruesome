@@ -21,7 +21,9 @@ class Bla implements DialogueItem {
 	var dlg: Dialogue;
 	private function keyUpListener(key:Key, char: String) {
 		kha.Scheduler.addTimeTask( function() { 
-			BlaBox.boxes.remove(dlg.blaBox);
+			Keyboard.get().remove(null, keyUpListener);
+			finished = true;
+			Empty.the.mode = lastMode;
 		}, 1);
 	}
 	
@@ -36,12 +38,14 @@ class Bla implements DialogueItem {
 			BlaBox.boxes.push(dlg.blaBox);
 		} else {
 			finished = !Lambda.has(BlaBox.boxes, dlg.blaBox);
-			Empty.the.mode = lastMode;
+			if (finished) Empty.the.mode = lastMode;
 		}
 	}
 	
 	public function cancel(dlg: Dialogue) : Void
 	{
+		if (lastMode != null) Empty.the.mode = lastMode;
 		BlaBox.boxes.remove(dlg.blaBox);
+		dlg.blaBox = null;
 	}
 }
