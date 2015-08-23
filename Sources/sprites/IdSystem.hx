@@ -6,7 +6,6 @@ import haxe.io.Bytes;
 import kha.Image;
 import kha.math.Random;
 import kha2d.Direction;
-import localization.Keys_text;
 import sprites.IdSystem.IdLogger;
 
 class IdCard

@@ -55,6 +55,11 @@
 	<en>Press</en>
 </ability_Use>
 
+<back>
+	<de>zurück</de>
+	<en>back</en>
+</back>
+	
 <computer>
 	<de>elektronische Rechenmaschine</de>
 	<en>Computer</en>

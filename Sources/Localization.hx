@@ -87,7 +87,7 @@ class Localization
 		var dir = Path.directory(f) + "/";
 		var name = 'Keys_$assetName';
 		var contend = new StringBuf();
-		contend.add("package localization;\n\n");
+		contend.add("package;\n\n");
 		contend.add('class $name {\n');
 		
 		var xml = Parser.parse(sys.io.File.getContent(file));
@@ -99,11 +99,7 @@ class Localization
 		}
 		contend.add("}");
 		
-		var ldir = dir + "localization";
-		if (!sys.FileSystem.exists(ldir) || !sys.FileSystem.isDirectory(ldir)) {
-			sys.FileSystem.createDirectory(ldir);
-		}
-		sys.io.File.saveContent(ldir + '/$name.hx', contend.toString());
+		sys.io.File.saveContent(dir + '/$name.hx', contend.toString());
 		
 		return haxe.macro.Context.parse('Localization.load("$assetName")' , haxe.macro.Context.currentPos());
 	}
