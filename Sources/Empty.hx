@@ -66,17 +66,19 @@ class Empty extends Game {
 	public var overlayColor : Color;
 	public var dlg : Dialogue;
 	
-	private var elevatorOffset: Float = 10;
+    var lastTime = 0.0;
 	
 	public function new() {
 		super("10Up");
 		the = this;
 		dlg = new Dialogue();
+		lastTime = Scheduler.time();
 	}
 	
 	public override function init(): Void {
 		Configuration.setScreen(new LoadingScreen());
 		Random.init(Std.int(kha.Sys.getTime() * 100));
+		ElevatorManager.init(new ElevatorManager());
 		Loader.the.loadRoom("titlescreen", initFirst);
 	}
 	
@@ -160,7 +162,6 @@ class Empty extends Game {
 			sprites.push(blob.readS32BE());
 			sprites.push(blob.readS32BE());
 		}
-		ElevatorManager.init(new ElevatorManager());
 		startGame(spriteCount, sprites);
 	}
 	
@@ -225,10 +226,8 @@ class Empty extends Game {
 			Scene.the.addOther(computer);
 			computers.remove(pos);
 		}
-		var elevatorSprites = ElevatorManager.the.setPositions(elevatorPositions);
-		for (sprite in elevatorSprites) {
-			Scene.the.addOther(sprite);
-		}
+		
+		ElevatorManager.the.initSprites(elevatorPositions);
 		
 		var guy = new RandomGuy(monsterPlayer);
 		guy.x = 64;
@@ -287,6 +286,10 @@ class Empty extends Game {
 	public override function update() {
 		super.update();
 		
+		var deltaTime = Scheduler.time() - lastTime;
+		lastTime = Scheduler.time();
+		
+		ElevatorManager.the.update(deltaTime);
 		var player = Player.current();
 		if (player != null) {
 			Scene.the.camx = Std.int(player.x) + Std.int(player.width / 2);

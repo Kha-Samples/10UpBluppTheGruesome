@@ -21,12 +21,12 @@ class MoveTask extends Task {
 	override public function update(): Void {
 		switch (step) {
 			case 0:
-				targetLevel = ElevatorManager.the.getLevel(target);
-				if (targetLevel == ElevatorManager.the.getLevel(sprite)) {
+				targetLevel = ElevatorManager.the.getLevel(target.y);
+				if (targetLevel == ElevatorManager.the.getLevel(sprite.y)) {
 					step += 2;
 				}
 				else {
-					var elevatorX = ElevatorManager.the.getX(ElevatorManager.the.getLevel(sprite));
+					var elevatorX = ElevatorManager.the.getX(ElevatorManager.the.getLevel(sprite.y));
 					if (sprite.x + sprite.width / 2 < elevatorX - 10) {
 						sprite.speedx = speed;
 					}
@@ -42,17 +42,17 @@ class MoveTask extends Task {
 				if (!inElevator) {
 					if (!buttonPushed) {
 						buttonPushed = true;
-						ElevatorManager.the.callTo(ElevatorManager.the.getLevel(sprite));
+						ElevatorManager.the.callTo(ElevatorManager.the.getLevel(sprite.y));
 					}
-					inElevator = ElevatorManager.the.getIn(sprite, ElevatorManager.the.getLevel(sprite), ElevatorManager.the.getLevel(target), function () {
+					inElevator = ElevatorManager.the.getIn(sprite, ElevatorManager.the.getLevel(sprite.y), ElevatorManager.the.getLevel(target.y), function () {
 						++step;
 						inElevator = false;
 						buttonPushed = false;
 					});
 				}
 			case 2:
-				targetLevel = ElevatorManager.the.getLevel(target);
-				if (targetLevel != ElevatorManager.the.getLevel(sprite)) {
+				targetLevel = ElevatorManager.the.getLevel(target.y);
+				if (targetLevel != ElevatorManager.the.getLevel(sprite.y)) {
 					step -= 2;
 				}
 				else {
