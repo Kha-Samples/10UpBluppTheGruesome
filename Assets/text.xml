@@ -100,6 +100,17 @@
 	<fr>Shelve du bux</fr>
 </bookshelf>
 
+<fluxcompensator>
+	<de>Fluxkompensator</de>
+	<en>Fluxcompensator</en>
+	<fr>Compensatür du flux</fr>
+</fluxcompensator>
+
+<itemfound>
+	<de>{0} gefunden</de>
+	<en>{0} found</en>
+</itemfound>
+
 <idLogger_display>
 	<de>WARNUNG: Zeitstempel defekt.
 Folgende Personen benuzten diese {0}:</de>
