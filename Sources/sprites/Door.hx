@@ -3,6 +3,7 @@ package sprites;
 import dialogue.BlaWithChoices;
 import kha.Loader;
 import kha.Rectangle;
+import kha.Scheduler;
 import kha2d.Animation;
 import kha2d.Direction;
 import kha2d.Scene;
@@ -16,12 +17,10 @@ class Door extends DestructibleSprite {
 	private var closedAnim: Animation;
 	private var crackedAnim: Animation;
 	private var destroyedAnim: Animation;
-	public var id: Int;
 	public var idLogger: IdLogger;
 	
-	public function new(id: Int, x: Int, y: Int) {
+	public function new(x: Int, y: Int) {
 		super(100, Loader.the.getImage("door"), 32 * 2, 64 * 2, 0);
-		this.id = id;
 		this.x = x;
 		this.y = y;
 		accy = 0;
@@ -32,6 +31,7 @@ class Door extends DestructibleSprite {
 		setAnimation(closedAnim);
 		isStucture = true;
 		isRepairable = true;
+		collides = true;
 		idLogger = new IdLogger(Keys_text.SECURITY_DOOR);
 		isUseable = true;
 	}
@@ -77,15 +77,21 @@ class Door extends DestructibleSprite {
 		return super.set_health(value);
 	}
 	
+	var nextCloseTime: Float;
 	public override function hit(sprite: Sprite) {
 		super.hit(sprite);
-		if (opened) return;
+		if (opened) {
+			nextCloseTime = Scheduler.time() + 1.0;
+			return;
+		}
 		if (health <= 0) return;
 		
 		if (Std.is(sprite, IdCardOwner))
 		{
 			var owner : IdCardOwner = cast sprite;
 			idLogger.useID(owner.IdCard);
+			opened = true;
+			nextCloseTime = Scheduler.time() + 1.0;
 		}
 		else
 		{
@@ -94,6 +100,15 @@ class Door extends DestructibleSprite {
 			} else {
 				if (sprite.x < x + 0.5 * tempcollider.width) sprite.x = x + 0.5 * tempcollider.width;
 			}
+		}
+	}
+	
+	override public function update():Void 
+	{
+		super.update();
+		if (Scheduler.time() >= nextCloseTime) {
+			nextCloseTime = Math.NaN;
+			opened = false;
 		}
 	}
 	

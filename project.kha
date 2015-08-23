@@ -249,6 +249,7 @@
 			"file": "door.png",
 			"name": "door",
 			"type": "image",
+			"scale": 2,
 			"background": {
 				"red": 255,
 				"green": 174,
