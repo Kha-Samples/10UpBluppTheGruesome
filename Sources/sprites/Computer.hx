@@ -27,7 +27,7 @@ class Computer extends IdLoggerSprite {
 	}
 	
 	function searchCriticalFiles(): Void {
-		
+		// TODO: implement
 	}
 	function useComputerDialogue(): Void {
 		var choices = new Array<Array<DialogueItem>>();
@@ -36,7 +36,7 @@ class Computer extends IdLoggerSprite {
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_SEARCH);
 		if (Std.is(currentUser, Agent))
 		{
-			choices.push([new BlaWithChoices(idLogger.displayUsers() + "1: [" + Localization.getText(Keys_text.BACK) + "]", this, [[new StartDialogue(useComputerDialogue)]])]);
+			choices.push([new BlaWithChoices(idLogger.displayUsers() + "\n\n1: [" + Localization.getText(Keys_text.BACK) + "]", this, [[new StartDialogue(useComputerDialogue)]])]);
 			text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_SHOW_USERS);
 		}
 		choices.push([new StartDialogue(stopUsing)]);
