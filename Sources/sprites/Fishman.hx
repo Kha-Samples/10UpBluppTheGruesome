@@ -47,18 +47,18 @@ class Fishman extends Player implements IdCardOwner {
 		if (attacking > 0) {
 			if (attacking > 15) {
 				if (lookRight) {
-					g.drawSubImage(attackImage, x - 66, y - 4, 0, attackImage.height / 2, attackImage.width / 2, attackImage.height / 2);
+					g.drawSubImage(attackImage, x - 66, y - 24, 0, attackImage.height / 2, attackImage.width / 2, attackImage.height / 2);
 				}
 				else {
-					g.drawSubImage(attackImage, x - 66, y - 4, 0, 0, attackImage.width / 2, attackImage.height / 2);
+					g.drawSubImage(attackImage, x - 66, y - 24, 0, 0, attackImage.width / 2, attackImage.height / 2);
 				}
 			}
 			else {
 				if (lookRight) {
-					g.drawSubImage(attackImage, x - 66, y - 4, attackImage.width / 2, attackImage.height / 2, attackImage.width / 2, attackImage.height / 2);
+					g.drawSubImage(attackImage, x - 36, y - 24, attackImage.width / 2, attackImage.height / 2, attackImage.width / 2, attackImage.height / 2);
 				}
 				else {
-					g.drawSubImage(attackImage, x - 66, y - 4, attackImage.width / 2, 0, attackImage.width / 2, attackImage.height / 2);
+					g.drawSubImage(attackImage, x - 66, y - 24, attackImage.width / 2, 0, attackImage.width / 2, attackImage.height / 2);
 				}
 			}
 			--attacking;
