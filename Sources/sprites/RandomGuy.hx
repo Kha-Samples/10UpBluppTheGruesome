@@ -45,7 +45,9 @@ class RandomGuy extends Sprite implements IdCardOwner {
 			}
 		}
 		
-		IdCard = new IdCard(names[Random.getUpTo(names.length - 1)]);
+		var name = names[Random.getUpTo(names.length - 1)];
+		names.remove(name);
+		IdCard = new IdCard(name);
 		
 		schedule = new schedule.Schedule();
 		while (schedule.length < 20) {
