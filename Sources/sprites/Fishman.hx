@@ -4,8 +4,12 @@ import kha.Loader;
 import kha.Rectangle;
 import kha2d.Animation;
 import kha2d.Direction;
+import localization.Keys_text;
+import sprites.IdSystem.IdCard;
+import sprites.IdSystem.IdCardOwner;
 
-class Fishman extends Player {
+class Fishman extends Player implements IdCardOwner {
+	public var IdCard(default, null): IdCard;
 	
 	public function new(x: Float, y: Float) {
 		super(0, x, y, 'fishy', Std.int(594 * 2 / 9), Std.int(146 * 2 / 2));
@@ -16,6 +20,8 @@ class Fishman extends Player {
 		walkRight = Animation.createRange(10, 17, 4);
 		setAnimation(walkLeft);
 		collider = new Rectangle(20, 5, (594 * 2 / 9) - 40, ((146 * 2 / 2) - 1) - 5);
+		
+		IdCard = new IdCard(Keys_text.FISCHMENSCH);
 	}
 	
 	override public function hitFrom(dir: Direction): Void {
