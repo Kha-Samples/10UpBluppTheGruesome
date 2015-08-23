@@ -40,15 +40,17 @@ class MoveTask extends Task {
 				}
 			case 1:
 				if (!inElevator) {
-					if (!buttonPushed) {
-						buttonPushed = true;
-						ElevatorManager.the.callTo(ElevatorManager.the.getLevel(sprite));
-					}
 					inElevator = ElevatorManager.the.getIn(sprite, ElevatorManager.the.getLevel(sprite), ElevatorManager.the.getLevel(target), function () {
 						++step;
 						inElevator = false;
 						buttonPushed = false;
 					});
+					if (!inElevator) {
+						if (!buttonPushed) {
+							buttonPushed = true;
+							ElevatorManager.the.callTo(ElevatorManager.the.getLevel(sprite));
+						}
+					}
 				}
 			case 2:
 				targetLevel = ElevatorManager.the.getLevel(target);
