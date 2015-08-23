@@ -94,6 +94,11 @@
 	<de>Sicherheitstür</de>
 	<en>Security Door</en>
 </security_door>
+<bookshelf>
+	<de>Bücherregal</de>
+	<en>Bookshelf</en>
+	<fr>Shelve du bux</fr>
+</bookshelf>
 
 <idLogger_display>
 	<de>WARNUNG: Zeitstempel defekt.
@@ -108,7 +113,7 @@ Following persons used this {0}:</en>
 Was machen wir jetzt?</de>
 	<en>Hello {0},
 
-hat do we do now?</en>
+what do we do now?</en>
 </computer_hello>
 <computer_show_users>
 	<de>Wer haddn dat Ding o'gschalt?</de>
@@ -127,3 +132,16 @@ hat do we do now?</en>
 	<de>[Einfach weggehen]</de>
 	<en>[just leave]</en>
 </computer_just_leave>
+
+<bookshelf_actions>
+	<de>Aktionen:</de>
+	<en>Actions:</en>
+</bookshelf_actions>
+<bookshelf_search>
+	<de>[Durchsuchen]</de>
+	<en>[Search]</en>
+</bookshelf_search>
+<bookshelf_leave>
+	<de>[Weggehen]</de>
+	<en>[Leave]</en>
+</bookshelf_leave>

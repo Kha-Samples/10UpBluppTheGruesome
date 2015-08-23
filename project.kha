@@ -305,6 +305,16 @@
 			"file": "broetchen2.png",
 			"name": "broetchen2",
 			"type": "image"
+		},
+		{
+			"file": "bookshelf.png",
+			"name": "bookshelf",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		}
 	],
 	"rooms": [
@@ -346,6 +356,7 @@
 				"7",
 				"8",
 				"9",
+        "bookshelf",
 				"elevator",
 				"Liberation Sans20.kravur",
 				"arial34.kravur",
