@@ -171,7 +171,8 @@
 		{
 			"file": "elevator.png",
 			"name": "elevator",
-			"type": "image"
+			"type": "image",
+			"scale": 2.0
 		},
 		{
 			"file": "Arial.ttf",
