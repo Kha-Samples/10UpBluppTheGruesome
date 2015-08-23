@@ -35,7 +35,8 @@ class ElevatorManager
 			sprites.push(elevator);
 			Empty.the.interactiveSprites.push(elevator);
 		}
-		sprites[Random.getUpTo(positions.length - 1)].open = true;
+		currentPosition = Random.getUpTo(positions.length - 1);
+		sprites[currentPosition].open = true;
 		
 		return sprites;
 	}
@@ -46,7 +47,7 @@ class ElevatorManager
 			moveTo(toPosition);
 		}
 		else {
-			queue.push(toPosition);
+			if (queue.indexOf(toPosition) < 0) queue.push(toPosition);
 		}
 	}
 	
