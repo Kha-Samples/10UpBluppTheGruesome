@@ -38,7 +38,6 @@ class Dialogues {
 	}
 	
 	static public function dawn() {
-		Empty.the.overlayColor = Color.fromBytes(0, 0, 0, 255);
 		Empty.the.renderOverlay = true;
 		Empty.the.dlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)
@@ -57,7 +56,6 @@ class Dialogues {
 		]);
 	}
 	static public function dusk() {
-		Empty.the.overlayColor = Color.fromBytes(0, 0, 0, 0);
 		Empty.the.renderOverlay = true;
 		Empty.the.dlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)

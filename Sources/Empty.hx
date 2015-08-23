@@ -242,6 +242,7 @@ class Empty extends Game {
 		Configuration.setScreen(this);
 		
 		nextDayChangeTime = -1;
+		overlayColor = Color.Black;
 	}
 	
 	public function setMainPlayer(player : Player) {
