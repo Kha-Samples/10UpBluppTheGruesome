@@ -45,7 +45,7 @@ class Elevator extends IdLoggerSprite {
 	
 	override public function useFrom(dir:Direction, user:Dynamic):Bool 
 	{
-		if (super.useFrom(dir, user)) return false;
+		if (!super.useFrom(dir, user)) return false;
 		if (open) 
 		{
 			var text : String = "";
