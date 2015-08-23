@@ -3,8 +3,11 @@ package sprites;
 import dialogue.Bla;
 import haxe.crypto.Adler32;
 import haxe.io.Bytes;
+import kha.Image;
 import kha.math.Random;
+import kha2d.Direction;
 import localization.Keys_text;
+import sprites.IdSystem.IdLogger;
 
 class IdCard
 {
@@ -34,9 +37,9 @@ class IdLogger
 	var currendDayIndex: Int = 0;
 	var txtKey: String;
 
-	public function new(txtKey: String) 
+	public function new(nameTxtKey: String) 
 	{
-		this.txtKey = txtKey;
+		this.txtKey = nameTxtKey;
 	}
 	
 	public function useID(idCard: IdCard)
@@ -44,23 +47,26 @@ class IdLogger
 		loggedIDs.push(idCard);
 	}
 	
-	public function displayUsers()
+	function countById(users: Array<IdCard>): Map<String, Int>
 	{
 		var toDisplay = new Map<String, Int>();
-		for (card in loggedIDs)
+		for (card in users)
 		{
 			var id = card.Id + ": " + card.Name;
 			if (toDisplay.exists(id)) toDisplay[id] += 1;
 			else toDisplay[id] = 1;
 		}
-		
-		var list : String = Localization.getText(Keys_text.IDLOGGER_DISPLAY);
-		list += Localization.getText(txtKey);
+		return toDisplay;
+	}
+	public function displayUsers(): String
+	{
+		var toDisplay = countById(loggedIDs);
+		var list : String = Localization.getText(Keys_text.IDLOGGER_DISPLAY, [txtKey]);
 		for (id in toDisplay.keys())
 		{
 			list += "\n" + id + ": " + toDisplay[id];
 		}
-		Empty.the.dlg.insert([new Bla(list,null)]);
+		return list;
 	}
 	
 	public function newDay()
@@ -73,4 +79,29 @@ class IdLogger
 interface IdCardOwner
 {
 	var IdCard(default, never): IdCard;
+}
+
+
+class IdLoggerSprite extends InteractiveSprite
+{
+	var idLogger: IdLogger;
+	
+	public function new(nameTxtKey: String, image:Image, width:Int=0, height:Int=0, z:Int=1) {
+		super(image, width, height, z);
+		idLogger = new IdLogger(nameTxtKey);
+		isUseable = true;
+	}
+	
+	override public function useFrom(dir: Direction, user: Dynamic): Bool
+	{
+		if (Std.is(user, sprites.IdCardOwner))
+		{
+			var owner: IdCardOwner = cast user;
+			
+			idLogger.useID(owner.IdCard);
+			
+			return true;
+		}
+		return false;
+	}
 }
