@@ -41,11 +41,11 @@ class Dialogues {
 		Empty.the.renderOverlay = true;
 		Empty.the.dlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)
-			, new Bla(Keys_text.DAWN, null)
+			, new Bla(Keys_text.DAWN, null, true)
 			, new StartDialogue(function() {
 				for (ias in Empty.the.interactiveSprites)
 				{
-					ias.dlg.set([]);
+					ias.dlg.cancel();
 					var logger = Std.instance(ias, IdLoggerSprite);
 					if (logger != null) logger.idLogger.newDay();
 				}
@@ -59,11 +59,11 @@ class Dialogues {
 		Empty.the.renderOverlay = true;
 		Empty.the.dlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)
-			, new Bla(Keys_text.DUSK, null)
+			, new Bla(Keys_text.DUSK, null, true)
 			, new StartDialogue(function() {
 				for (ias in Empty.the.interactiveSprites)
 				{
-					ias.dlg.set([]);
+					ias.dlg.cancel();
 				}
 				Empty.the.setMainPlayer(Empty.the.monsterPlayer);
 			})

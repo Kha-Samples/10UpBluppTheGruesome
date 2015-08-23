@@ -37,7 +37,7 @@ class Elevator extends IdLoggerSprite {
 		open = value;
 		setAnimation(open ? openAnimation : closedAnimation);
 		if (!open) {
-			dlg.set([]); // TODO: only if entering
+			dlg.cancel();
 		}
 		return open;
 	}
