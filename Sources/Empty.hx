@@ -56,9 +56,9 @@ class Empty extends Game {
 	private var originalmap : Array<Array<Int>>;
 	private var font: Font;
 	private var backbuffer: Image;
-	private var monsterPlayer : Player;
-	private var agentPlayer : Player;
-	private var interactiveSprites: Array<InteractiveSprite>;
+	public var monsterPlayer : Player;
+	public var agentPlayer : Player;
+	public var interactiveSprites: Array<InteractiveSprite>;
 	
 	public var mode(default, null) : Mode;
 	
@@ -67,6 +67,9 @@ class Empty extends Game {
 	public var dlg : Dialogue;
 	
     var lastTime = 0.0;
+	
+	var isDay: Bool = true;
+	var nextDayChangeTime: Float = Math.NaN;
 	
 	public function new() {
 		super("10Up");
@@ -229,7 +232,7 @@ class Empty extends Game {
 		
 		ElevatorManager.the.initSprites(elevatorPositions);
 		
-		var guy = new RandomGuy(monsterPlayer);
+		var guy = new RandomGuy(monsterPlayer, interactiveSprites);
 		guy.x = 64;
 		guy.y = 64;
 		Scene.the.addOther(guy);
@@ -237,9 +240,11 @@ class Empty extends Game {
 		setMainPlayer(monsterPlayer);
 		
 		Configuration.setScreen(this);
+		
+		nextDayChangeTime = -1;
 	}
 	
-	private function setMainPlayer(player : Player) {
+	public function setMainPlayer(player : Player) {
 		if (Player.current() != null) {
 			Scene.the.removeHero(Player.current());
 		}
@@ -297,6 +302,17 @@ class Empty extends Game {
 		}
 		Scene.the.update();
 		
+		if (dlg.isEmpty()) {
+			if (Scheduler.time() >= nextDayChangeTime)
+			{
+				isDay = !isDay;
+				nextDayChangeTime = Scheduler.time() + 60.0;
+				if (isDay) Dialogues.dawn();
+				else Dialogues.dusk();
+			}
+		}
+		
+		
 		dlg.update();
 	}
 	
@@ -342,9 +358,14 @@ class Empty extends Game {
 			var str = Localization.getText(Keys_text.CLICK_TO_START);
 			g.drawString(str, 0.5 * (width - font.stringWidth(str)), 650);
 		}
-		g.end();
 		
 		g.transformation = FastMatrix3.identity();
+		if (renderOverlay)
+		{
+			g.color = overlayColor;
+			g.fillRect(0, 0, width, height);
+		}
+		
 		for (box in BlaBox.boxes) {
 			g.color = Color.White;
 			box.render(g);

@@ -54,12 +54,34 @@
 	<de>Drück</de>
 	<en>Press</en>
 </ability_Use>
-
+	
+<!-- misc -->
+	
 <back>
 	<de>zurück</de>
 	<en>back</en>
 </back>
+<dawn>
+	<de>Zum nächsten Morgengrauen ...</de>
+	<en>At next dawn ...</en>
+</dawn>
+<dusk>
+	<de>Zum nächsten Abendrot ...</de>
+	<en>At next dusk ...</en>
+</dusk>
+
+<!-- Elevator -->
+<Elevator>
+	<de>Aufzugseinheit des Stockwerks</de>
+	<en>floor's Elevator</en>
+</Elevator>
+<Floor>
+	<de>Stockwerk</de>
+	<en>floor</en>
+</Floor>
 	
+	
+<!-- Computer -->
 <computer>
 	<de>elektronische Rechenmaschine</de>
 	<en>Computer</en>
