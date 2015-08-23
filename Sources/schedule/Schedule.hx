@@ -9,6 +9,10 @@ class Schedule {
 		currentTask = null;
 	}
 	
+	public function add(task: Task): Void {
+		tasks.push(task);
+	}
+	
 	public function update(): Void {
 		if (currentTask == null) {
 			currentTask = tasks.shift();
@@ -17,7 +21,9 @@ class Schedule {
 			if (currentTask.isDone()) {
 				currentTask = tasks.shift();
 			}
-			currentTask.update();
+			if (currentTask != null) {
+				currentTask.update();
+			}
 		}
 	}
 }

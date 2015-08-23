@@ -39,6 +39,7 @@ import sprites.Agent;
 import sprites.Computer;
 import sprites.Fishman;
 import sprites.Player;
+import sprites.RandomGuy;
 
 import dialogue.*;
 
@@ -223,6 +224,11 @@ class Empty extends Game {
 		}
 		elevator.addPositions(elevatorPositions);
 		
+		var guy = new RandomGuy(monsterPlayer);
+		guy.x = 64;
+		guy.y = 64;
+		Scene.the.addOther(guy);
+		
 		setMainPlayer(monsterPlayer);
 		Scene.the.addOther(elevator);
 		
@@ -285,9 +291,9 @@ class Empty extends Game {
 		
 		if (mode != StartScreen)
 		{
-			if (Math.abs(Player.current().x - elevator.x) < elevatorOffset) {
-				Player.current().y = elevator.y;
-			}
+			//if (Math.abs(Player.current().x - elevator.x) < elevatorOffset) {
+			//	Player.current().y = elevator.y;
+			//}
 		}
 		
 		dlg.update();
