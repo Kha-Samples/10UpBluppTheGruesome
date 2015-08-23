@@ -13,6 +13,12 @@ class Schedule {
 		tasks.push(task);
 	}
 	
+	public var length(get, null): Int;
+	
+	private function get_length(): Int {
+		return tasks.length;
+	}
+	
 	public function update(): Void {
 		if (currentTask == null) {
 			currentTask = tasks.shift();

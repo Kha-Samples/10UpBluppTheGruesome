@@ -230,7 +230,7 @@ class Empty extends Game {
 			Scene.the.addOther(sprite);
 		}
 		
-		var guy = new RandomGuy(monsterPlayer);
+		var guy = new RandomGuy(monsterPlayer, interactiveSprites);
 		guy.x = 64;
 		guy.y = 64;
 		Scene.the.addOther(guy);

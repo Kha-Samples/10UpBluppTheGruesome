@@ -1,6 +1,8 @@
 package schedule;
 
+import kha.Scheduler;
 import kha2d.Direction;
+import kha2d.Sprite;
 import sprites.Computer;
 
 class ComputerTask extends Task {
@@ -17,7 +19,7 @@ class ComputerTask extends Task {
 		if (!taskScheduled) {
 			taskScheduled = true;
 			computer.useFrom(Direction.LEFT, sprite);
-			Scheduler.addTimeTask(function() { computer.stopUsing(); done = true; }, time);
+			Scheduler.addTimeTask(function() { computer.stopUsing(); done = true; }, 5);
 		}
 	}
 }
