@@ -37,7 +37,12 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		accy = 0;
 		
 		this.monster = monster;
-		this.stuff = stuff;
+		this.stuff = [];
+		for (thing in stuff) {
+			if (Std.is(thing, Computer)) {
+				this.stuff.push(thing);
+			}
+		}
 		
 		IdCard = new IdCard("TODO: pick random name");
 		
