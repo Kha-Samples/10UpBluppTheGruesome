@@ -35,6 +35,7 @@ import kha2d.Sprite;
 import kha2d.Tile;
 import kha2d.Tilemap;
 import sprites.Agent;
+import sprites.Bookshelf;
 import sprites.Computer;
 import sprites.Door;
 import sprites.Fishman;
@@ -218,8 +219,11 @@ class Empty extends Game {
 			}
 		}
 		
-		var computerCount : Int = 4;
+		var computerCount : Int = 8;
+		var bookshelfCount : Int = 4;
+		var importantBookshelfCount : Int = 2;
 		var computers : Array<Vector2> = new Array<Vector2>();
+		var bookshelves : Array<Vector2> = new Array<Vector2>();
 		var elevatorPositions : Array<Vector2> = new Array<Vector2>();
 		interactiveSprites = new Array();
 		for (i in 0...spriteCount) {
@@ -236,6 +240,8 @@ class Empty extends Game {
 				var door : Door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]-96);
 				Scene.the.addOther(door);
 				interactiveSprites.push(door);
+			case 4:
+				bookshelves.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			}
 		}
 		for (i in 0...computerCount) {
@@ -246,6 +252,15 @@ class Empty extends Game {
 			interactiveSprites.push(computer);
 			Scene.the.addOther(computer);
 			computers.remove(pos);
+		}
+		for (i in 0...bookshelfCount) {
+			if (bookshelves.length <= 0) break;
+			
+			var pos : Vector2 = bookshelves[Random.getIn(0, bookshelves.length - 1)];
+			var bookshelf = new Bookshelf(pos.x, pos.y, i < importantBookshelfCount);
+			interactiveSprites.push(bookshelf);
+			Scene.the.addOther(bookshelf);
+			bookshelves.remove(pos);
 		}
 		
 		ElevatorManager.the.initSprites(elevatorPositions);
