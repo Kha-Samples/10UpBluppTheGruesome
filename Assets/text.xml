@@ -55,6 +55,18 @@
 	<en>Press</en>
 </ability_Use>
 
+<!-- Elevator -->
+<Elevator>
+	<de>Aufzugseinheit des Stockwerks</de>
+	<en>floor's Elevator</en>
+</Elevator>
+<Floor>
+	<de>Stockwerk</de>
+	<en>floor</en>
+</Floor>
+	
+	
+<!-- Computer -->
 <back>
 	<de>zurück</de>
 	<en>back</en>
