@@ -32,7 +32,8 @@ class ElevatorManager
 		for (i in 0...positions.length) {
 			sprites.push(new Elevator(positions[i].x, positions[i].y, i));
 		}
-		sprites[Random.getUpTo(positions.length - 1)].open = true;
+		currentPosition = Random.getUpTo(positions.length - 1);
+		sprites[currentPosition].open = true;
 		
 		return sprites;
 	}
@@ -43,7 +44,7 @@ class ElevatorManager
 			moveTo(toPosition);
 		}
 		else {
-			queue.push(toPosition);
+			if (queue.indexOf(toPosition) < 0) queue.push(toPosition);
 		}
 	}
 	
