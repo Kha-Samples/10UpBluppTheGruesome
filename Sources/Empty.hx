@@ -62,7 +62,19 @@ class Empty extends Game {
 	public var agentPlayer : Player;
 	public var interactiveSprites: Array<InteractiveSprite>;
 	
-	public var mode(default, null) : Mode;
+	public var mode(default, set) : Mode;
+	function set_mode(v: Mode): Mode {
+		mode = v; 
+		if (mode != Game) {
+			if (Player.current() != null) {
+				Player.current().left = false;
+				Player.current().right = false;
+				Player.current().up = false;
+				// TODO: cancel other actions?
+			}
+		}
+		return mode;
+	}
 	
 	public var renderOverlay : Bool;
 	public var overlayColor : Color;
@@ -499,6 +511,8 @@ class Empty extends Game {
 			case Key.ESC:
 				Dialogues.escMenu();
 			default:
+				overlayColor = Color.fromBytes(0, 0, 0, 0);
+				renderOverlay = true;
 				dlg.set([new Action(null, ActionType.FADE_TO_BLACK)
 						, new StartDialogue(function() {
 							Configuration.setScreen(new LoadingScreen());
@@ -506,11 +520,6 @@ class Empty extends Game {
 						}) ]);
 			}
 		default:
-			switch (key) {
-			case Key.ESC:
-				Dialogues.escMenu();
-			default:
-			}
 		}
 	}
 }
