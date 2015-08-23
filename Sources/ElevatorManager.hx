@@ -3,7 +3,9 @@ package;
 import kha.math.Random;
 import kha.math.Vector2;
 import kha.Scheduler;
+import kha2d.Scene;
 import kha2d.Sprite;
+import sprites.ElevatorIndicator;
 
 class ElevatorManager
 {
@@ -16,8 +18,19 @@ class ElevatorManager
 	
 	private var idle : Bool = true;
 	private var sprites : Array<Elevator> = new Array<Elevator>();
-	private var currentPosition : Int = -1;
+	private var indicators : Array<ElevatorIndicator> = new Array<ElevatorIndicator>();
+	private var currentPosition(default, set_currentPosition) : Int = -1;
 	private var idleTaskId : Int = -1;
+	
+	private function set_currentPosition(value : Int) : Int {
+		currentPosition = value;
+		
+		for (indicator in indicators) {
+			indicator.setLevel(currentPosition);
+		}
+		
+		return currentPosition;
+	}
 	
 	public function new() { }
 	
@@ -27,11 +40,15 @@ class ElevatorManager
 	
 	public function setPositions(positions : Array<Vector2>) : Array<Elevator>
 	{
-		positions.sort(function(pos1 : Vector2, pos2 : Vector2) { return Std.int(pos1.y - pos2.y); } );
+		positions.sort(function(pos1 : Vector2, pos2 : Vector2) { return Std.int(pos2.y - pos1.y); } );
 		sprites = new Array<Elevator>();
 		for (i in 0...positions.length) {
 			sprites.push(new Elevator(positions[i].x, positions[i].y, i));
+			var indicator : ElevatorIndicator = new ElevatorIndicator(positions[i].x, positions[i].y);
+			indicators.push(indicator);
+			Scene.the.addOther(indicator);
 		}
+		
 		currentPosition = Random.getUpTo(positions.length - 1);
 		sprites[currentPosition].open = true;
 		
@@ -54,15 +71,13 @@ class ElevatorManager
 	}
 	
 	public function getLevel(sprite: Sprite): Int {
-		var i = sprites.length - 1;
-		while (i >= 0) {
+		for (i in 0...sprites.length) {
 			var elevator = sprites[i];
 			if (sprite.y > elevator.y + elevator.height) {
-				return i + 1;
+				return i - 1;
 			}
-			--i;
 		}
-		return 0;
+		return sprites.length - 1;
 	}
 	
 	public function getX(level: Int): Float {
@@ -78,6 +93,8 @@ class ElevatorManager
 		idle = false;
 		
 		Scheduler.removeTimeTask(idleTaskId);
+		
+		// TODO: Movement
 		Scheduler.addTimeTask(arrive.bind(sprite, toPosition, callback), Math.abs(atPosition - toPosition) * 3 + 1);
 		return true;
 	}

@@ -23,7 +23,7 @@ class Elevator extends Sprite {
 		openAnimation = Animation.create(1);
 		closedAnimation = Animation.create(0);
 		accy = 0;
-		this.collides = false;
+		collides = false;
 	}
 	
 	public function set_open(value : Bool) : Bool {
