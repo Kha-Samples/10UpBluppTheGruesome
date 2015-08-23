@@ -1,5 +1,6 @@
 package;
 
+import kha.math.Vector2;
 import kha2d.Animation;
 import kha.audio1.Audio;
 import kha2d.Direction;
@@ -120,6 +121,11 @@ class Elevator extends Sprite {
 	public function setUp() {
 		up = false;
 		lastupcount = 8;
+	}
+	
+	public function addPositions(positions : Array<Vector2>) 
+	{
+		// TODO: Elevater should stop at this positions, select a random one as the starting position
 	}
 	
 }

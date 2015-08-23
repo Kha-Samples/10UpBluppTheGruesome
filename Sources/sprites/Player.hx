@@ -108,9 +108,6 @@ class Player extends DestructibleSprite {
 				if (standing) setAnimation(lookRight ? standRight : standLeft);
 				speedx = 0;
 			}
-			if (up) {
-				trace("hallo ingo");
-			}
 			if (up && standing) {
 				setAnimation(lookRight ? jumpRight : jumpLeft);
 				speedy = -8.2;
