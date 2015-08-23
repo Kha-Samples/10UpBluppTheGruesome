@@ -6,6 +6,7 @@ import kha2d.Animation;
 import kha2d.Direction;
 import kha2d.Scene;
 import kha2d.Sprite;
+import sprites.IdSystem.IdLogger;
 
 class Door extends DestructibleSprite {
 	public var opened(default,set) = false;
@@ -14,6 +15,7 @@ class Door extends DestructibleSprite {
 	private var crackedAnim: Animation;
 	private var destroyedAnim: Animation;
 	public var id: Int;
+	public var idLogger: IdLogger;
 	
 	public function new(id: Int, x: Int, y: Int) {
 		super(100, Loader.the.getImage("door"), 32 * 2, 64 * 2, 0);
@@ -28,6 +30,8 @@ class Door extends DestructibleSprite {
 		setAnimation(closedAnim);
 		isStucture = true;
 		isRepairable = true;
+		idLogger = new IdLogger(Keys_text.SECURITY_DOOR);
+		isUseable = true;
 	}
 	
 	private function set_opened(value : Bool) : Bool {
@@ -75,30 +79,30 @@ class Door extends DestructibleSprite {
 		super.hit(sprite);
 		if (opened) return;
 		if (health <= 0) return;
-		if (sprite.x < x) {
-			sprite.x = x - sprite.tempcollider.width - 1;
-		} else {
-			if (sprite.x < x + 0.5 * tempcollider.width) sprite.x = x + 0.5 * tempcollider.width;
+		
+		if (Std.is(user, sprites.IdCardOwner))
+		{
+			var owner: IdCardOwner = cast user;
+			idLogger.useID(owner.IdCard);
+		}
+		else
+		{
+			if (sprite.x < x) {
+				sprite.x = x - sprite.tempcollider.width - 1;
+			} else {
+				if (sprite.x < x + 0.5 * tempcollider.width) sprite.x = x + 0.5 * tempcollider.width;
+			}
 		}
 	}
-}
-
-
-class DoorOpener extends InteractiveSprite {
-	var door: Door;
-	public function new(door: Door, x: Float, y: Float) {
-		super(null, 32, 64 * 2, 0);
-		this.door = door;
-		this.x = x;
-		this.y = y;
-		accy = 0;
-		isUseable = true;
-	}
 	
-	override public function useFrom(dir:Direction) 
+	override public function useFrom(dir: Direction, user: Dynamic): Bool
 	{
-		if (door.health <= 0) return;
-		
-		door.opened = !door.opened;
+		if (Std.is(user, Agent))
+		{
+			dlg.set([ new BlaWithChoices(idLogger.displayUsers() + "\n\n1: [" + Localization.getText(Keys_text.BACK) + "]", this, [[]])]);
+			
+			return true;
+		}
+		return false;
 	}
 }
