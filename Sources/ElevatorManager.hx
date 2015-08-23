@@ -7,9 +7,17 @@ import kha2d.Sprite;
 
 class ElevatorManager
 {
-	private var sprites : Array<Elevator> = new Array<Elevator>();
-
 	public static var the(default, null): ElevatorManager;
+	
+	public var levels(get_levels, null) : Int;
+	public function get_levels() : Int {
+		return sprites.length;
+	}
+	
+	private var idle : Bool = true;
+	private var sprites : Array<Elevator> = new Array<Elevator>();
+	private var currentPosition : Int = -1;
+	private var idleTaskId : Int = -1;
 	
 	public function new() { }
 	
@@ -19,13 +27,29 @@ class ElevatorManager
 	
 	public function setPositions(positions : Array<Vector2>) : Array<Elevator>
 	{
+		positions.sort(function(pos1 : Vector2, pos2 : Vector2) { return Std.int(pos1.y - pos2.y); } );
 		sprites = new Array<Elevator>();
 		for (i in 0...positions.length) {
-			sprites.push(new Elevator(positions[i].x, positions[i].y));
+			sprites.push(new Elevator(positions[i].x, positions[i].y, i));
 		}
 		sprites[Random.getUpTo(positions.length - 1)].open = true;
 		
 		return sprites;
+	}
+	
+	private var queue : Array<Int> = new Array<Int>();
+	public function callTo(toPosition : Int) {
+		if (idle) {
+			moveTo(toPosition);
+		}
+		else {
+			queue.push(toPosition);
+		}
+	}
+	
+	private function moveTo(toPosition : Int) {
+		sprites[currentPosition].open = false;
+		Scheduler.addTimeTask(arrive.bind(null, toPosition, null), Math.abs(currentPosition - toPosition) * 3 + 1);
 	}
 	
 	public function getLevel(sprite: Sprite): Int {
@@ -33,7 +57,7 @@ class ElevatorManager
 		while (i >= 0) {
 			var elevator = sprites[i];
 			if (sprite.y > elevator.y + elevator.height) {
-				return i - 1;
+				return i + 1;
 			}
 			--i;
 		}
@@ -50,14 +74,32 @@ class ElevatorManager
 		sprite.visible = false;
 		sprite.collides = false;
 		sprites[atPosition].open = false;
-		Scheduler.addTimeTask(getOut.bind(sprite, toPosition, callback), Math.abs(atPosition - toPosition) * 3 + 1);
+		idle = false;
+		
+		Scheduler.removeTimeTask(idleTaskId);
+		Scheduler.addTimeTask(arrive.bind(sprite, toPosition, callback), Math.abs(atPosition - toPosition) * 3 + 1);
 		return true;
 	}
 	
-	private function getOut(sprite : Sprite, atPosition : Int, callback : Void -> Void) {
-		sprite.visible = true;
-		sprite.collides = true;
+	private function arrive(spriteInside : Sprite, atPosition : Int, callback : Void -> Void) {
+		if (spriteInside != null) {
+			spriteInside.visible = true;
+			spriteInside.collides = true;
+			spriteInside.x = sprites[atPosition].x;
+			spriteInside.y = sprites[atPosition].y;
+		}
+		currentPosition = atPosition;
 		sprites[atPosition].open = true;
-		callback();
+		idle = true;
+		
+		if (callback != null) callback();
+		idleTaskId = Scheduler.addTimeTask(onIdle, 1);
+	}
+	
+	private function onIdle() {
+		if (queue.length > 0) {
+			moveTo(queue[0]);
+			queue.remove(queue[0]);
+		}
 	}
 }
