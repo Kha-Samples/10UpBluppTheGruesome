@@ -1,4 +1,5 @@
 package;
+
 import kha.math.Random;
 import kha.math.Vector2;
 import kha.Scheduler;
@@ -25,6 +26,22 @@ class ElevatorManager
 		sprites[Random.getUpTo(positions.length - 1)].open = true;
 		
 		return sprites;
+	}
+	
+	public function getLevel(sprite: Sprite): Int {
+		var i = sprites.length - 1;
+		while (i >= 0) {
+			var elevator = sprites[i];
+			if (sprite.y > elevator.y + elevator.height) {
+				return i - 1;
+			}
+			--i;
+		}
+		return 0;
+	}
+	
+	public function getX(level: Int): Float {
+		return sprites[level].x + sprites[level].width / 2;
 	}
 	
 	public function getIn(sprite : Sprite, atPosition : Int, toPosition : Int, callback : Void -> Void) : Bool {
