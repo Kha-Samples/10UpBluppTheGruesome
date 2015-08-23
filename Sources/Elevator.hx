@@ -28,7 +28,7 @@ class Elevator extends IdLoggerSprite {
 		openAnimation = Animation.create(1);
 		closedAnimation = Animation.create(0);
 		accy = 0;
-		this.collides = false;
+		collides = false;
 		
 		isUseable = true;
 	}
@@ -37,7 +37,7 @@ class Elevator extends IdLoggerSprite {
 		open = value;
 		setAnimation(open ? openAnimation : closedAnimation);
 		if (!open) {
-			dlg.set([]);
+			dlg.set(null);
 		}
 		return open;
 	}

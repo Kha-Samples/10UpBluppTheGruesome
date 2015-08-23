@@ -56,9 +56,9 @@ class Empty extends Game {
 	private var originalmap : Array<Array<Int>>;
 	private var font: Font;
 	private var backbuffer: Image;
-	private var monsterPlayer : Player;
-	private var agentPlayer : Player;
-	private var interactiveSprites: Array<InteractiveSprite>;
+	public var monsterPlayer : Player;
+	public var agentPlayer : Player;
+	public var interactiveSprites: Array<InteractiveSprite>;
 	
 	public var mode(default, null) : Mode;
 	
@@ -66,17 +66,22 @@ class Empty extends Game {
 	public var overlayColor : Color;
 	public var dlg : Dialogue;
 	
-	private var elevatorOffset: Float = 10;
+    var lastTime = 0.0;
+	
+	var isDay: Bool = true;
+	var nextDayChangeTime: Float = Math.NaN;
 	
 	public function new() {
 		super("10Up");
 		the = this;
 		dlg = new Dialogue();
+		lastTime = Scheduler.time();
 	}
 	
 	public override function init(): Void {
 		Configuration.setScreen(new LoadingScreen());
 		Random.init(Std.int(kha.Sys.getTime() * 100));
+		ElevatorManager.init(new ElevatorManager());
 		Loader.the.loadRoom("titlescreen", initFirst);
 	}
 	
@@ -160,7 +165,6 @@ class Empty extends Game {
 			sprites.push(blob.readS32BE());
 			sprites.push(blob.readS32BE());
 		}
-		ElevatorManager.init(new ElevatorManager());
 		startGame(spriteCount, sprites);
 	}
 	
@@ -225,10 +229,8 @@ class Empty extends Game {
 			Scene.the.addOther(computer);
 			computers.remove(pos);
 		}
-		var elevatorSprites = ElevatorManager.the.setPositions(elevatorPositions);
-		for (sprite in elevatorSprites) {
-			Scene.the.addOther(sprite);
-		}
+		
+		ElevatorManager.the.initSprites(elevatorPositions);
 		
 		var guy = new RandomGuy(monsterPlayer, interactiveSprites);
 		guy.x = 64;
@@ -238,9 +240,12 @@ class Empty extends Game {
 		setMainPlayer(monsterPlayer);
 		
 		Configuration.setScreen(this);
+		
+		nextDayChangeTime = -1;
+		overlayColor = Color.Black;
 	}
 	
-	private function setMainPlayer(player : Player) {
+	public function setMainPlayer(player : Player) {
 		if (Player.current() != null) {
 			Scene.the.removeHero(Player.current());
 		}
@@ -287,12 +292,27 @@ class Empty extends Game {
 	public override function update() {
 		super.update();
 		
+		var deltaTime = Scheduler.time() - lastTime;
+		lastTime = Scheduler.time();
+		
+		ElevatorManager.the.update(deltaTime);
 		var player = Player.current();
 		if (player != null) {
 			Scene.the.camx = Std.int(player.x) + Std.int(player.width / 2);
 			Scene.the.camy = Std.int(player.y + player.height + 80 - 0.5 * height);
 		}
 		Scene.the.update();
+		
+		if (dlg.isEmpty()) {
+			if (Scheduler.time() >= nextDayChangeTime)
+			{
+				isDay = !isDay;
+				nextDayChangeTime = Scheduler.time() + 60.0;
+				if (isDay) Dialogues.dawn();
+				else Dialogues.dusk();
+			}
+		}
+		
 		
 		dlg.update();
 	}
@@ -339,9 +359,14 @@ class Empty extends Game {
 			var str = Localization.getText(Keys_text.CLICK_TO_START);
 			g.drawString(str, 0.5 * (width - font.stringWidth(str)), 650);
 		}
-		g.end();
 		
 		g.transformation = FastMatrix3.identity();
+		if (renderOverlay)
+		{
+			g.color = overlayColor;
+			g.fillRect(0, 0, width, height);
+		}
+		
 		for (box in BlaBox.boxes) {
 			g.color = Color.White;
 			box.render(g);

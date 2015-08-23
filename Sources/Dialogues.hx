@@ -3,9 +3,10 @@ package;
 import dialogue.*;
 import Cfg;
 import haxe.macro.Expr.Var;
+import kha.Color;
 import kha2d.Scene;
 import kha2d.Sprite;
-
+import sprites.IdSystem;
 import sprites.Player;
 
 using Lambda;
@@ -36,6 +37,40 @@ class Dialogues {
 		], true );
 	}
 	
+	static public function dawn() {
+		Empty.the.renderOverlay = true;
+		Empty.the.dlg.insert([
+			new Action(null, ActionType.FADE_TO_BLACK)
+			, new Bla(Keys_text.DAWN, null)
+			, new StartDialogue(function() {
+				for (ias in Empty.the.interactiveSprites)
+				{
+					ias.dlg.set([]);
+					var logger = Std.instance(ias, IdLoggerSprite);
+					if (logger != null) logger.idLogger.newDay();
+				}
+				Empty.the.setMainPlayer(Empty.the.agentPlayer);
+			})
+			, new Action(null, ActionType.FADE_FROM_BLACK)
+			, new StartDialogue(function() { Empty.the.renderOverlay = false; } )
+		]);
+	}
+	static public function dusk() {
+		Empty.the.renderOverlay = true;
+		Empty.the.dlg.insert([
+			new Action(null, ActionType.FADE_TO_BLACK)
+			, new Bla(Keys_text.DUSK, null)
+			, new StartDialogue(function() {
+				for (ias in Empty.the.interactiveSprites)
+				{
+					ias.dlg.set([]);
+				}
+				Empty.the.setMainPlayer(Empty.the.monsterPlayer);
+			})
+			, new Action(null, ActionType.FADE_FROM_BLACK)
+			, new StartDialogue(function() { Empty.the.renderOverlay = false; } )
+		]);
+	}
 	static public function startAsDetective() {
 		/*PlayerBullie.the.setCurrent();
 		PlayerBullie.the.dlg.insert( [

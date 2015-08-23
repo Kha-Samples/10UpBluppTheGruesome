@@ -7,15 +7,17 @@ import kha2d.Scene;
 class Dialogue {
 	private var items: Array<DialogueItem>;
 	private var index: Int = -1;
-	public var isActionActive(default, null): Bool = false;
+	//public var isActionActive(default, null): Bool = false;
 	public var blaBox: BlaBox;
 	
-	public function new() {}
+	public function new() { }
+
+	public function isEmpty(): Bool { return items == null || items.length == 0; }
 	
 	public function set(newItems: Array<DialogueItem>): Void {
-		if (newItems == null || newItems.length <= 0) {
+		/*if (newItems == null || newItems.length <= 0) {
 			return;
-		}
+		}*/
 		items = newItems;
 		index = -1;
 		next();

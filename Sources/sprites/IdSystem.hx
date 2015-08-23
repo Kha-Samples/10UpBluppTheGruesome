@@ -83,7 +83,7 @@ interface IdCardOwner
 
 class IdLoggerSprite extends InteractiveSprite
 {
-	var idLogger: IdLogger;
+	public var idLogger: IdLogger;
 	
 	public function new(nameTxtKey: String, image:Image, width:Int=0, height:Int=0, z:Int=1) {
 		super(image, width, height, z);

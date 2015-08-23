@@ -49,7 +49,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	}
 	
 	private function createRandomTask(): Void {
-		var value = Random.getUpTo(stuff.length + 1);
+		var value = Random.getUpTo(stuff.length);
 		if (value == 0) schedule.add(new MoveTask(this, monster));
 		else {
 			var thing = stuff[value - 1];

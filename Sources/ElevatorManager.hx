@@ -3,7 +3,15 @@ package;
 import kha.math.Random;
 import kha.math.Vector2;
 import kha.Scheduler;
+import kha2d.Scene;
 import kha2d.Sprite;
+import sprites.ElevatorIndicator;
+
+enum ElevatorState {
+	Idle;
+	WaitingForEnter;
+	MovingTo;
+}
 
 class ElevatorManager
 {
@@ -11,13 +19,30 @@ class ElevatorManager
 	
 	public var levels(get_levels, null) : Int;
 	public function get_levels() : Int {
-		return sprites.length;
+		return elevators.length;
 	}
 	
-	private var idle : Bool = true;
-	private var sprites : Array<Elevator> = new Array<Elevator>();
-	private var currentPosition : Int = -1;
-	private var idleTaskId : Int = -1;
+	private var state : ElevatorState = ElevatorState.Idle;
+	private var waitingTaskId : Int = -1;
+	private var elevators : Array<Elevator> = new Array<Elevator>();
+	private var indicators : Array<ElevatorIndicator> = new Array<ElevatorIndicator>();
+	
+	private var targetY : Float;
+	private var currentY : Float;
+	
+	private var currentLoad : Sprite;
+	private var currentCallback : Void->Void;
+	private var currentPosition(default, set_currentPosition) : Int;
+	private function set_currentPosition(value : Int) : Int {
+		currentPosition = value;
+		
+		for (indicator in indicators) {
+			indicator.setLevel(currentPosition);
+		}
+		
+		return currentPosition;
+	}
+	
 	
 	public function new() { }
 	
@@ -25,85 +50,142 @@ class ElevatorManager
 		the = instance;
 	}
 	
-	@:access(Empty.interactiveSprites)
-	public function setPositions(positions : Array<Vector2>) : Array<Elevator>
+	public function initSprites(positions : Array<Vector2>) : Array<Elevator>
 	{
-		positions.sort(function(pos1 : Vector2, pos2 : Vector2) { return Std.int(pos1.y - pos2.y); } );
-		sprites = new Array<Elevator>();
+		positions.sort(function(pos1 : Vector2, pos2 : Vector2) { return Std.int(pos2.y - pos1.y); } );
+		elevators = new Array<Elevator>();
 		for (i in 0...positions.length) {
-			var elevator = new Elevator(positions[i].x, positions[i].y, i);
-			sprites.push(elevator);
-			Empty.the.interactiveSprites.push(elevator);
+			var elevator : Elevator = new Elevator(positions[i].x, positions[i].y, i);
+			elevators.push(elevator);
+			Scene.the.addOther(elevator);
+			
+			var indicator : ElevatorIndicator = new ElevatorIndicator(positions[i].x, positions[i].y);
+			indicators.push(indicator);
+			Scene.the.addOther(indicator);
 		}
-		currentPosition = Random.getUpTo(positions.length - 1);
-		sprites[currentPosition].open = true;
 		
-		return sprites;
+		currentPosition = Random.getUpTo(positions.length - 1);
+		currentY = elevators[currentPosition].y;
+		elevators[currentPosition].open = true;
+		
+		return elevators;
 	}
 	
 	private var queue : Array<Int> = new Array<Int>();
 	public function callTo(toPosition : Int) {
-		if (idle) {
-			moveTo(toPosition);
+		if (state == Idle) {
+			if (toPosition == currentPosition) {
+				wait();
+			}
+			else  {
+				moveTo(toPosition, null, null);
+			}
 		}
 		else {
 			if (queue.indexOf(toPosition) < 0) queue.push(toPosition);
 		}
 	}
 	
-	private function moveTo(toPosition : Int) {
-		sprites[currentPosition].open = false;
-		Scheduler.addTimeTask(arrive.bind(null, toPosition, null), Math.abs(currentPosition - toPosition) * 3 + 1);
-	}
-	
-	public function getLevel(sprite: Sprite): Int {
-		var i = sprites.length - 1;
-		while (i >= 0) {
-			var elevator = sprites[i];
-			if (sprite.y > elevator.y + elevator.height) {
-				return i + 1;
-			}
-			--i;
-		}
-		return 0;
-	}
-	
-	public function getX(level: Int): Float {
-		return sprites[level].x + sprites[level].width / 2;
+	private function moveTo(toPosition : Int, load : Sprite, callback : Void -> Void) {
+		Scheduler.removeTimeTask(waitingTaskId);
+		
+		elevators[currentPosition].open = false;
+		
+		currentLoad = load;
+		currentCallback = callback;
+		targetY = elevators[toPosition].y;
+		
+		state = MovingTo;
 	}
 	
 	public function getIn(sprite : Sprite, atPosition : Int, toPosition : Int, callback : Void -> Void) : Bool {
-		if (!sprites[atPosition].open) return false;
+		if (!elevators[atPosition].open) return false;
 		
 		sprite.visible = false;
 		sprite.collides = false;
-		sprites[atPosition].open = false;
-		idle = false;
+		elevators[atPosition].open = false;
 		
-		Scheduler.removeTimeTask(idleTaskId);
-		Scheduler.addTimeTask(arrive.bind(sprite, toPosition, callback), Math.abs(atPosition - toPosition) * 3 + 1);
+		moveTo(toPosition, sprite, callback);
 		return true;
 	}
 	
 	private function arrive(spriteInside : Sprite, atPosition : Int, callback : Void -> Void) {
 		if (spriteInside != null) {
+			updateLoadPosition();
 			spriteInside.visible = true;
 			spriteInside.collides = true;
-			spriteInside.x = sprites[atPosition].x;
-			spriteInside.y = sprites[atPosition].y + sprites[atPosition].collisionRect().height - spriteInside.collisionRect().height;
 		}
-		currentPosition = atPosition;
-		sprites[atPosition].open = true;
-		idle = true;
+		
+		elevators[atPosition].open = true;
+		
+		if (queue.indexOf(atPosition) >= 0) {
+			wait();
+		}
+		else {
+			onIdle();
+		}
 		
 		if (callback != null) callback();
-		idleTaskId = Scheduler.addTimeTask(onIdle, 1);
+	}
+	
+	private function wait() {
+		state = WaitingForEnter;
+		waitingTaskId = Scheduler.addTimeTask(onIdle, 1);
 	}
 	
 	private function onIdle() {
 		if (queue.length > 0) {
-			moveTo(queue[0]);
+			moveTo(queue[0], null, null);
 			queue.remove(queue[0]);
 		}
+		else {
+			state = Idle;
+		}
+	}
+	
+	public function update(deltaTime : Float) {
+		switch (state) {
+			case Idle:
+			case WaitingForEnter:
+			case MovingTo:
+				var difference : Float = targetY - currentY;
+				var distance : Float = Math.abs(difference);
+				if (distance < 1) { 
+					arrive(currentLoad, currentPosition, currentCallback);
+				}
+				else {
+					currentY += Math.min(250 * deltaTime, distance) * difference / distance;
+					updateLoadPosition();
+					updateCurrentPosition();
+				}
+		}
+	}
+	
+	private function updateCurrentPosition() {
+		currentPosition = getLevel(currentY);
+		for (indicator in indicators) {
+			indicator.setLevel(currentPosition);
+		}
+	}
+	
+	private function updateLoadPosition() {
+		if (currentLoad != null) {
+			currentLoad.x = elevators[currentPosition].x;
+			currentLoad.y = currentY + elevators[currentPosition].collisionRect().height - currentLoad.collisionRect().height;
+		}
+	}
+	
+	public function getLevel(y : Float): Int {
+		for (i in 0...elevators.length) {
+			var elevator = elevators[i];
+			if (y > elevator.y + elevator.height) {
+				return i - 1;
+			}
+		}
+		return elevators.length - 1;
+	}
+	
+	public function getX(level: Int): Float {
+		return elevators[level].x + elevators[level].width / 2;
 	}
 }
