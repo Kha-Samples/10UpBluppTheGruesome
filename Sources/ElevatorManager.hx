@@ -58,6 +58,7 @@ class ElevatorManager
 			var elevator : Elevator = new Elevator(positions[i].x, positions[i].y, i);
 			elevators.push(elevator);
 			Scene.the.addOther(elevator);
+			Empty.the.interactiveSprites.push(elevator);
 			
 			var indicator : ElevatorIndicator = new ElevatorIndicator(positions[i].x, positions[i].y);
 			indicators.push(indicator);
