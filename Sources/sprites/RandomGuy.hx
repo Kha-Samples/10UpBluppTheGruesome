@@ -28,6 +28,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		walkRight = Animation.createRange(1, 8, 4);
 		lookLeft = false;
 		setAnimation(standRight);
+		accy = 0;
 		
 		IdCard = new IdCard("TODO: pick random name");
 		

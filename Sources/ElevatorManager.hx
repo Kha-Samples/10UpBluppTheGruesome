@@ -87,7 +87,7 @@ class ElevatorManager
 			spriteInside.visible = true;
 			spriteInside.collides = true;
 			spriteInside.x = sprites[atPosition].x;
-			spriteInside.y = sprites[atPosition].y;
+			spriteInside.y = sprites[atPosition].y + sprites[atPosition].collisionRect().height - spriteInside.collisionRect().height;
 		}
 		currentPosition = atPosition;
 		sprites[atPosition].open = true;
