@@ -49,7 +49,7 @@ class Bookshelf extends InteractiveSprite {
 		var text = Localization.getText(Keys_text.BOOKSHELF_ACTIONS);
 		choices.push([new StartDialogue(search)]);
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.BOOKSHELF_SEARCH);
-		choices.push([]);
+		choices.push([]); // TODO Blabox FAIL
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.BOOKSHELF_LEAVE);
 		dlg.insert([new BlaWithChoices( text, this, choices)]);
 	}
