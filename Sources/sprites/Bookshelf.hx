@@ -8,6 +8,7 @@ import kha.Loader;
 import kha2d.Animation;
 import kha2d.Direction;
 import kha2d.Sprite;
+import manipulatables.UseableSprite;
 
 import sprites.IdSystem;
 
@@ -32,9 +33,14 @@ class Bookshelf extends InteractiveSprite {
 	
 	function search(): Void {
 		if (important) {
-			// TODO: Give inventory item
+			// TODO: Fix item pickup
+			var fk : UseableSprite = new UseableSprite(Localization.getText(Keys_text.FLUXCOMPENSATOR), Loader.the.getImage("broetchen1"), 0, 0, 39, 39, 0);
+			Inventory.pick(fk);
 			setAnimation(destroyedAnimation);
 			destroyed = true;
+			
+			var text = Localization.getText(Keys_text.ITEMFOUND, [ fk.name ]);
+			dlg.insert([new Bla(text, this, true)]);
 		}
 	}
 	
@@ -52,7 +58,7 @@ class Bookshelf extends InteractiveSprite {
 	{
 		if (destroyed) return false;
 		
-		if (user == Player.current())
+		if (user == Player.current() && Std.is(user, Fishman))
 		{
 			useComputerDialogue();
 		}
