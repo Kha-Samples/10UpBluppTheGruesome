@@ -6,8 +6,12 @@ import kha2d.Sprite;
 import schedule.MoveTask;
 import schedule.Schedule;
 import schedule.WaitTask;
+import sprites.IdSystem.IdCard;
+import sprites.IdSystem.IdCardOwner;
 
-class RandomGuy extends Sprite {
+class RandomGuy extends Sprite implements IdCardOwner {
+	public var IdCard(default, null): IdCard;
+	
 	private var schedule: Schedule;
 	
 	private var standLeft: Animation;
@@ -24,6 +28,8 @@ class RandomGuy extends Sprite {
 		walkRight = Animation.createRange(1, 8, 4);
 		lookLeft = false;
 		setAnimation(standRight);
+		
+		IdCard = new IdCard("TODO: pick random name");
 		
 		schedule = new schedule.Schedule();
 		schedule.add(new WaitTask(this, 20));

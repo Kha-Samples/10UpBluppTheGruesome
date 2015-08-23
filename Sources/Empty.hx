@@ -34,7 +34,7 @@ import kha.Storage;
 import kha2d.Sprite;
 import kha2d.Tile;
 import kha2d.Tilemap;
-import localization.Keys_text;
+import localization.*;
 import sprites.Agent;
 import sprites.Computer;
 import sprites.Fishman;

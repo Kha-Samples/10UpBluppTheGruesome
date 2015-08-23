@@ -15,12 +15,12 @@ import dialogue.Dialogue;
 class InteractiveSprite extends Sprite {
 	public var isUseable(default, null) : Bool = false;
 	public var isLiftable(default, null) : Bool = false;
-	//public var dlg(default, null) : Dialogue;
+	public var dlg(default, null) : Dialogue;
 	public var playerCanUseIt(default, null) : Bool = false;
 	
 	public function new(image:Image, width:Int=0, height:Int=0, z:Int=1) {
 		super(image, width, height, z);
-		//dlg = new Dialogue();
+		dlg = new Dialogue();
 	}
 	
 	public var center(get, never) : Vector2;
@@ -35,7 +35,7 @@ class InteractiveSprite extends Sprite {
 	{
 		super.update();
 		
-		//dlg.update();
+		dlg.update();
 		
 		if (playerCanUseItClear) playerCanUseIt = false;
 		else playerCanUseItClear = true;
