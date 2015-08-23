@@ -12,12 +12,14 @@ import kha2d.Sprite;
 class Elevator extends Sprite {
 	var openAnimation : Animation;
 	var closedAnimation : Animation;
+	public var level : Int;
 	public var open(default, set_open) : Bool;
 	
-	public function new(x : Float, y : Float) {
+	public function new(x : Float, y : Float, level : Int) {
 		super(Loader.the.getImage("elevator"), 64 * 2, 78 * 2, 0);
 		this.x = x - 64 * 2 / 2;
 		this.y = y - 78 - 14;
+		this.level = level;
 		openAnimation = Animation.create(1);
 		closedAnimation = Animation.create(0);
 		collider = new Rectangle(0, 0, 64 * 2, 78 * 2);
