@@ -31,16 +31,16 @@ public class SpritesPanel extends JPanel implements MouseListener, MouseMotionLi
 
 	private SpritesPanel() {
 		int i = 0;
-		sprites.add(new Sprite("../Assets/0.png", i++, 32, 32));
-		sprites.add(new Sprite("../Assets/1.png", i++, 32, 32));
-		sprites.add(new Sprite("../Assets/2.png", i++, 32, 32));
-		sprites.add(new Sprite("../Assets/3.png", i++, 32, 32));
-		sprites.add(new Sprite("../Assets/4.png", i++, 32, 32));
-		sprites.add(new Sprite("../Assets/5.png", i++, 32, 32));
-		sprites.add(new Sprite("../Assets/6.png", i++, 32, 32));
-		sprites.add(new Sprite("../Assets/7.png", i++, 32, 32));
-		sprites.add(new Sprite("../Assets/8.png", i++, 32, 32));
-		sprites.add(new Sprite("../Assets/9.png", i++, 32, 32));
+		sprites.add(new Sprite("../Assets/0.png", i++));
+		sprites.add(new Sprite("../Assets/1.png", i++));
+		sprites.add(new Sprite("../Assets/2.png", i++));
+		sprites.add(new Sprite("../Assets/3.png", i++));
+		sprites.add(new Sprite("../Assets/4.png", i++));
+		sprites.add(new Sprite("../Assets/5.png", i++));
+		sprites.add(new Sprite("../Assets/6.png", i++));
+		sprites.add(new Sprite("../Assets/7.png", i++));
+		sprites.add(new Sprite("../Assets/8.png", i++));
+		sprites.add(new Sprite("../Assets/9.png", i++));
 		addMouseMotionListener(this);
 		addMouseListener(this);
 	}
