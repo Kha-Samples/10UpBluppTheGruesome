@@ -26,6 +26,8 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	private var monster: Sprite;
 	private var stuff: Array<InteractiveSprite>;
 	
+	private static var names = ["Ingo", "Christian", "Robert", "Björn", "Johannes", "Rebecca", "Stephen", "Alvar", "Michael", "Linh", "Roger", "Roman", "Max", "Paul", "Tobias", "Henno", "Niko", "Kai", "Julian"];
+	
 	public function new(monster: Sprite, stuff: Array<InteractiveSprite>) {
 		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
 		standLeft = Animation.create(9);
@@ -43,7 +45,9 @@ class RandomGuy extends Sprite implements IdCardOwner {
 			}
 		}
 		
-		IdCard = new IdCard("TODO: pick random name");
+		var name = names[Random.getUpTo(names.length - 1)];
+		names.remove(name);
+		IdCard = new IdCard(name);
 		
 		schedule = new schedule.Schedule();
 		while (schedule.length < 20) {

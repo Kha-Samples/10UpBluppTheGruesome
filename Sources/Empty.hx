@@ -170,7 +170,8 @@ class Empty extends Game {
 	}
 	
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
-		mode = Game; 
+		mode = Game;
+		Inventory.init();
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
 		var tilemap = new Tilemap("tileset", 32, 32, map, tileColissions);
@@ -376,6 +377,9 @@ class Empty extends Game {
 			g.color = Color.White;
 			box.render(g);
 		}
+		
+		Inventory.paint(g);
+		
 		g.end();
 		
 		startRender(frame);
