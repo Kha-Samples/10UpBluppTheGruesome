@@ -25,12 +25,15 @@ class ElevatorManager
 		the = instance;
 	}
 	
+	@:access(Empty.interactiveSprites)
 	public function setPositions(positions : Array<Vector2>) : Array<Elevator>
 	{
 		positions.sort(function(pos1 : Vector2, pos2 : Vector2) { return Std.int(pos1.y - pos2.y); } );
 		sprites = new Array<Elevator>();
 		for (i in 0...positions.length) {
-			sprites.push(new Elevator(positions[i].x, positions[i].y, i));
+			var elevator = new Elevator(positions[i].x, positions[i].y, i);
+			sprites.push(elevator);
+			Empty.the.interactiveSprites.push(elevator);
 		}
 		currentPosition = Random.getUpTo(positions.length - 1);
 		sprites[currentPosition].open = true;
