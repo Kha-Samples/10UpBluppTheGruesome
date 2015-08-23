@@ -5,7 +5,6 @@ import kha.math.Vector2;
 import kha.math.Vector2i;
 import kha.Storage;
 import kha2d.Sprite;
-import localization.Keys_text;
 
 class Cfg
 {

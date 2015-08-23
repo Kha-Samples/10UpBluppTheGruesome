@@ -4,7 +4,6 @@ import kha.Loader;
 import kha.Rectangle;
 import kha2d.Animation;
 import kha2d.Direction;
-import localization.Keys_text;
 import sprites.IdSystem.IdCard;
 import sprites.IdSystem.IdCardOwner;
 

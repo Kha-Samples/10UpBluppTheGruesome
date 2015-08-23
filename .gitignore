@@ -1,4 +1,5 @@
 
 /build
 /kake.lua
-/Sources/localization/Keys_text.hx
+/Sources/Keys_*.hx
+

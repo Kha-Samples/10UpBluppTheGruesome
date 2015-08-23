@@ -8,7 +8,6 @@ import kha.Loader;
 import kha2d.Animation;
 import kha2d.Direction;
 import kha2d.Sprite;
-import localization.Keys_text;
 
 import sprites.IdSystem;
 
@@ -37,14 +36,14 @@ class Computer extends IdLoggerSprite {
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_SEARCH);
 		if (Std.is(currentUser, Agent))
 		{
-			choices.push([new Bla(idLogger.displayUsers(), this), new StartDialogue(useComputerDialogue)]);
+			choices.push([new BlaWithChoices(idLogger.displayUsers() + "1: [" + Localization.getText(Keys_text.BACK) + "]", this, [[new StartDialogue(useComputerDialogue)]])]);
 			text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_SHOW_USERS);
 		}
 		choices.push([new StartDialogue(stopUsing)]);
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_LOGOUT);
 		choices.push([]);
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_JUST_LEAVE);
-		Empty.the.dlg.insert([new BlaWithChoices( text, this, choices)]);
+		dlg.insert([new BlaWithChoices( text, this, choices)]);
 	}
 	override public function useFrom(dir:Direction, user:Dynamic): Bool 
 	{
