@@ -434,6 +434,10 @@ class Empty extends Game {
 				Player.current().left = false;
 			case UP:
 				Player.current().setUp();
+			case Key.CHAR:
+				if (char == 'a') {
+					Player.current().attack();
+				}
 			default:
 				
 		}
