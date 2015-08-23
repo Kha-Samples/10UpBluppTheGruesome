@@ -51,7 +51,7 @@ class IdLogger
 		var toDisplay = new Map<String, Int>();
 		for (card in users)
 		{
-			var id = card.Id + ": " + card.Name;
+			var id = card.Id + " (" + card.Name + ")";
 			if (toDisplay.exists(id)) toDisplay[id] += 1;
 			else toDisplay[id] = 1;
 		}
@@ -63,7 +63,7 @@ class IdLogger
 		var list : String = Localization.getText(Keys_text.IDLOGGER_DISPLAY, [txtKey]);
 		for (id in toDisplay.keys())
 		{
-			list += "\n" + id + ": " + toDisplay[id];
+			list += "\n" + id + ": " + toDisplay[id] + "x";
 		}
 		return list;
 	}
