@@ -4,8 +4,12 @@ import kha.Loader;
 import kha.Rectangle;
 import kha2d.Animation;
 import kha2d.Direction;
+import localization.Keys_text;
+import sprites.IdSystem.IdCard;
+import sprites.IdSystem.IdCardOwner;
 
-class Agent extends Player {
+class Agent extends Player implements IdCardOwner {
+	public var IdCard(default, null): IdCard;
 	
 	public function new(x: Float, y: Float) {
 		super(1, x, y, "agent", Std.int(410 / 10) * 2, Std.int(455 / 7) * 2, 0);
@@ -18,6 +22,8 @@ class Agent extends Player {
 		jumpRight = Animation.create(30);
 		setAnimation(jumpRight);
 		collider = new Rectangle(20, 30, 41 * 2 - 40, (65 - 1) * 2 - 30);
+		
+		IdCard = new IdCard(Keys_text.AGENT);
 	}
 	
 	override public function hitFrom(dir: Direction): Void {

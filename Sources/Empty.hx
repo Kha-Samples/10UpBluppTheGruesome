@@ -39,6 +39,7 @@ import sprites.Agent;
 import sprites.Computer;
 import sprites.Fishman;
 import sprites.Player;
+import sprites.RandomGuy;
 
 import dialogue.*;
 
@@ -224,6 +225,11 @@ class Empty extends Game {
 		for (sprite in elevatorSprites) {
 			Scene.the.addOther(sprite);
 		}
+		
+		var guy = new RandomGuy(monsterPlayer);
+		guy.x = 64;
+		guy.y = 64;
+		Scene.the.addOther(guy);
 		
 		setMainPlayer(monsterPlayer);
 		
