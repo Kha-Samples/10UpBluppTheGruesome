@@ -1,11 +1,13 @@
 package sprites;
 
+import dialogue.BlaWithChoices;
 import kha.Loader;
 import kha.Rectangle;
 import kha2d.Animation;
 import kha2d.Direction;
 import kha2d.Scene;
 import kha2d.Sprite;
+import sprites.IdSystem.IdCardOwner;
 import sprites.IdSystem.IdLogger;
 
 class Door extends DestructibleSprite {
@@ -80,9 +82,9 @@ class Door extends DestructibleSprite {
 		if (opened) return;
 		if (health <= 0) return;
 		
-		if (Std.is(user, sprites.IdCardOwner))
+		if (Std.is(sprite, IdCardOwner))
 		{
-			var owner: IdCardOwner = cast user;
+			var owner : IdCardOwner = cast sprite;
 			idLogger.useID(owner.IdCard);
 		}
 		else

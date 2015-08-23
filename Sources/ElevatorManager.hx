@@ -50,8 +50,7 @@ class ElevatorManager
 		the = instance;
 	}
 	
-	public function initSprites(positions : Array<Vector2>) : Array<Elevator>
-	{
+	public function initSprites(positions : Array<Vector2>) : Array<Elevator> {
 		positions.sort(function(pos1 : Vector2, pos2 : Vector2) { return Std.int(pos2.y - pos1.y); } );
 		elevators = new Array<Elevator>();
 		for (i in 0...positions.length) {
@@ -91,6 +90,8 @@ class ElevatorManager
 	
 	private function moveTo(toPosition : Int, load : Sprite, callback : Void -> Void) {
 		Scheduler.removeTimeTask(waitingTaskId);
+		
+		// TODO: Ingo, please implement cancel elevator usage here
 		
 		elevators[currentPosition].open = false;
 		
