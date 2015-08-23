@@ -16,7 +16,7 @@ class MoveTask extends Task {
 	}
 	
 	private static function getLevel(sprite: Sprite): Int {
-		return Std.int(sprite.y / 10);
+		return Std.int(sprite.y / 100);
 	}
 	
 	override public function update(): Void {
@@ -42,15 +42,21 @@ class MoveTask extends Task {
 				// use elevator
 				++step;
 			case 2:
-				if (sprite.x < target.x - 10) {
-					sprite.speedx = speed;
-				}
-				else if (sprite.x > target.x + 10) {
-					sprite.speedx = -speed;
+				targetLevel = getLevel(target);
+				if (targetLevel != getLevel(sprite)) {
+					step -= 2;
 				}
 				else {
-					sprite.speedx = 0;
-					done = true;
+					if (sprite.x + sprite.width / 2 < target.x + target.width / 2 - 10) {
+						sprite.speedx = speed;
+					}
+					else if (sprite.x + sprite.width / 2 > target.x + target.width / 2 + 10) {
+						sprite.speedx = -speed;
+					}
+					else {
+						sprite.speedx = 0;
+						done = true;
+					}
 				}
 		}
 	}
