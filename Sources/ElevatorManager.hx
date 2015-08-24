@@ -107,7 +107,9 @@ class ElevatorManager
 	
 	public function getIn(sprite : Sprite, atPosition : Int, toPosition : Int, callback : Void -> Void) : Bool {
 		if (!elevators[atPosition].open) return false;
-		
+
+		if (!elevators[atPosition].useFrom(sprite)) return false;
+
 		sprite.visible = false;
 		sprite.collides = false;
 		elevators[atPosition].open = false;
