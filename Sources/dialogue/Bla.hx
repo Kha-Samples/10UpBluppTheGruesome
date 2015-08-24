@@ -20,22 +20,21 @@ class Bla implements DialogueItem {
 	}
 	
 	var dlg: Dialogue;
-	private function keyUpListener(key:Key, char: String) {
+	private function keyDownListener(key:Key, char: String) {
 		trace ('KEY UP: $char');
-		Keyboard.get().remove(null, keyUpListener);
+		Keyboard.get().remove(keyDownListener, null);
 		kha.Scheduler.addTimeTask( function() { 
 			finished = true;
 		}, 0.5);
 	}
 	
-	@:access(Empty.mode)
 	public function execute(dlg: Dialogue) : Void {
 		if (dlg.blaBox == null) {
 			this.dlg = dlg;
 			dlg.blaBox = new BlaBox(text, speaker, persistent);
 			if (persistent)
 			{
-				Keyboard.get().notify(null, keyUpListener);
+				Keyboard.get().notify(keyDownListener, null);
 			}
 			BlaBox.boxes.push(dlg.blaBox);
 		} else {
@@ -45,7 +44,7 @@ class Bla implements DialogueItem {
 	
 	public function cancel(dlg: Dialogue) : Void
 	{
-		Keyboard.get().remove(null, keyUpListener);
+		Keyboard.get().remove(keyDownListener, null);
 		BlaBox.boxes.remove(dlg.blaBox);
 		dlg.blaBox = null;
 	}

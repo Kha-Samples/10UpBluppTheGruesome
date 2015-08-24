@@ -421,19 +421,23 @@ class Empty extends Game {
 				{
 					trace ('change day!');
 					nextDayChangeTime = Math.NaN;
+					mode = PlayerSwitch;
 					if (Player.current() == monsterPlayer) Dialogues.dawn();
 					else Dialogues.dusk();
 				}
 				else
 				{
-					for (dlg in npcDlgs)
-					{
-						dlg.update();
-					}
 				}
 			}
 		}
 		
+		var index = npcDlgs.length - 1;
+		while (index >= 0)
+		{
+			npcDlgs[index].update();
+			if (npcDlgs[index].isEmpty()) npcDlgs.splice(index, 1);
+			--index;
+		}
 		playerDlg.update();
 		
 		var player = Player.current();

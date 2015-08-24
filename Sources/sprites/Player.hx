@@ -265,4 +265,13 @@ class Player extends DestructibleSprite {
 			ias.useFrom(this);
 		}
 	}
+	
+	public function wouldUse(): String {
+		var touse = Empty.the.interactiveSprites.filter(function(sprite:InteractiveSprite):Bool { return sprite.playerCanUseIt; } );
+		var px = x + 0.5 * tempcollider.width;
+		for (ias in touse) {
+			return Type.getClassName(Type.getClass(ias));
+		}
+		return null;
+	}
 }

@@ -32,9 +32,18 @@ class Dialogues {
 		], true );
 	}
 	
+	static function fadeFromBlackNoBlock()
+	{
+		var dlg = new Dialogue();
+		Empty.the.npcDlgs.push(dlg);
+		dlg.insert([
+			new Action(null, ActionType.FADE_FROM_BLACK)
+			, new StartDialogue(function() { Empty.the.renderOverlay = false; })
+		]);
+	}
+	
 	static public function dawn() {
 		trace ('DAWN!');
-		Empty.the.mode = PlayerSwitch;
 		Empty.the.renderOverlay = true;
 		Empty.the.playerDlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)
@@ -42,11 +51,7 @@ class Dialogues {
 			, new BlaWithChoices(Keys_text.DAWN, null, [
 				[
 					new StartDialogue(Empty.the.onDayBegin)
-					, new Action(null, ActionType.FADE_FROM_BLACK)
-					, new StartDialogue(function() {
-						trace ('after FADE_FROM_BLACK');
-						Empty.the.renderOverlay = false;
-					})
+					, new StartDialogue(fadeFromBlackNoBlock)
 				]
 				, [new StartDialogue(escMenu), new StartDialogue(dawn)]
 			])
@@ -54,7 +59,6 @@ class Dialogues {
 	}
 	static public function dusk() {
 		trace ('DUSK!');
-		Empty.the.mode = PlayerSwitch;
 		Empty.the.renderOverlay = true;
 		Empty.the.playerDlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)
@@ -62,11 +66,7 @@ class Dialogues {
 			, new BlaWithChoices(Keys_text.DUSK, null, [
 				[
 					new StartDialogue(Empty.the.onNightBegin)
-					, new Action(null, ActionType.FADE_FROM_BLACK)
-					, new StartDialogue(function() {
-						trace ('after FADE_FROM_BLACK');
-						Empty.the.renderOverlay = false;
-					})
+					, new StartDialogue(fadeFromBlackNoBlock)
 				]
 				, [new StartDialogue(escMenu), new StartDialogue(dusk)]
 			])
