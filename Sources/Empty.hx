@@ -42,9 +42,11 @@ import sprites.Door;
 import sprites.Fishman;
 import sprites.IdSystem;
 import sprites.InteractiveSprite;
+import sprites.Mechanic;
 import sprites.Michael;
 import sprites.Player;
 import sprites.RandomGuy;
+import sprites.Rowdy;
 
 import dialogue.*;
 
@@ -220,8 +222,6 @@ class Empty extends Game {
 			var sprite : kha2d.Sprite = null;
 			switch (sprites[i * 3]) {
 			case 0:
-				monsterPlayer = new Fishman(sprites[i * 3 + 1], sprites[i * 3 + 2]);
-				agentPlayer = new Agent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 				agentSpawn = new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 			case 1:
 				computers.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
@@ -263,17 +263,52 @@ class Empty extends Game {
 		var  npcSpawnsCopy : Array<Vector2> = npcSpawns.copy();
 		populateRandom(5, npcSpawnsCopy, function(index : Int, pos : Vector2) {
 			var guy;
-			if (index == 0) guy = new RandomGuy(interactiveSprites, true);
+			if (index == 0) guy = createMonsterGuy(interactiveSprites);
 			else if (index == 1) guy = new Michael(interactiveSprites);
-			else guy = new RandomGuy(interactiveSprites, false);
+			else guy = createGuy(interactiveSprites);
 			guy.x = pos.x;
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
 		
+		monsterPlayer = new Fishman(agentSpawn.x, agentSpawn.y);
+		agentPlayer = new Agent(agentSpawn.x, agentSpawn.y);
+		setMainPlayer(agentPlayer, agentSpawn);
 		onDayBegin();
 		Configuration.setScreen(this);
 		
 		Dialogues.dusk();
+	}
+	
+	private var gotMechanic = false;
+	private var gotRowdy = false;
+	
+	private function createMonsterGuy(interacticeSprites: Array<InteractiveSprite>): RandomGuy {
+		var value = Random.getUpTo(5);
+		if (value == 0) {
+			gotMechanic = true;
+			return new Mechanic(interacticeSprites, true);
+		}
+		else if (value == 1) {
+			gotRowdy = true;
+			return new Rowdy(interacticeSprites, true);
+		}
+		else {
+			return new RandomGuy(interacticeSprites, true);
+		}
+	}
+	
+	private function createGuy(interacticeSprites: Array<InteractiveSprite>): RandomGuy {
+		if (!gotMechanic) {
+			gotMechanic = true;
+			return new Mechanic(interacticeSprites, false);
+		}
+		else if (!gotRowdy) {
+			gotRowdy = true;
+			return new Rowdy(interacticeSprites, false);
+		}
+		else {
+			return new RandomGuy(interacticeSprites, false);
+		}
 	}
 	
 	private function populateRandom(count : Int, positions : Array<Vector2>, creationFunction : Int->Vector2->Void) {
@@ -291,7 +326,8 @@ class Empty extends Game {
 		if (Player.current() != null) {
 			Scene.the.removeHero(Player.current());
 		}
-		player.setPosition(spawnPosition);
+		player.x = spawnPosition.x;
+		player.y = spawnPosition.y - player.height - 5; // -5, just to be sure
 		player.setCurrent();
 		Scene.the.addHero(player);
 	}
@@ -313,25 +349,23 @@ class Empty extends Game {
 		case 60: return true;
 		case 61: return true;
 		case 62: return true;*/
-		case 32: return true;
-		case 33: return true;
-		case 34: return true;
-		case 39: return true;
+		case 6: return true;
 		
-		case 48: return true;
-		case 49: return true;
-		case 50: return true;
-		case 55: return true;
+		case 481: return true;
+		case 482: return true;
+		
+		case 163: return true;
+		case 179: return true;
 		
 		case 64: return true;
 		case 65: return true;
+		
+		case 34: return true;
+		case 39: return true;
+		case 50: return true;
+		case 55: return true;
 		case 66: return true;
 		case 71: return true;
-		
-		case 80: return true;
-		case 81: return true;
-		case 82: return true;
-		case 87: return true;	
 		/*case 63: return true;
 		case 64: return true;
 		case 65: return true;

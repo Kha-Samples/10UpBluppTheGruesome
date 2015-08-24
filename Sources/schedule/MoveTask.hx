@@ -9,11 +9,13 @@ class MoveTask extends Task {
 	private var step: Int;
 	private var inElevator: Bool;
 	private static inline var speed: Float = 2;
+	private var waitOnOpen: Int;
 	
 	public function new(guy: RandomGuy, target: Sprite) {
 		super(guy);
 		this.target = target;
 		step = 0;
+		waitOnOpen = 0;
 		inElevator = false;
 	}
 	
@@ -39,12 +41,20 @@ class MoveTask extends Task {
 				}
 			case 1:
 				if (!inElevator) {
-					inElevator = ElevatorManager.the.getIn(guy, ElevatorManager.the.getLevel(guy.y), ElevatorManager.the.getLevel(target.y), function () {
-						++step;
-						inElevator = false;
-					});
-					if (!inElevator) {
+					if (ElevatorManager.the.doorIsOpen(ElevatorManager.the.getLevel(guy.y))) {
+						if (waitOnOpen > 0) {
+							--waitOnOpen;
+						}
+						else {
+							inElevator = ElevatorManager.the.getIn(guy, ElevatorManager.the.getLevel(guy.y), ElevatorManager.the.getLevel(target.y), function () {
+								++step;
+								inElevator = false;
+							});
+						}
+					}
+					else {
 						ElevatorManager.the.callTo(ElevatorManager.the.getLevel(guy.y));
+						waitOnOpen = 60 * 3;
 					}
 				}
 			case 2:

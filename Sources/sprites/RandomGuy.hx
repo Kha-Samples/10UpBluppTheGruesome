@@ -35,6 +35,8 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	
 	public var sleeping: Bool;
 	
+	private var primaryComputer: Computer;
+	
 	private static var names = ["Augusto", "Ingo", "Christian", "Robert", "Björn", "Johannes", "Rebecca", "Stephen", "Alvar", "Michael", "Linh", "Roger", "Roman", "Max", "Paul", "Tobias", "Henno", "Niko", "Kai", "Julian"];
 	public static var allguys = new Array<RandomGuy>();
 	
@@ -51,8 +53,16 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		
 		this.stuff = [];
 		for (thing in stuff) {
-			if (thing.isUseable && (Std.is(thing, Computer) || Std.is(thing, Coffee))) {
+			if (thing.isUseable && thing.isUsableFrom(this) && (Std.is(thing, Computer) || Std.is(thing, Coffee))) {
 				this.stuff.push(thing);
+			}
+		}
+		
+		primaryComputer = null;
+		while (primaryComputer == null) {
+			var thing = this.stuff[Random.getUpTo(this.stuff.length - 1)];
+			if (Std.is(thing, Computer)) {
+				primaryComputer = cast thing;
 			}
 		}
 		
@@ -68,7 +78,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	public static function monsterPosition(): Vector2 {
 		for (guy in allguys) {
 			if (guy.youarethemonster) {
-				return new Vector2(guy.x, guy.y);
+				return new Vector2(guy.x, guy.y + guy.height);
 			}
 		}
 		return new Vector2();
@@ -146,7 +156,9 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		var thing = stuff[value];
 		schedule.add(new MoveTask(this, thing));
 		if (Std.is(thing, Computer)) {
-			schedule.add(new ComputerTask(this, cast thing));
+			var mycomp = Random.getUpTo(4) != 0;
+			if (mycomp) schedule.add(new ComputerTask(this, primaryComputer));
+			else schedule.add(new ComputerTask(this, cast thing));
 		}
 		if (Std.is(thing, Coffee)) {
 			schedule.add(new CoffeeTask(this, cast thing));

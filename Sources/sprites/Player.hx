@@ -108,7 +108,7 @@ class Player extends DestructibleSprite {
 				if (standing) setAnimation(lookRight ? standRight : standLeft);
 				speedx = 0;
 			}
-			if (up && standing) {
+			if (up && (standing || (x > 3821 && x < 3956))) { // Ladder hack
 				setAnimation(lookRight ? jumpRight : jumpLeft);
 				speedy = -8.2;
 			}
