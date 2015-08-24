@@ -51,5 +51,6 @@ class Schedule {
 			}
 		}
 		tasks = [];
+		currentTask = null;
 	}
 }

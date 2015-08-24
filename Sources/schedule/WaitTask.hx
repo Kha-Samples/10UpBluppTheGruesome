@@ -15,7 +15,7 @@ class WaitTask extends Task {
 	override public function update(): Void {
 		if (!taskScheduled) {
 			taskScheduled = true;
-			Scheduler.addTimeTask(function() { done = true; }, Random.getIn(1, 15));
+			Scheduler.addTimeTask(function() { done = true; }, Random.getIn(1, 5));
 		}
 	}
 }
