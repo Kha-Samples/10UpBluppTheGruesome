@@ -1,5 +1,6 @@
 package schedule;
 
+import kha.math.Random;
 import kha.Scheduler;
 import kha2d.Direction;
 import kha2d.Sprite;
@@ -19,7 +20,12 @@ class ComputerTask extends Task {
 		if (!taskScheduled) {
 			taskScheduled = true;
 			computer.useFrom(Direction.LEFT, sprite);
-			Scheduler.addTimeTask(function() { computer.stopUsing(); done = true; }, 5);
+			Scheduler.addTimeTask(function() {
+				if (Random.getIn(0, 5) != 0) {
+					computer.stopUsing();
+				}
+				done = true;
+			}, Random.getIn(5, 15));
 		}
 	}
 }
