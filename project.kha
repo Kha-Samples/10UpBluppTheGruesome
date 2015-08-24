@@ -315,6 +315,11 @@
 				"green": 174,
 				"blue": 201
 			}
+		},
+		{
+			"file": "coffee.png",
+			"name": "coffee",
+			"type": "image"
 		}
 	],
 	"rooms": [
@@ -366,6 +371,7 @@
 				"floorlevel",
 				"door",
 				"zzzzz",
+        "coffee",
 				"broetchen1",
 				"broetchen2"
 			]

@@ -36,6 +36,7 @@ import kha2d.Tile;
 import kha2d.Tilemap;
 import sprites.Agent;
 import sprites.Bookshelf;
+import sprites.Coffee;
 import sprites.Computer;
 import sprites.Door;
 import sprites.Fishman;
@@ -242,6 +243,11 @@ class Empty extends Game {
 				bookshelves.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			case 5:
 				npcSpawns.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+			case 6:
+				npcSpawns.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				var coffee : Coffee = new Coffee(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				Scene.the.addOther(coffee);
+				interactiveSprites.push(coffee);
 			}
 		}
 		ElevatorManager.the.initSprites(elevatorPositions);
@@ -318,14 +324,14 @@ class Empty extends Game {
 		case 66: return true;
 		case 67: return true;
 		case 68: return true;
-		case 70: return true;
+		/*case 70: return true;
 		case 74: return true;
 		case 75: return true;
 		case 76: return true;
 		case 77: return true;
 		case 84: return true;
 		case 86: return true;
-		case 87: return true;
+		case 87: return true;*/
 		default:
 			return false;
 		}
