@@ -19,10 +19,10 @@ class ComputerTask extends Task {
 	override public function update(): Void {
 		if (!taskScheduled) {
 			taskScheduled = true;
-			computer.useFrom(Direction.LEFT, guy);
+			computer.useFrom(guy);
 			Scheduler.addTimeTask(function() {
 				if (Random.getIn(0, 5) != 0) {
-					computer.stopUsing();
+					computer.stopUsing(true);
 				}
 				done = true;
 			}, Random.getIn(5, 15));
@@ -30,9 +30,11 @@ class ComputerTask extends Task {
 	}
 	
 	override public function doImmediately(): Void {
-		computer.useFrom(Direction.LEFT, guy);
+		computer.useFrom(guy);
 		if (Random.getIn(0, 5) != 0) {
-			computer.stopUsing();
+			computer.stopUsing(true);
+		} else {
+			computer.stopUsing(false);
 		}
 	}
 }

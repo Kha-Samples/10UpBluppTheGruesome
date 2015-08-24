@@ -1,11 +1,13 @@
 package sprites;
 
 import dialogue.Bla;
+import dialogue.DialogueItem;
 import haxe.crypto.Adler32;
 import haxe.io.Bytes;
 import kha.Image;
 import kha.math.Random;
 import kha2d.Direction;
+import kha2d.Sprite;
 import sprites.IdSystem.IdLogger;
 
 class IdCard
@@ -57,7 +59,7 @@ class IdLogger
 		}
 		return toDisplay;
 	}
-	public function displayUsers(): String
+	public function displayUsers(speaker: Sprite): DialogueItem
 	{
 		var toDisplay = countById(loggedIDs);
 		var list : String = Localization.getText(Keys_text.IDLOGGER_DISPLAY, [txtKey]);
@@ -65,7 +67,7 @@ class IdLogger
 		{
 			list += "\n" + id + ": " + toDisplay[id] + "x";
 		}
-		return list;
+		return new Bla(list, speaker, true);
 	}
 	
 	public function newDay()
@@ -91,9 +93,13 @@ class IdLoggerSprite extends InteractiveSprite
 		isUseable = true;
 	}
 	
-	override public function useFrom(dir: Direction, user: Dynamic): Bool
+	override public function isUsableFrom(user:Dynamic):Bool 
 	{
-		if (Std.is(user, sprites.IdCardOwner))
+		return super.isUsableFrom(user) && Std.is(user, sprites.IdCardOwner);
+	}
+	override public function useFrom(user: Dynamic): Bool
+	{
+		if (super.useFrom(user))
 		{
 			var owner: IdCardOwner = cast user;
 			

@@ -39,16 +39,22 @@ class Elevator extends IdLoggerSprite {
 		setAnimation(open ? openAnimation : closedAnimation);
 		if (!open) {
 			if (isCurrentlyUsedFrom == Player.current()) {
-				Empty.the.playerDlg.cancel();
+				Empty.the.playerDlg.cancel(); // TODO: FIXME!
 			}
+			stopUsing(false);
 		}
 		return open;
 	}
 	
-	override public function useFrom(dir:Direction, user:Dynamic):Bool 
+	override public function isUsableFrom(user:Dynamic):Bool 
 	{
-		if (!super.useFrom(dir, user)) return false;
-		if (open) 
+		return super.isUsableFrom(user);
+	}
+	override public function useFrom(user:Dynamic):Bool 
+	{
+		if (!super.useFrom(user)) return false;
+		// TODO: agent reading logs
+		if (open)
 		{
 			var text : String = "";
 			var choices = new Array<Array<DialogueItem>>();
@@ -61,11 +67,11 @@ class Elevator extends IdLoggerSprite {
 			choices.push([new StartDialogue(ElevatorManager.the.getIn.bind(user, level, 0, null))]);
 			text += '${ElevatorManager.the.levels}: ' + Localization.getText(Keys_text.FLOOR_0) + "\n";
 			Empty.the.playerDlg.insert([new BlaWithChoices(text, this, choices), new StartDialogue(function() { isCurrentlyUsedFrom = null; })]);
-			isCurrentlyUsedFrom = user;
 		}
 		else
 		{
 			ElevatorManager.the.callTo(level);
+			isCurrentlyUsedFrom = null; // instant task
 		}
 		
 		return true;

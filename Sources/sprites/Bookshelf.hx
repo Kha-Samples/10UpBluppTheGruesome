@@ -49,19 +49,22 @@ class Bookshelf extends InteractiveSprite {
 		var text = Localization.getText(Keys_text.BOOKSHELF_ACTIONS);
 		choices.push([new StartDialogue(search)]);
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.BOOKSHELF_SEARCH);
-		choices.push([]); // TODO Blabox FAIL
+		choices.push([new StartDialogue(stopUsing.bind(true))]);
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.BOOKSHELF_LEAVE);
 		Empty.the.playerDlg.insert([new BlaWithChoices( text, this, choices)]);
 	}
 	
-	override public function useFrom(dir:Direction, user:Dynamic): Bool 
+	override public function isUsableFrom(user:Dynamic):Bool 
 	{
-		if (destroyed) return false;
-		
-		if (user == Player.current() && Std.is(user, Fishman))
+		return super.isUsableFrom(user) && !destroyed && user == Player.current() && Std.is(user, Fishman);
+	}
+	override public function useFrom(user:Dynamic): Bool 
+	{
+		if (super.useFrom(user))
 		{
 			useDialogue();
+			return true;
 		}
-		return true;
+		return false;
 	}
 }

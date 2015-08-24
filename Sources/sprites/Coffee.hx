@@ -50,12 +50,16 @@ class Coffee extends InteractiveSprite {
 		dlg.insert([new BlaWithChoices( text, this, choices)]);
 	}*/
 	
-	override public function useFrom(dir:Direction, user:Dynamic): Bool 
+	override public function isUsableFrom(user:Dynamic):Bool 
 	{
-		if (user == Player.current() && Std.is(user, Fishman))
+		return super.isUsableFrom(user);
+	}
+	override public function useFrom(user:Dynamic): Bool 
+	{
+		if (super.useFrom(user))
 		{
-			//useComputerDialogue();
+			return true;
 		}
-		return true;
+		return false;
 	}
 }

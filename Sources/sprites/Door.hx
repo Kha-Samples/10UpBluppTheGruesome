@@ -1,6 +1,7 @@
 package sprites;
 
 import dialogue.BlaWithChoices;
+import dialogue.StartDialogue;
 import kha.Loader;
 import kha.Rectangle;
 import kha.Scheduler;
@@ -112,11 +113,16 @@ class Door extends DestructibleSprite {
 		}
 	}
 	
-	override public function useFrom(dir: Direction, user: Dynamic): Bool
+	override public function isUsableFrom(user:Dynamic):Bool 
 	{
-		if (Std.is(user, Agent))
+		return health > 0 && Std.is(user, Agent) && Player.current() == user;
+	}
+	override public function useFrom(user: Dynamic): Bool
+	{
+		if (isUsableFrom(user))
 		{
-			Empty.the.playerDlg.set([ new BlaWithChoices(idLogger.displayUsers() + "\n\n1: [" + Localization.getText(Keys_text.BACK) + "]", this, [[]])]);
+			isCurrentlyUsedFrom = user; 
+			Empty.the.playerDlg.set([ idLogger.displayUsers(this), new StartDialogue(stopUsing.bind(true)) ]);
 			
 			return true;
 		}

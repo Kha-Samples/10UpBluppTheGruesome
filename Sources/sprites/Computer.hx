@@ -39,18 +39,23 @@ class Computer extends IdLoggerSprite {
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_SEARCH);
 		if (Std.is(currentUser, Agent))
 		{
-			choices.push([new BlaWithChoices(idLogger.displayUsers() + "\n\n1: [" + Localization.getText(Keys_text.BACK) + "]", this, [[new StartDialogue(useDialogue)]])]);
+			choices.push([idLogger.displayUsers(this), new StartDialogue(useDialogue)]);
 			text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_SHOW_USERS);
 		}
-		choices.push([new StartDialogue(stopUsing)]);
+		choices.push([new StartDialogue(stopUsing.bind(true))]);
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_LOGOUT);
-		choices.push([]);
+		choices.push([new StartDialogue(stopUsing.bind(false))]);
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.COMPUTER_JUST_LEAVE);
 		Empty.the.playerDlg.insert([new BlaWithChoices( text, this, choices)]);
 	}
-	override public function useFrom(dir:Direction, user:Dynamic): Bool 
+	
+	override public function isUsableFrom(user:Dynamic):Bool 
 	{
-		if (currentUser != null || super.useFrom(dir, user))
+		return currentUser != null || super.isUsableFrom(user);
+	}
+	override public function useFrom(user:Dynamic): Bool 
+	{
+		if (super.useFrom(user))
 		{
 			if (currentUser == null) currentUser = cast user;
 			
@@ -65,9 +70,13 @@ class Computer extends IdLoggerSprite {
 		}
 		return false;
 	}
-	override public function stopUsing():Void 
+	override public function stopUsing(clean: Bool):Void 
 	{
-		currentUser = null;
-		setAnimation(offAnimation);
+		super.stopUsing(clean);
+		if (clean)
+		{
+			currentUser = null;
+			setAnimation(offAnimation);
+		}
 	}
 }

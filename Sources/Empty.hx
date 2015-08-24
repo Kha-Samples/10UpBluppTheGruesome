@@ -77,7 +77,6 @@ class Empty extends Game {
 	
     var lastTime = 0.0;
 	
-	var isDay: Bool = true;
 	var nextDayChangeTime: Float = Math.NaN;
 	
 	public function new() {
@@ -289,7 +288,7 @@ class Empty extends Game {
 	}
 	
 	public function setMainPlayer(player : Player, spawnPosition : Vector2) {
-		trace ("setMainPlayer!");
+		trace ("setMainPlayer: " + Type.getClassName(Type.getClass(player)));
 		if (Player.current() != null) {
 			Scene.the.removeHero(Player.current());
 		}
@@ -376,15 +375,8 @@ class Empty extends Game {
 				if (Scheduler.time() >= nextDayChangeTime)
 				{
 					trace ('change day!');
-					for (dlg in npcDlgs)
-					{
-						dlg.cancel();
-					}
-					npcDlgs.splice(0, npcDlgs.length);
-					
-					isDay = !isDay;
 					nextDayChangeTime = Math.NaN;
-					if (isDay) Dialogues.dawn();
+					if (Player.current() == monsterPlayer) Dialogues.dawn();
 					else Dialogues.dusk();
 				}
 				else
@@ -409,14 +401,14 @@ class Empty extends Game {
 	}
 	
 	public function onDayBegin() : Void {
-		// Spawn npcs
+		setMainPlayer(agentPlayer, agentSpawn);
 		
+		// Spawn npcs
 		var npcSpawnsCopy : Array<Vector2> = npcSpawns.copy();
 		populateRandom(RandomGuy.allguys.length, npcSpawnsCopy, function(index : Int, pos : Vector2) {
 			RandomGuy.allguys[index].setPosition(pos); } );
 		
 		RandomGuy.createAllTasks();
-		setMainPlayer(agentPlayer, agentSpawn);
 		nextDayChangeTime = Scheduler.time() + 60.0;
 	}
 	
@@ -435,7 +427,14 @@ class Empty extends Game {
 	}
 	
 	private function resetInteractiveSprites(resetLoggers : Bool) {
+		for (dlg in npcDlgs)
+		{
+			dlg.cancel();
+		}
+		npcDlgs.splice(0, npcDlgs.length);
+		
 		for (ias in interactiveSprites) {
+			if (ias.isCurrentlyUsedFrom != null) ias.stopUsing(false);
 			if (resetLoggers) {
 				var logger = Std.instance(ias, IdLoggerSprite);
 				if (logger != null) logger.idLogger.newDay();
