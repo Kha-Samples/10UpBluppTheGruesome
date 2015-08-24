@@ -23,6 +23,7 @@ class BlaTask extends Task {
 			var drg = new Dialogue();
 			drg.insert([new Bla(Localization.getText(Keys_text.HELLO, [aim.IdCard.Name]), guy, false)]);
 			Empty.the.npcDlgs.push(drg);
+			taskScheduled = true;
 		}
 	}
 }
