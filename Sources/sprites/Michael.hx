@@ -10,11 +10,6 @@ class Michael extends RandomGuy {
 	}
 	
 	override private function createRandomTask(): Void {
-		var guy: RandomGuy = this;
-		while (guy == this) {
-			var value = Random.getUpTo(RandomGuy.allguys.length - 1);
-			guy = RandomGuy.allguys[value - 1];
-		}
-		schedule.add(new MoveTask(this, guy));
+		createMichaelTask();
 	}
 }

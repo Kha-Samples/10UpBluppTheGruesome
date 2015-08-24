@@ -11,6 +11,10 @@ class MoveTask extends Task {
 	
 	public function new(sprite: Sprite, target: Sprite) {
 		super(sprite);
+		if (target == null) {
+			var a = 3;
+			++a;
+		}
 		this.target = target;
 		step = 0;
 		inElevator = false;

@@ -281,6 +281,8 @@ class Empty extends Game {
 		michael.y = pos.y;
 		Scene.the.addOther(michael);
 		
+		RandomGuy.createAllTasks();
+		
 		setMainPlayer(agentPlayer);
 		
 		Configuration.setScreen(this);

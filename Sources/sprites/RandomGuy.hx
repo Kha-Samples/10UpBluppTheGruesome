@@ -42,7 +42,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		this.monster = monster;
 		this.stuff = [];
 		for (thing in stuff) {
-			if (Std.is(thing, Computer)) {
+			if (Std.is(thing, Computer) || Std.is(thing, Coffee)) {
 				this.stuff.push(thing);
 			}
 		}
@@ -52,9 +52,14 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		IdCard = new IdCard(name);
 		
 		schedule = new schedule.Schedule();
-		createTasks();
 		
 		allguys.push(this);
+	}
+	
+	public static function createAllTasks(): Void {
+		for (guy in allguys) {
+			guy.createTasks();
+		}
 	}
 	
 	private function createTasks(): Void {
@@ -65,18 +70,37 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	}
 	
 	private function createRandomTask(): Void {
-		var value = Random.getUpTo(stuff.length);
-		if (value == 0) schedule.add(new MoveTask(this, monster));
-		else {
-			var thing = stuff[value - 1];
-			schedule.add(new MoveTask(this, thing));
-			if (Std.is(thing, Computer)) {
-				schedule.add(new ComputerTask(this, cast thing));
-			}
-			if (Std.is(thing, Coffee)) {
-				schedule.add(new CoffeeTask(this, cast thing));
-			}
+		var tasktype = Random.getUpTo(9);
+		switch (tasktype) {
+			case 0:
+				schedule.add(new MoveTask(this, monster));
+			case 1, 2:
+				createMichaelTask();
+			case 3, 4, 5, 6, 7, 8, 9:
+				createStuffTask();
 		}
+		
+	}
+	
+	private function createStuffTask(): Void {
+		var value = Random.getUpTo(stuff.length - 1);
+		var thing = stuff[value];
+		schedule.add(new MoveTask(this, thing));
+		if (Std.is(thing, Computer)) {
+			schedule.add(new ComputerTask(this, cast thing));
+		}
+		if (Std.is(thing, Coffee)) {
+			schedule.add(new CoffeeTask(this, cast thing));
+		}
+	}
+	
+	private function createMichaelTask(): Void {
+		var guy: RandomGuy = this;
+		while (guy == this) {
+			var value = Random.getUpTo(RandomGuy.allguys.length - 1);
+			guy = RandomGuy.allguys[value];
+		}
+		schedule.add(new MoveTask(this, guy));
 	}
 	
 	override public function update(): Void {
