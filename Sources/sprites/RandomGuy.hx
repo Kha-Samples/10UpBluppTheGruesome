@@ -9,6 +9,7 @@ import kha.math.Random;
 import kha.math.Vector2;
 import kha2d.Animation;
 import kha2d.Sprite;
+import schedule.BlaTask;
 import schedule.CoffeeTask;
 import schedule.ComputerTask;
 import schedule.MoveTask;
@@ -211,6 +212,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 			guy = RandomGuy.allguys[value];
 		}
 		schedule.add(new MoveTask(this, guy));
+		schedule.add(new BlaTask(this, guy));
 	}
 	
 	override public function update(): Void {

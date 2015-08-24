@@ -252,3 +252,8 @@ The other player plays as {Agent}. In his youth he was a vicitm of these experim
 	<de>Zum Glück hab ich jetzt erstmal {0} Wochen Urlaub...</de>
 	<en>Luckily I'm on vacation for the next {0} weeks...</en>
 </intro_4_Prof>
+
+<hello>
+	<de>Hallo {0}</de>
+	<en>Hello {0}</en>
+</hello>
