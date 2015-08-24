@@ -203,6 +203,8 @@ what do we do now?</en>
 <menu_how_to_play>
 	<de>{Title} ist ein rundenbasiertes Echzeit-Detektivspiel für zwei Spieler.
 
+[Steuerung: Pfeiltasten zum bewegen, e zum benutzen.]
+
 Ein Spieler spielt {Fischmensch}, das tragische Opfer eines Experimentes. Ein normaler Mitarbeiter am Tag, sucht er Nachts alle Teile der Dimensionskanone um in seine Heimat zu kommen (siehe 10Up: Interdimensional Liquids).
 
 [Tipp: Untersuche als {Fischmensch} Bücherschränke und Computer um Hinweise zu finden, wie dieses Ziel zu erreichen ist.]
@@ -222,6 +224,8 @@ Der andere Spieler spielt {Agent}. In seiner Jugend war er selbst das Opfer von 
 7. [Spiele 10Up: Unity]
 </de>
 	<en>{Title} is a turn-based real-time detective-thriller for two players.
+
+[Controls: Arrow keys for movement, e to use.]
 
 One player is {Fischmensch}, victim of a gruesome experiment. Being a normal worker at day, he searches for parts of an dimensional cannon at night in order to return to his home planet (see 10Up: Interdimensional Liquids).
 
@@ -279,13 +283,19 @@ The other player plays as {Agent}. In his youth he was a vicitm of these experim
 3: You are the monsgter!</en>
 </how_to_help>
 
-<Strange_nothing_><de>DUMMY</de></Strange_nothing_>
+<Strange_nothing_>
+  <de>DUMMY</de>
+  <en>DUMMY</en>
+</Strange_nothing_>
 <Strange_nothing_0>
 	<de>Nö, was soll denn sein?</de>
+	<en>No, is there anything wrong?</en>
 </Strange_nothing_0>
 <Strange_nothing_1>
 	<de>Ob ich {Fischmann} gesehen habe?
 Was hast du denn eingeschmissen?</de>
+	<en>You want to know if I saw {Fischmann}?
+Are you high?</en>
 </Strange_nothing_1>
 
 <Task>
