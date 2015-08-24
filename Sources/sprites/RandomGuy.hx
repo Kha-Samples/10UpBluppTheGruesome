@@ -125,6 +125,14 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 		allguys.push(this);
 	}
 	
+	public static function monsterGuy(): RandomGuy {
+		for (guy in allguys) {
+			if (guy.youarethemonster) {
+				return guy;
+			}
+		}
+		return null;
+	}
 	public static function monsterPosition(): Vector2 {
 		for (guy in allguys) {
 			if (guy.youarethemonster) {

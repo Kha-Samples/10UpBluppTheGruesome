@@ -465,6 +465,11 @@ class Empty extends Game {
 			Dialogues.dusk();
 			--dayTimesLeft;
 		}
+		if (dayTimesLeft < 0)
+		{
+			mode = ProfessorWins;
+			// TODO: spawn professor with fancy extro
+		}
 	}
 	
 	public function onDayBegin() : Void {
