@@ -65,6 +65,7 @@ class Empty extends Game {
 	public var monsterPlayer : Player;
 	public var agentPlayer : Player;
 	private var agentSpawn : Vector2;
+	private var npcSpawns : Array<Vector2> = new Array<Vector2>();
 	public var interactiveSprites: Array<InteractiveSprite>;
 	
 	public var mode : Mode;
@@ -214,7 +215,7 @@ class Empty extends Game {
 		var computers : Array<Vector2> = new Array<Vector2>();
 		var bookshelves : Array<Vector2> = new Array<Vector2>();
 		var elevatorPositions : Array<Vector2> = new Array<Vector2>();
-		var npcSpawns : Array<Vector2> = new Array<Vector2>();
+		npcSpawns = new Array<Vector2>();
 		interactiveSprites = new Array();
 		for (i in 0...spriteCount) {
 			var sprite : kha2d.Sprite = null;
@@ -243,7 +244,7 @@ class Empty extends Game {
 			}
 		}
 		ElevatorManager.the.initSprites(elevatorPositions);
-		populateRandom(8, computers, function(pos : Vector2) {
+		populateRandom(8, computers, function(index : Int, pos : Vector2) {
 			var computer = new Computer(pos.x, pos.y);
 			interactiveSprites.push(computer);
 			Scene.the.addOther(computer); } );
@@ -260,39 +261,29 @@ class Empty extends Game {
 			bookshelves.remove(pos);
 		}
 		
-		populateRandom(1, npcSpawns, function(pos : Vector2) {
-			var michael = new RandomGuy(interactiveSprites, false);
-			michael.x = pos.x;
-			michael.y = pos.y;
-			Scene.the.addOther(michael); } );
-		
-		populateRandom(1, npcSpawns, function(pos : Vector2) {
-			var guy = new RandomGuy(interactiveSprites, true);
+		var  npcSpawnsCopy : Array<Vector2> = npcSpawns.copy();
+		populateRandom(5, npcSpawnsCopy, function(index : Int, pos : Vector2) {
+			var guy;
+			if (index == 0) guy = new RandomGuy(interactiveSprites, true);
+			else if (index == 1) guy = new Michael(interactiveSprites);
+			else guy = new RandomGuy(interactiveSprites, false);
 			guy.x = pos.x;
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
 		
-		populateRandom(3, npcSpawns, function(pos : Vector2) {
-			var guy = new RandomGuy(interactiveSprites, false);
-			guy.x = pos.x;
-			guy.y = pos.y;
-			Scene.the.addOther(guy); } );
-		
-		// Simulate first day
 		setMainPlayer(agentPlayer, agentSpawn);
-		RandomGuy.createAllTasks();
-		
+		onDayBegin();
 		Configuration.setScreen(this);
 		
 		Dialogues.dusk();
 	}
 	
-	private function populateRandom(count : Int, positions : Array<Vector2>, creationFunction : Vector2->Void) {
+	private function populateRandom(count : Int, positions : Array<Vector2>, creationFunction : Int->Vector2->Void) {
 		for (i in 0...count) {
 			if (positions.length <= 0) break;
 			
 			var pos : Vector2 = positions[Random.getIn(0, positions.length - 1)];
-			creationFunction(pos);
+			creationFunction(i, pos);
 			positions.remove(pos);
 		}
 	}
@@ -419,6 +410,11 @@ class Empty extends Game {
 	
 	public function onDayBegin() : Void {
 		// Spawn npcs
+		
+		var npcSpawnsCopy : Array<Vector2> = npcSpawns.copy();
+		populateRandom(RandomGuy.allguys.length, npcSpawnsCopy, function(index : Int, pos : Vector2) {
+			RandomGuy.allguys[index].setPosition(pos); } );
+		
 		RandomGuy.createAllTasks();
 		setMainPlayer(agentPlayer, agentSpawn);
 		nextDayChangeTime = Scheduler.time() + 60.0;
@@ -430,7 +426,7 @@ class Empty extends Game {
 	
 	public function onNightBegin() : Void {
 		RandomGuy.endDayForEverybody();
-		//setMainPlayer(monsterPlayer, RandomGuy.monsterNPCPosition);
+		setMainPlayer(monsterPlayer, RandomGuy.monsterPosition());
 		nextDayChangeTime = Scheduler.time() + 60.0;
 	}
 	
