@@ -67,21 +67,21 @@
 	<en>Back</en>
 </back>
 <dawn>
-	<de>Zum nächsten Morgengrauen ...
+	<de>Zum nächsten Morgengrauen...
 
 1: Weiter [Zug des Agenten]
 2: Optionen</de>
-	<en>At next dawn ...
+	<en>At dawn...
 
 1: Continue [Agent's turn]
 2: Options</en>
 </dawn>
 <dusk>
-	<de>Zum nächsten Abendrot ...
+	<de>Zum nächsten Abendrot...
 
 1: Weiter [Zug des Monsters]
 2: Optionen</de>
-	<en>At next dusk ...
+	<en>At dusk...
 
 1: Continue [Monster's turn]
 2: Options</en>
@@ -97,8 +97,8 @@
 	<en>Floor</en>
 </Floor>
 <Floor_0>
-	<de>Erdgeschoss</de>
-	<en>Ground floor</en>
+	<de>Stockwerk 0</de>
+	<en>Floor 0</en>
 </Floor_0>
 	
 	
@@ -123,6 +123,22 @@
 	<en>Fluxcompensator</en>
 	<fr>Compensatür du flux</fr>
 </fluxcompensator>
+<tc1>
+	<de>Teil der Zeitkanone (#1)</de>
+	<en>Part of the time cannon (#1)</en>
+</tc1>
+<tc2>
+	<de>Teil der Zeitkanone (#2)</de>
+	<en>Part of the time cannon (#2)</en>
+</tc2>
+<tc3>
+	<de>Teil der Zeitkanone (#3)</de>
+	<en>Part of the time cannon (#3)</en>
+</tc3>
+<tc4>
+	<de>Teil der Zeitkanone (#4)</de>
+	<en>Part of the time cannon (#4)</en>
+</tc4>
 
 <itemfound>
 	<de>{0} gefunden</de>
