@@ -33,6 +33,7 @@ class Computer extends IdLoggerSprite {
 		// TODO: implement
 	}
 	function useDialogue(): Void {
+		if (currentUser == null) return;
 		var choices = new Array<Array<DialogueItem>>();
 		var text = Localization.getText(Keys_text.COMPUTER_HELLO, [currentUser.IdCard.Name]);
 		choices.push([new StartDialogue(searchCriticalFiles), new StartDialogue(useDialogue)]);
