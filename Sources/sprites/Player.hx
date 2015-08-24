@@ -14,6 +14,8 @@ import kha2d.Animation;
 import kha2d.Direction;
 import kha2d.Scene;
 import kha2d.Sprite;
+import sprites.IdSystem.IdCardOwner;
+import sprites.IdSystem.IdLoggerSprite;
 
 class Player extends DestructibleSprite {
 	public var left : Bool;
@@ -261,16 +263,42 @@ class Player extends DestructibleSprite {
 	public function use() {
 		var touse = Empty.the.interactiveSprites.filter(function(sprite:InteractiveSprite):Bool { return sprite.playerCanUseIt; } );
 		var px = x + 0.5 * tempcollider.width;
+		var nearest: InteractiveSprite = null;
+		var dst = Math.POSITIVE_INFINITY;
 		for (ias in touse) {
-			ias.useFrom(this);
+			var tmpdst = Math.abs(px - (ias.y + 0.5 * ias.tempcollider.width));
+			if (tmpdst < dst)
+			{
+				dst = tmpdst;
+				nearest = ias;
+			}
 		}
+		if (nearest != null)
+			nearest.useFrom(this);
 	}
 	
 	public function wouldUse(): String {
 		var touse = Empty.the.interactiveSprites.filter(function(sprite:InteractiveSprite):Bool { return sprite.playerCanUseIt; } );
 		var px = x + 0.5 * tempcollider.width;
+		var nearest: InteractiveSprite = null;
+		var dst = Math.POSITIVE_INFINITY;
 		for (ias in touse) {
-			return Type.getClassName(Type.getClass(ias));
+			var tmpdst = Math.abs(px - (ias.y + 0.5 * ias.tempcollider.width));
+			if (tmpdst < dst)
+			{
+				dst = tmpdst;
+				nearest = ias;
+			}
+		}
+		if (nearest != null)
+		{
+			if (Std.is(nearest, IdLoggerSprite)) {
+				return Localization.getText(cast(nearest, IdLoggerSprite).idLogger.txtKey);
+			} else if (Std.is(nearest, IdCardOwner)) {
+				return Localization.getText(cast(nearest, IdCardOwner).IdCard.Name);
+			} else {
+				return Type.getClassName(Type.getClass(nearest));
+			}
 		}
 		return null;
 	}
