@@ -429,11 +429,6 @@
 			"file": "waterflow.png",
 			"name": "waterflow",
 			"type": "image"
-		},
-		{
-			"file": "wooddoor.png",
-			"name": "wooddoor",
-			"type": "image"
 		}
 	],
 	"rooms": [

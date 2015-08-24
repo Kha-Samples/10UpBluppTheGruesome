@@ -47,6 +47,7 @@ import sprites.Michael;
 import sprites.Player;
 import sprites.RandomGuy;
 import sprites.Rowdy;
+import sprites.Wooddoor;
 
 import dialogue.*;
 
@@ -241,6 +242,9 @@ class Empty extends Game {
 				var coffee : Coffee = new Coffee(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 				Scene.the.addOther(coffee);
 				interactiveSprites.push(coffee);
+			case 7:
+				var wooddoor : Wooddoor = new Wooddoor(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				Scene.the.addOther(wooddoor);
 			}
 		}
 		ElevatorManager.the.initSprites(elevatorPositions);

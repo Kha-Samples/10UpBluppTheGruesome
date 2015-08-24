@@ -70,7 +70,7 @@ class Localization
 				}
 			}
 			var front: Int = text.indexOf("{");
-			var back: Int = text.indexOf("}", front+1);
+			var back: Int = front >= 0 ? text.indexOf("}", front+1) : -1;
 			var fix: Int = front;
 			while (back >= 0)
 			{
@@ -86,12 +86,12 @@ class Localization
 						text = StringTools.replace(text, text.substring(front, back+1), key);
 					}
 					front = text.indexOf("{", fix);
-					back = text.indexOf("}", front+1);
+					back = front >= 0 ? text.indexOf("}", front + 1) : -1;
 				}
 				else
 				{
 					front = text.indexOf("{", fix+1);
-					back = text.indexOf("}", front+1);
+					back = front >= 0 ? text.indexOf("}", front+1) : -1;
 				}
 				fix = front;
 			}
