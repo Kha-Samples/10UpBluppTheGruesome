@@ -9,6 +9,7 @@ import kha2d.Scene;
 import kha2d.Sprite;
 import sprites.IdSystem;
 import sprites.Player;
+import sprites.RandomGuy;
 
 using Lambda;
 
@@ -96,5 +97,13 @@ class Dialogues {
 				Loader.the.loadRoom("testlevel", Empty.the.initLevel);
 			})
 		]);
+	}
+	
+	public static function showdownShoot(accused: RandomGuy) {
+		
+	}
+	
+	public static function showdownHesitate(accused: RandomGuy) {
+		
 	}
 }

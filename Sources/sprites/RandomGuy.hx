@@ -285,15 +285,21 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 		{
 			var idUser : IdCardOwner = cast Player.current();
 			Empty.the.playerDlg.insert([
-				new Bla(Localization.getText(Keys_text.HELLO, [IdCard.Name + ', ${IdCard.Id}']), user, false)
-				, new Bla(Localization.getText(Keys_text.HELLO, [idUser.IdCard.Name]), this, false)
+				new Bla(Localization.getText(Keys_text.HELLO, [IdCard.Name + ', ${IdCard.Id}']), user, true)
+				, new Bla(Localization.getText(Keys_text.HELLO, [idUser.IdCard.Name]), this, true)
 				, new BlaWithChoices(Localization.getText(Keys_text.HOW_TO_HELP), this, [
 					[ /* Seltsames?*/ 
+						new Bla(Keys_text.STRANGE_NOTHING_ + Random.getUpTo(1), this, true)
 					]
 					, [ /* tun gerade? */
-						new Bla(schedule.nextTwoTaskDescription(), this, false)
+						new Bla(schedule.nextTwoTaskDescription(), this, true)
 					]
 					, [ /* YOU ARE THE MONSTER */
+						new Bla(Keys_text.YOUMONSTER_REACTION_ + Random.getUpTo(6), this, true)
+						, new BlaWithChoices(Keys_text.YOUMONSTER_SHOWDOWN, null, [
+							[new StartDialogue(Dialogues.showdownShoot.bind(this))]
+							, [new StartDialogue(Dialogues.showdownHesitate.bind(this))]
+						])
 					]
 				])
 				, new StartDialogue(stopUsing.bind(true))
