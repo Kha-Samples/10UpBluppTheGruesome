@@ -282,6 +282,7 @@ class Empty extends Game {
 		Scene.the.addOther(michael);
 		
 		RandomGuy.createAllTasks();
+		RandomGuy.endDayForEverybody();
 		
 		setMainPlayer(agentPlayer);
 		

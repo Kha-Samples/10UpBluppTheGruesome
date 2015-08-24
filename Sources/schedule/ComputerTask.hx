@@ -28,4 +28,11 @@ class ComputerTask extends Task {
 			}, Random.getIn(5, 15));
 		}
 	}
+	
+	override public function doImmediately(): Void {
+		computer.useFrom(Direction.LEFT, sprite);
+		if (Random.getIn(0, 5) != 0) {
+			computer.stopUsing();
+		}
+	}
 }

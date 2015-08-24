@@ -56,6 +56,17 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		allguys.push(this);
 	}
 	
+	public static function endDayForEverybody(): Void {
+		for (guy in allguys) {
+			guy.endDay();
+		}
+		createAllTasks();
+	}
+	
+	public function endDay(): Void {
+		schedule.endDay();
+	}
+	
 	public static function createAllTasks(): Void {
 		for (guy in allguys) {
 			guy.createTasks();
@@ -79,7 +90,6 @@ class RandomGuy extends Sprite implements IdCardOwner {
 			case 3, 4, 5, 6, 7, 8, 9:
 				createStuffTask();
 		}
-		
 	}
 	
 	private function createStuffTask(): Void {
