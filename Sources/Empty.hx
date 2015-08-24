@@ -40,6 +40,7 @@ import sprites.Coffee;
 import sprites.Computer;
 import sprites.Door;
 import sprites.Fishman;
+import sprites.IdSystem;
 import sprites.InteractiveSprite;
 import sprites.Michael;
 import sprites.Player;
@@ -50,7 +51,8 @@ import dialogue.*;
 enum Mode {
 	StartScreen;
 	Game;
-	Menu;
+	PlayerSwitch;
+	//Menu;
 }
 
 class Empty extends Game {
@@ -62,25 +64,16 @@ class Empty extends Game {
 	private var backbuffer: Image;
 	public var monsterPlayer : Player;
 	public var agentPlayer : Player;
+	private var agentSpawn : Vector2;
+	private var npcSpawns : Array<Vector2> = new Array<Vector2>();
 	public var interactiveSprites: Array<InteractiveSprite>;
 	
-	public var mode(default, set) : Mode;
-	function set_mode(v: Mode): Mode {
-		mode = v; 
-		if (mode != Game) {
-			if (Player.current() != null) {
-				Player.current().left = false;
-				Player.current().right = false;
-				Player.current().up = false;
-				// TODO: cancel other actions?
-			}
-		}
-		return mode;
-	}
+	public var mode : Mode;
 	
 	public var renderOverlay : Bool;
 	public var overlayColor : Color;
-	public var dlg : Dialogue;
+	public var playerDlg : Dialogue = new Dialogue();
+	public var npcDlgs : Array<Dialogue> = new Array();
 	
     var lastTime = 0.0;
 	
@@ -90,7 +83,6 @@ class Empty extends Game {
 	public function new() {
 		super("10Up");
 		the = this;
-		dlg = new Dialogue();
 		lastTime = Scheduler.time();
 	}
 	
@@ -121,7 +113,7 @@ class Empty extends Game {
 				msg += '\n($i): ${Localization.availableLanguages[l]}';
 				++i;
 			}
-			dlg.set( [
+			playerDlg.set( [
 				new BlaWithChoices(msg, null, choices)
 				, new StartDialogue(Cfg.save)
 				, new StartDialogue(initTitleScreen)
@@ -154,7 +146,7 @@ class Empty extends Game {
 
 	public function initLevel(): Void {
 		tileColissions = new Array<Tile>();
-		for (i in 0...512) {
+		for (i in 0...1024) {
 			tileColissions.push(new Tile(i, isCollidable(i)));
 		}
 		var blob = Loader.the.getBlob("testlevel.map");
@@ -185,7 +177,6 @@ class Empty extends Game {
 	}
 	
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
-		mode = Game;
 		Inventory.init();
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
@@ -224,7 +215,7 @@ class Empty extends Game {
 		var computers : Array<Vector2> = new Array<Vector2>();
 		var bookshelves : Array<Vector2> = new Array<Vector2>();
 		var elevatorPositions : Array<Vector2> = new Array<Vector2>();
-		var npcSpawns : Array<Vector2> = new Array<Vector2>();
+		npcSpawns = new Array<Vector2>();
 		interactiveSprites = new Array();
 		for (i in 0...spriteCount) {
 			var sprite : kha2d.Sprite = null;
@@ -232,12 +223,13 @@ class Empty extends Game {
 			case 0:
 				monsterPlayer = new Fishman(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 				agentPlayer = new Agent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				agentSpawn = new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 			case 1:
 				computers.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			case 2:
 				elevatorPositions.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			case 3:
-				var door : Door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]-96);
+				var door : Door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 				Scene.the.addOther(door);
 				interactiveSprites.push(door);
 			case 4:
@@ -252,8 +244,8 @@ class Empty extends Game {
 			}
 		}
 		ElevatorManager.the.initSprites(elevatorPositions);
-		populateRandom(8, computers, function(pos : Vector2) {
-			var computer = new Computer(pos.x, pos.y);
+		populateRandom(computers.length, computers, function(index : Int, pos : Vector2) {
+			var computer = new Computer(pos.x, pos.y, index < 8);
 			interactiveSprites.push(computer);
 			Scene.the.addOther(computer); } );
 			
@@ -269,46 +261,41 @@ class Empty extends Game {
 			bookshelves.remove(pos);
 		}
 		
-		populateRandom(4, npcSpawns, function(pos : Vector2) {
-			var guy = new RandomGuy(interactiveSprites, false);
+		var  npcSpawnsCopy : Array<Vector2> = npcSpawns.copy();
+		populateRandom(5, npcSpawnsCopy, function(index : Int, pos : Vector2) {
+			var guy;
+			if (index == 0) guy = new RandomGuy(interactiveSprites, true);
+			else if (index == 1) guy = new Michael(interactiveSprites);
+			else guy = new RandomGuy(interactiveSprites, false);
 			guy.x = pos.x;
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
 		
-		var michael = new Michael(interactiveSprites);
-		var pos : Vector2 = npcSpawns[Random.getIn(0, npcSpawns.length - 1)];
-		michael.x = pos.x;
-		michael.y = pos.y;
-		Scene.the.addOther(michael);
-		
-		RandomGuy.createAllTasks();
-		RandomGuy.endDayForEverybody();
-		
-		setMainPlayer(agentPlayer);
-		
+		setMainPlayer(agentPlayer, agentSpawn);
+		onDayBegin();
 		Configuration.setScreen(this);
 		
-		nextDayChangeTime = -1;
-		overlayColor = Color.Black;
+		Dialogues.dusk();
 	}
 	
-	private function populateRandom(count : Int, positions : Array<Vector2>, creationFunction : Vector2->Void) {
+	private function populateRandom(count : Int, positions : Array<Vector2>, creationFunction : Int->Vector2->Void) {
 		for (i in 0...count) {
 			if (positions.length <= 0) break;
 			
 			var pos : Vector2 = positions[Random.getIn(0, positions.length - 1)];
-			creationFunction(pos);
+			creationFunction(i, pos);
 			positions.remove(pos);
 		}
 	}
 	
-	public function setMainPlayer(player : Player) {
+	public function setMainPlayer(player : Player, spawnPosition : Vector2) {
+		trace ("setMainPlayer!");
 		if (Player.current() != null) {
 			Scene.the.removeHero(Player.current());
 		}
+		player.setPosition(spawnPosition);
 		player.setCurrent();
 		Scene.the.addHero(player);
-		nextDayChangeTime = Scheduler.time() + 60.0;
 	}
 	
 	private static function isCollidable(tilenumber: Int): Bool {
@@ -328,12 +315,31 @@ class Empty extends Game {
 		case 60: return true;
 		case 61: return true;
 		case 62: return true;*/
-		case 63: return true;
+		case 32: return true;
+		case 33: return true;
+		case 34: return true;
+		case 39: return true;
+		
+		case 48: return true;
+		case 49: return true;
+		case 50: return true;
+		case 55: return true;
+		
+		case 64: return true;
+		case 65: return true;
+		case 66: return true;
+		case 71: return true;
+		
+		case 80: return true;
+		case 81: return true;
+		case 82: return true;
+		case 87: return true;	
+		/*case 63: return true;
 		case 64: return true;
 		case 65: return true;
 		case 66: return true;
 		case 67: return true;
-		case 68: return true;
+		case 68: return true;*/
 		/*case 70: return true;
 		case 74: return true;
 		case 75: return true;
@@ -353,26 +359,88 @@ class Empty extends Game {
 		var deltaTime = Scheduler.time() - lastTime;
 		lastTime = Scheduler.time();
 		
-		ElevatorManager.the.update(deltaTime);
+		if (mode == Game)
+		{
+			ElevatorManager.the.update(deltaTime);
+			
+			if (!playerDlg.isEmpty()) {
+				if (Player.current() != null) {
+					Player.current().left = false;
+					Player.current().right = false;
+					Player.current().up = false;
+					// TODO: Stop other actions?
+				}
+			}
+			else
+			{
+				if (Scheduler.time() >= nextDayChangeTime)
+				{
+					trace ('change day!');
+					for (dlg in npcDlgs)
+					{
+						dlg.cancel();
+					}
+					npcDlgs.splice(0, npcDlgs.length);
+					
+					isDay = !isDay;
+					nextDayChangeTime = Math.NaN;
+					if (isDay) Dialogues.dawn();
+					else Dialogues.dusk();
+				}
+				else
+				{
+					for (dlg in npcDlgs)
+					{
+						dlg.update();
+					}
+				}
+			}
+		}
+		
+		playerDlg.update();
+		
 		var player = Player.current();
 		if (player != null) {
 			Scene.the.camx = Std.int(player.x) + Std.int(player.width / 2);
 			Scene.the.camy = Std.int(player.y + player.height + 80 - 0.5 * height);
 		}
-		Scene.the.update();
 		
-		if (dlg.isEmpty()) {
-			if (Scheduler.time() >= nextDayChangeTime)
-			{
-				isDay = !isDay;
-				nextDayChangeTime = Math.NaN;
-				if (isDay) Dialogues.dawn();
-				else Dialogues.dusk();
+		Scene.the.update();
+	}
+	
+	public function onDayBegin() : Void {
+		// Spawn npcs
+		
+		var npcSpawnsCopy : Array<Vector2> = npcSpawns.copy();
+		populateRandom(RandomGuy.allguys.length, npcSpawnsCopy, function(index : Int, pos : Vector2) {
+			RandomGuy.allguys[index].setPosition(pos); } );
+		
+		RandomGuy.createAllTasks();
+		setMainPlayer(agentPlayer, agentSpawn);
+		nextDayChangeTime = Scheduler.time() + 60.0;
+	}
+	
+	public function onDayEnd() : Void {
+		resetInteractiveSprites(false);
+	}
+	
+	public function onNightBegin() : Void {
+		RandomGuy.endDayForEverybody();
+		setMainPlayer(monsterPlayer, RandomGuy.monsterPosition());
+		nextDayChangeTime = Scheduler.time() + 60.0;
+	}
+	
+	public function onNightEnd() : Void {
+		resetInteractiveSprites(true);
+	}
+	
+	private function resetInteractiveSprites(resetLoggers : Bool) {
+		for (ias in interactiveSprites) {
+			if (resetLoggers) {
+				var logger = Std.instance(ias, IdLoggerSprite);
+				if (logger != null) logger.idLogger.newDay();
 			}
 		}
-		
-		
-		dlg.update();
 	}
 	
 	public override function render(frame: Framebuffer) {
@@ -385,7 +453,7 @@ class Empty extends Game {
 		case Congratulations:
 			var congrat = Loader.the.getImage("congratulations");
 			g.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);*/
-		case Game, Menu:
+		case Game, PlayerSwitch:
 			Scene.the.render(g);
 			/*g.transformation = FastMatrix3.identity();
 			g.color = Color.Black;
@@ -485,6 +553,7 @@ class Empty extends Game {
 	
 	private function keyboardDown(key: Key, char: String): Void {
 		if (mode != Game) return;
+		if (!playerDlg.isEmpty()) return;
 		
 		switch (key) {
 			case LEFT:
@@ -507,6 +576,7 @@ class Empty extends Game {
 	private function keyboardUp(key: Key, char: String): Void {
 		switch (mode) {
 		case Game:
+			if (!playerDlg.isEmpty()) return;
 			switch (key) {
 			case LEFT:
 				Player.current().left = false;
@@ -536,9 +606,10 @@ class Empty extends Game {
 			case Key.ESC:
 				Dialogues.escMenu();
 			default:
+				mode = PlayerSwitch;
 				overlayColor = Color.fromBytes(0, 0, 0, 0);
 				renderOverlay = true;
-				dlg.set([new Action(null, ActionType.FADE_TO_BLACK)
+				playerDlg.set([new Action(null, ActionType.FADE_TO_BLACK)
 						, new StartDialogue(function() {
 							Configuration.setScreen(new LoadingScreen());
 							Loader.the.loadRoom("testlevel", initLevel);

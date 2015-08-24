@@ -13,6 +13,7 @@ import kha.Sound;
 import kha2d.Sprite;
 import sprites.IdSystem.IdLoggerSprite;
 import sprites.InteractiveSprite;
+import sprites.Player;
 
 class Elevator extends IdLoggerSprite {
 	var openAnimation : Animation;
@@ -22,8 +23,8 @@ class Elevator extends IdLoggerSprite {
 	
 	public function new(x : Float, y : Float, level : Int) {
 		super(Keys_text.ELEVATOR, Loader.the.getImage("elevator"), 64 * 2, 62 * 2, 0);
-		this.x = x - 64 * 2 / 2;
-		this.y = y - 78 - 14;
+		this.x = x;
+		this.y = y;
 		this.level = level;
 		openAnimation = Animation.create(1);
 		closedAnimation = Animation.create(0);
@@ -37,7 +38,9 @@ class Elevator extends IdLoggerSprite {
 		open = value;
 		setAnimation(open ? openAnimation : closedAnimation);
 		if (!open) {
-			dlg.cancel();
+			if (isCurrentlyUsedFrom == Player.current()) {
+				Empty.the.playerDlg.cancel();
+			}
 		}
 		return open;
 	}
@@ -57,7 +60,8 @@ class Elevator extends IdLoggerSprite {
 			}
 			choices.push([new StartDialogue(ElevatorManager.the.getIn.bind(user, level, 0, null))]);
 			text += '${ElevatorManager.the.levels}: ' + Localization.getText(Keys_text.FLOOR_0) + "\n";
-			dlg.insert([new BlaWithChoices(text, this, choices)]);
+			Empty.the.playerDlg.insert([new BlaWithChoices(text, this, choices), new StartDialogue(function() { isCurrentlyUsedFrom = null; })]);
+			isCurrentlyUsedFrom = user;
 		}
 		else
 		{

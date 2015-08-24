@@ -33,7 +33,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	public var sleeping: Bool;
 	
 	private static var names = ["Augusto", "Ingo", "Christian", "Robert", "Björn", "Johannes", "Rebecca", "Stephen", "Alvar", "Michael", "Linh", "Roger", "Roman", "Max", "Paul", "Tobias", "Henno", "Niko", "Kai", "Julian"];
-	private static var allguys = new Array<RandomGuy>();
+	public static var allguys = new Array<RandomGuy>();
 	
 	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool) {
 		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
