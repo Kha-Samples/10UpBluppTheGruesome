@@ -292,7 +292,8 @@ class Empty extends Game {
 		if (Player.current() != null) {
 			Scene.the.removeHero(Player.current());
 		}
-		player.setPosition(spawnPosition);
+		player.x = spawnPosition.x;
+		player.y = spawnPosition.y - player.height - 5; // -5, just to be sure
 		player.setCurrent();
 		Scene.the.addHero(player);
 	}
@@ -314,6 +315,14 @@ class Empty extends Game {
 		case 60: return true;
 		case 61: return true;
 		case 62: return true;*/
+		case 6: return true;
+		
+		case 481: return true;
+		case 482: return true;
+		
+		case 163: return true;
+		case 179: return true;
+		
 		case 32: return true;
 		case 33: return true;
 		case 34: return true;
