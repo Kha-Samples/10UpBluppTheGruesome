@@ -269,9 +269,4 @@ class Player extends DestructibleSprite {
 			}
 		}
 	}
-	
-	public function setPosition(pos : Vector2) {
-		x = pos.x;
-		y = pos.y;
-	}
 }
