@@ -21,8 +21,14 @@ class IntBranch implements Branch {
 			r = branches.length - r;
 		}
 		dlg.insert(branches[r]);
-		dlg.next();
 	}
+	
+	public function cancel(dlg: Dialogue) : Void
+	{
+		if (branches != null && branches.length > 0) for (item in branches[0]) item.cancel(dlg);
+	}
+	
+	function toString(): String { return 'IntBranch'; }
 }
 
 class BooleanBranch implements Branch {
@@ -44,11 +50,12 @@ class BooleanBranch implements Branch {
 		} else {
 			dlg.insert(onFalse);
 		}
-		dlg.next();
 	}
 	
 	public function cancel(dlg: Dialogue) : Void
 	{
-		for (item in onTrue) item.cancel(dlg);
+		if (onTrue != null && onTrue.length > 0) for (item in onTrue) item.cancel(dlg);
 	}
+	
+	function toString(): String { return 'BooleanBranch'; }
 }

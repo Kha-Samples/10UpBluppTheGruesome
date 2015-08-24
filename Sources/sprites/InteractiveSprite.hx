@@ -15,12 +15,11 @@ import dialogue.Dialogue;
 class InteractiveSprite extends Sprite {
 	public var isUseable(default, null) : Bool = false;
 	public var isLiftable(default, null) : Bool = false;
-	public var dlg(default, null) : Dialogue;
 	public var playerCanUseIt(default, null) : Bool = false;
+	public var isCurrentlyUsedFrom(default, null): Dynamic = null;
 	
 	public function new(image:Image, width:Int=0, height:Int=0, z:Int=1) {
 		super(image, width, height, z);
-		dlg = new Dialogue();
 	}
 	
 	public var center(get, never) : Vector2;
@@ -35,8 +34,6 @@ class InteractiveSprite extends Sprite {
 	{
 		super.update();
 		
-		dlg.update();
-		
 		if (playerCanUseItClear) playerCanUseIt = false;
 		else playerCanUseItClear = true;
 	}
@@ -44,7 +41,7 @@ class InteractiveSprite extends Sprite {
 	var playerCanUseItClear = true;
 	override public function hit(sprite:Sprite):Void 
 	{
-		if (isUseable && sprite == Player.current()) {
+		if (isUseable && isCurrentlyUsedFrom == null && sprite == Player.current()) {
 			playerCanUseIt = true;
 			playerCanUseItClear = false;
 			// TODO: inform HUMAN about the possibility to USE this

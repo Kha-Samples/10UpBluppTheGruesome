@@ -8,7 +8,6 @@ class Bla implements DialogueItem {
 	var text : String;
 	var speaker : Sprite;
 	var persistent: Bool;
-	var lastMode : Empty.Mode;
 	
 	public var finished(default, null) : Bool = false;
 	
@@ -20,32 +19,34 @@ class Bla implements DialogueItem {
 	
 	var dlg: Dialogue;
 	private function keyUpListener(key:Key, char: String) {
+		trace ('KEY UP: $char');
+		Keyboard.get().remove(null, keyUpListener);
 		kha.Scheduler.addTimeTask( function() { 
-			Keyboard.get().remove(null, keyUpListener);
 			finished = true;
-			Empty.the.mode = lastMode;
-		}, 1);
+		}, 0.5);
 	}
 	
 	@:access(Empty.mode)
 	public function execute(dlg: Dialogue) : Void {
 		if (dlg.blaBox == null) {
 			this.dlg = dlg;
-			this.lastMode = Empty.the.mode;
-			Empty.the.mode = Empty.Mode.Menu;
 			dlg.blaBox = new BlaBox(text, speaker, persistent);
-			if (persistent) Keyboard.get().notify(null, keyUpListener);
+			if (persistent)
+			{
+				Keyboard.get().notify(null, keyUpListener);
+			}
 			BlaBox.boxes.push(dlg.blaBox);
 		} else {
 			finished = !Lambda.has(BlaBox.boxes, dlg.blaBox);
-			if (finished) Empty.the.mode = lastMode;
 		}
 	}
 	
 	public function cancel(dlg: Dialogue) : Void
 	{
-		if (lastMode != null) Empty.the.mode = lastMode;
+		Keyboard.get().remove(null, keyUpListener);
 		BlaBox.boxes.remove(dlg.blaBox);
 		dlg.blaBox = null;
 	}
+	
+	function toString(): String { return 'Bla<${StringTools.replace(text, "\n", "\\n")}>'; }
 }

@@ -27,13 +27,12 @@ class BlaWithChoices extends Bla {
 	@:access(Dialogues.dlgChoices)
 	@:access(Empty.mode)
 	override function keyUpListener(key:Key, char: String) {
+		trace ('KEY UP: $char');
 		var choice = char.fastCodeAt(0) - '1'.fastCodeAt(0);
 		if (choice >= 0 && choice < choices.length) {
 			Keyboard.get().remove(null, keyUpListener);
 			finished = true;
-			Empty.the.mode = lastMode;
-			dlg.insert(choices[choice]);
-			dlg.next();
+			dlg.insert(choices[choice], true);
 		}
 	}
 	
@@ -52,6 +51,8 @@ class BlaWithChoices extends Bla {
 	override public function cancel(dlg:Dialogue):Void 
 	{
 		super.cancel(dlg);
-		for (item in choices[0]) item.cancel(dlg);
+		if (choices != null && choices.length > 0) for (item in choices[0]) item.cancel(dlg);
 	}
+	
+	override function toString(): String { return 'BlaWithChoices<${text.replace("\n", "|").replace("\r", "|")}>'; }
 }

@@ -15,10 +15,11 @@ class StartDialogue implements DialogueItem
 	
 	public function execute(dlg: Dialogue): Void {
 		func();
-		dlg.next();
 	}
 	
 	public function cancel(dlg: Dialogue) : Void
 	{
 	}
+	
+	function toString(): String { return 'StartDialogue<$func>'; }
 }

@@ -81,7 +81,9 @@ class Action implements DialogueItem {
 	function actionFinished(dlg: Dialogue) {
 		finished = true;
 		if (autoAdvance) {
-			dlg.next();
+			dlg.update();
 		}
 	}
+	
+	function toString(): String { return 'Action<$type>'; }
 }

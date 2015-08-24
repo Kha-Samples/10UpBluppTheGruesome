@@ -116,7 +116,7 @@ class Door extends DestructibleSprite {
 	{
 		if (Std.is(user, Agent))
 		{
-			dlg.set([ new BlaWithChoices(idLogger.displayUsers() + "\n\n1: [" + Localization.getText(Keys_text.BACK) + "]", this, [[]])]);
+			Empty.the.playerDlg.set([ new BlaWithChoices(idLogger.displayUsers() + "\n\n1: [" + Localization.getText(Keys_text.BACK) + "]", this, [[]])]);
 			
 			return true;
 		}

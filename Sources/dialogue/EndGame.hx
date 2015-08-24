@@ -13,4 +13,6 @@ class EndGame implements DialogueItem
 		// TODO!
 		dlg.next();
 	}
+	
+	function toString(): String { return 'EndGame'; }
 }

@@ -15,6 +15,7 @@ class Dialogue {
 	
 	public function cancel()
 	{
+		trace('DLG cancel!');
 		if (items != null)
 		{
 			if (index > 0) items.splice(0, index);
@@ -27,53 +28,71 @@ class Dialogue {
 	}
 	
 	public function set(newItems: Array<DialogueItem>): Void {
-		cancel();
-		if (newItems != null && newItems.length > 0) {
-			items = newItems;
-			index = 0;
-		}
+		if (items != null && items.length > 0) throw "Not supported!";
+		items = newItems;
+		index = -1;
+		if (items != null) for (i in 0...items.length) trace ('DLG added ${items[i]} at $i');
+		update();
 	}
 	
 	public function insert(insert: Array<DialogueItem>, toFront = false) {
-		if (items == null) {
-			set(insert);
-		} else if (index < 0) {
-			for (item in items) {
-				insert.push(item);
+		if (items == null) items = new Array();
+		if (index < 0) {
+			trace('DLG insert($toFront): index: $index, #items: ${items.length}');
+			if (toFront)
+			{
+				for (i in 0...insert.length)
+				{
+					trace ('DLG added ${insert[i]} at $i');
+				}
+				for (item in items) {
+					trace ('DLG moved $item to ${insert.length}');
+					insert.push(item);
+				}
+				items = insert;
 			}
-			items = insert;
+			else
+			{
+				for (item in insert) {
+					trace ('DLG added $item at ${items.length}');
+					items.push(item);
+				}
+			}
 		} else {
+			trace('DLG insert($toFront): index: $index, #items: ${items.length}');
 			var newItems = new Array<DialogueItem>();
+			var newIndex = toFront ? -1 : 0;
+			if (index < items.length && items[index].finished)
+			{
+				newIndex = -1;
+				++index;
+			}
 			if (!toFront) {
-				newItems.push(items[index]);
+				while (index < items.length) {
+					newItems.push(items[index]);
+					++index;
+				}
 			}
 			for (item in insert) {
+				trace ('DLG added $item at ${newItems.length}');
 				newItems.push(item);
 			}
-			if (!toFront) {
-				++index;
-			}
 			while (index < items.length) {
+				trace ('DLG moved ${items[index]} to ${newItems.length}');
 				newItems.push(items[index]);
 				++index;
 			}
-			index = 0;
 			items = newItems;
+			index = newIndex;
 		}
+		update();
 	}
 	
-	public function update() : Void {
-		if (index >= 0 && !items[index].finished) {
-			items[index].execute(this);
-		} else {
-			next();
-		}
-	}
-	
-	public function next(): Void {
+	public function update(): Void {
 		if (items == null) return;
 		
 		if (index >= 0 && !items[index].finished) {
+			//trace ('DLG index: $index, executing: ${items[index]}');
 			items[index].execute(this);
 			return;
 		}
@@ -85,11 +104,13 @@ class Dialogue {
 		}
 		
 		if (index >= items.length) {
+			trace ('DLG empty!');
 			items = null;
 			index = -1;
-			return;
 		}
-		
-		items[index].execute(this);
+		else {
+			trace ('DLG index: $index, executing: ${items[index]}');
+			items[index].execute(this);
+		}
 	}
 }
