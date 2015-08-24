@@ -137,7 +137,8 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		var thing = stuff[value];
 		schedule.add(new MoveTask(this, thing));
 		if (Std.is(thing, Computer)) {
-			schedule.add(new ComputerTask(this, cast thing));
+			var computer = cast(thing, Computer);
+			if (computer.active) schedule.add(new ComputerTask(this, computer));
 		}
 		if (Std.is(thing, Coffee)) {
 			schedule.add(new CoffeeTask(this, cast thing));
