@@ -301,7 +301,7 @@ Was hast du denn eingeschmissen?</de>
 	<en>something</en>
 </Task_something>
 <Task_coffee>
-	<de>Kaffeetrinken im {1}. Stock</de>
+	<de>Kaffeetrinken im {0}. Stock</de>
 	<en>trinking coffee at {0}. floor</en>
 </Task_coffee>
 <Task_sleep>

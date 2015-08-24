@@ -57,8 +57,10 @@ enum Mode {
 	StartScreen;
 	Game;
 	PlayerSwitch;
-	//Menu;
 	Intro;
+	ProfessorWins;
+	FischmanWins;
+	AgentWins;
 }
 
 class Empty extends Game {
@@ -93,8 +95,12 @@ class Empty extends Game {
 	private var professor: Professor;
 	private var monster: Fishman;
 	
-	public function checkGameEnding() : Bool {
-		return gotTC1 && gotTC2 && gotTC3 && gotTC4 && gotPl1 && gotan2;
+	public function checkGameEnding() : Void {
+		if (true || gotTC1 && gotTC2 && gotTC3 && gotTC4 && gotPl1 && gotan2)
+		{
+			mode = FischmanWins;
+			// TODO: extro
+		}
 	}
 	
     var lastTime = 0.0;
@@ -581,7 +587,36 @@ class Empty extends Game {
 			var str = Localization.getText(Keys_text.CLICK_TO_START);
 			g.drawString(str, 0.5 * (width - font.stringWidth(str)), 650);
 		case Loading:
-			
+		case AgentWins:
+			g.font = font;
+			Scene.the.render(g);
+			g.transformation = FastMatrix3.identity();
+			g.color = Color.fromBytes(0, 0, 0, 180);
+			g.fillRect(0, 0, width, 200);
+			g.font = Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70);
+			g.color = Color.Orange;
+			g.drawString(Localization.getText(Keys_text.AGENT), 150, 20);
+			g.drawString("Wins", 250, 100);
+		case FischmanWins:
+			g.font = font;
+			Scene.the.render(g);
+			g.transformation = FastMatrix3.identity();
+			g.color = Color.fromBytes(0, 0, 0, 180);
+			g.fillRect(0, 0, width, 200);
+			g.font = Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70);
+			g.color = Color.Orange;
+			g.drawString(Localization.getText(Keys_text.FISCHMENSCH), 150, 20);
+			g.drawString("Wins", 250, 100);
+		case ProfessorWins:
+			g.font = font;
+			Scene.the.render(g);
+			g.transformation = FastMatrix3.identity();
+			g.color = Color.fromBytes(0, 0, 0, 180);
+			g.fillRect(0, 0, width, 200);
+			g.font = Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70);
+			g.color = Color.Orange;
+			g.drawString(Localization.getText(Keys_text.PROFESSOR), 150, 20);
+			g.drawString("Wins", 250, 100);
 		}
 		
 		g.transformation = FastMatrix3.identity();
