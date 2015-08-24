@@ -9,6 +9,8 @@ import kha.math.Vector2;
 import manipulatables.UseableSprite;
 import sprites.Player;
 
+using StringTools;
+
 class Inventory {
 	public static var y;
 	public static var itemWidth = 32;
@@ -92,8 +94,12 @@ class Inventory {
 			itemX += itemWidth + 2 * spacing;
 		}
 		if (Player.current() != null) {
-			var thing = Player.current().wouldUse();
+			var thing = Player.current().wouldUse();			
 			if (thing != null) {
+				var index = thing.lastIndexOf(".");
+				if (index >= 0) {
+					thing = thing.substr(index + 1);
+				}
 				g.color = Color.White;
 				var text = "Press E to use " + thing;
 				g.drawString("Press E to use " + thing, Game.the.width - g.font.stringWidth(text) - 10, y + (itemHeight + 2 * spacing) / 2 - g.font.getHeight() / 2);
