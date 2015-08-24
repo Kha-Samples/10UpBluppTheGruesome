@@ -93,6 +93,7 @@ public class TilesetPanel extends JPanel implements MouseListener, MouseMotionLi
 
 	public void mouseMoved(MouseEvent e) {
 		mouse = e.getPoint();
+		InfoBar.getInstance().update(tile(mouse.x, mouse.y));
 		repaint();
 	}
 

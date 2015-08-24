@@ -51,7 +51,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		
 		this.stuff = [];
 		for (thing in stuff) {
-			if (thing.isUseable && (Std.is(thing, Computer) || Std.is(thing, Coffee))) {
+			if (thing.isUseable && thing.isUsableFrom(this) && (Std.is(thing, Computer) || Std.is(thing, Coffee))) {
 				this.stuff.push(thing);
 			}
 		}
