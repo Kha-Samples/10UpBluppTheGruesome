@@ -27,7 +27,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	private var monster: Sprite;
 	private var stuff: Array<InteractiveSprite>;
 	
-	private static var names = ["Ingo", "Christian", "Robert", "Björn", "Johannes", "Rebecca", "Stephen", "Alvar", "Michael", "Linh", "Roger", "Roman", "Max", "Paul", "Tobias", "Henno", "Niko", "Kai", "Julian"];
+	private static var names = ["Augusto", "Ingo", "Christian", "Robert", "Björn", "Johannes", "Rebecca", "Stephen", "Alvar", "Michael", "Linh", "Roger", "Roman", "Max", "Paul", "Tobias", "Henno", "Niko", "Kai", "Julian"];
 	private static var allguys = new Array<RandomGuy>();
 	
 	public function new(monster: Sprite, stuff: Array<InteractiveSprite>) {
