@@ -260,6 +260,17 @@
 			}
 		},
 		{
+			"file": "wooddoor.png",
+			"name": "wooddoor",
+			"type": "image",
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
 			"file": "elevatorbuttons.png",
 			"name": "elevatorbuttons",
 			"type": "image",
@@ -473,6 +484,7 @@
 				"elevatorbuttons",
 				"floorlevel",
 				"door",
+				"wooddoor",
 				"zzzzz",
 				"coffee",
 				"broetchen1",
