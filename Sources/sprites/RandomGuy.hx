@@ -36,7 +36,7 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 	private var standRight: Animation;
 	private var walkLeft: Animation;
 	private var walkRight: Animation;
-	private var lookLeft: Bool;
+	public var lookLeft: Bool;
 	
 	private var stuff: Array<InteractiveSprite>;
 	

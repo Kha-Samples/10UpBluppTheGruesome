@@ -18,12 +18,11 @@ class MoveTask extends Task {
 		super(guy);
 		this.target = target;
 		this.hurry = hurry;
+		offset = 0;
 		if (randomoffset > 0) {
-			while (Math.abs(offset) < randomoffset / 3) {
-				var value = Random.getUpTo(randomoffset);
-				value -= Std.int(randomoffset / 2);
-				offset = value;
-			}
+			var value = Random.getIn(Std.int(randomoffset / 2), randomoffset);
+			if (Random.getIn(0, 1) == 0) value = -value;
+			offset = value;
 		}
 		step = 0;
 		waitOnOpen = 0;
@@ -87,6 +86,14 @@ class MoveTask extends Task {
 					else {
 						guy.speedx = 0;
 						done = true;
+						if (offset != 0) {
+							if (target.x + target.width / 2 < guy.x + guy.width / 2) {
+								guy.lookLeft = true;
+							}
+							else {
+								guy.lookLeft = false;
+							}
+						}
 					}
 				}
 		}
