@@ -180,7 +180,7 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 		for (guy in allguys) {
 			if (guy != suspect) {
 				guy.end();
-				guy.schedule.add(new MoveTask(guy, Player.current(), 100));
+				guy.schedule.add(new MoveTask(guy, Player.current(), true, 100));
 			}
 		}
 		suspect.end();
