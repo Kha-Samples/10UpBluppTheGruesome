@@ -4,6 +4,7 @@ import kha.Loader;
 import kha.math.Random;
 import kha2d.Animation;
 import kha2d.Sprite;
+import schedule.CoffeeTask;
 import schedule.ComputerTask;
 import schedule.MoveTask;
 import schedule.Schedule;
@@ -71,6 +72,9 @@ class RandomGuy extends Sprite implements IdCardOwner {
 			schedule.add(new MoveTask(this, thing));
 			if (Std.is(thing, Computer)) {
 				schedule.add(new ComputerTask(this, cast thing));
+			}
+			if (Std.is(thing, Coffee)) {
+				schedule.add(new CoffeeTask(this, cast thing));
 			}
 		}
 	}
