@@ -9,6 +9,7 @@ import kha2d.Scene;
 import kha2d.Sprite;
 import sprites.IdSystem;
 import sprites.Player;
+import sprites.RandomGuy;
 
 using Lambda;
 
@@ -93,8 +94,22 @@ class Dialogues {
 			, new StartDialogue(function() {
 				Empty.the.mode = PlayerSwitch;
 				kha.Configuration.setScreen(new kha.LoadingScreen());
-				Loader.the.loadRoom("testlevel", Empty.the.initLevel);
+				//Loader.the.loadRoom("testlevel", Empty.the.initLevel);
+				Empty.the.renderOverlay = false;
+				Loader.the.loadRoom("intro", Empty.the.initIntro);
 			})
 		]);
+	}
+	
+	public static function showdownChatter(accused: RandomGuy) {
+		
+	}
+	
+	public static function showdownShoot(accused: RandomGuy) {
+		
+	}
+	
+	public static function showdownHesitate(accused: RandomGuy) {
+		
 	}
 }

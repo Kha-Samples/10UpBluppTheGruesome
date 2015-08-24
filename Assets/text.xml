@@ -257,8 +257,8 @@ The other player plays as {Agent}. In his youth he was a vicitm of these experim
 	<en>Oh. Something went wrong there.</en>
 </intro_3_Prof>
 <intro_4_Prof>
-	<de>Zum Glück hab ich jetzt erstmal {0} Wochen Urlaub...</de>
-	<en>Luckily I'm on vacation for the next {0} weeks...</en>
+	<de>Zum Glück hab ich jetzt erstmal eine Woche Urlaub...</de>
+	<en>Luckily I'm on vacation for the next week...</en>
 </intro_4_Prof>
 
 <hello>
@@ -278,6 +278,15 @@ The other player plays as {Agent}. In his youth he was a vicitm of these experim
 2: What do you do now?
 3: You are the monsgter!</en>
 </how_to_help>
+
+<Strange_nothing_><de>DUMMY</de></Strange_nothing_>
+<Strange_nothing_0>
+	<de>Nö, was soll denn sein?</de>
+</Strange_nothing_0>
+<Strange_nothing_1>
+	<de>Ob ich {Fischmann} gesehen habe?
+Was hast du denn eingeschmissen?</de>
+</Strange_nothing_1>
 
 <Task>
 	<de>Zuerst {0} und dann {1}.</de>
@@ -315,3 +324,65 @@ The other player plays as {Agent}. In his youth he was a vicitm of these experim
 	<de>an der {computer} auf {Floor} {0} Arbeiten</de>
 	<en>working at the {computer} at {Floor} {0}</en>
 </Task_computer>
+
+<YouMonster_reaction_><de>DUMMY</de></YouMonster_reaction_>
+<YouMonster_reaction_0>
+	<de>Niemals!</de>
+</YouMonster_reaction_0>
+<YouMonster_reaction_1>
+	<de>Ich weiß nicht, wovon sie reden!</de>
+</YouMonster_reaction_1>
+<YouMonster_reaction_2>
+	<de>Blub!</de>
+</YouMonster_reaction_2>
+<YouMonster_reaction_3>
+	<de>Blub. Blubb, Ahahahahaha.</de>
+</YouMonster_reaction_3>
+<YouMonster_reaction_4>
+	<de>Das ist durchaus wahrscheinlich.</de>
+</YouMonster_reaction_4>
+<YouMonster_reaction_5>
+	<de>[Starrt dich ungläubig an]</de>
+</YouMonster_reaction_5>
+<YouMonster_reaction_6>
+	<de>[Starrt dich blutrünstig an]</de>
+</YouMonster_reaction_6>
+
+<YouMonster_chatter_0>
+	<de>Nicht möglich!</de>
+</YouMonster_chatter_0>
+<YouMonster_chatter_1>
+	<de>Das glaube ich nicht!</de>
+</YouMonster_chatter_1>
+<YouMonster_chatter_2>
+	<de>Nein, ich bin es!</de>
+</YouMonster_chatter_2>
+<YouMonster_chatter_3>
+	<de>[Weint]</de>
+</YouMonster_chatter_3>
+<YouMonster_chatter_4>
+	<de>Töte das Monster!</de>
+</YouMonster_chatter_4>
+<YouMonster_chatter_5>
+	<de>Na los tu es!</de>
+</YouMonster_chatter_5>
+<YouMonster_chatter_6>
+	<de>Der traut sich doch niemals...</de>
+</YouMonster_chatter_6>
+<YouMonster_chatter_7>
+	<de>Verrückt.</de>
+</YouMonster_chatter_7>
+<YouMonster_chatter_8>
+	<de>[Starr vor entsetzen]</de>
+</YouMonster_chatter_8>
+<YouMonster_chatter_9>
+	<de>Was macht ein 20 Kilo schwerer Spatz auf einem Baum?</de>
+</YouMonster_chatter_9>
+<YouMonster_chatter_10>
+	<de>Ein Spatz von 20 Kilo? Das muss ein Kapitalist sein!</de>
+</YouMonster_chatter_10>
+
+<YouMonster_showdown>
+	<de>1: [schießen]
+2: [zögern]</de>
+</YouMonster_showdown>
