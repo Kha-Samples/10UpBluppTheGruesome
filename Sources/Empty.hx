@@ -270,12 +270,12 @@ class Empty extends Game {
 		}
 		
 		populateRandom(4, npcSpawns, function(pos : Vector2) {
-			var guy = new RandomGuy(monsterPlayer, interactiveSprites);
+			var guy = new RandomGuy(interactiveSprites);
 			guy.x = pos.x;
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
 		
-		var michael = new Michael(monsterPlayer, interactiveSprites);
+		var michael = new Michael(interactiveSprites);
 		var pos : Vector2 = npcSpawns[Random.getIn(0, npcSpawns.length - 1)];
 		michael.x = pos.x;
 		michael.y = pos.y;

@@ -24,13 +24,12 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	private var walkRight: Animation;
 	private var lookLeft: Bool;
 	
-	private var monster: Sprite;
 	private var stuff: Array<InteractiveSprite>;
 	
 	private static var names = ["Augusto", "Ingo", "Christian", "Robert", "Björn", "Johannes", "Rebecca", "Stephen", "Alvar", "Michael", "Linh", "Roger", "Roman", "Max", "Paul", "Tobias", "Henno", "Niko", "Kai", "Julian"];
 	private static var allguys = new Array<RandomGuy>();
 	
-	public function new(monster: Sprite, stuff: Array<InteractiveSprite>) {
+	public function new(stuff: Array<InteractiveSprite>) {
 		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
 		standLeft = Animation.create(9);
 		standRight = Animation.create(0);
@@ -39,7 +38,6 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		lookLeft = false;
 		setAnimation(standRight);
 		
-		this.monster = monster;
 		this.stuff = [];
 		for (thing in stuff) {
 			if (Std.is(thing, Computer) || Std.is(thing, Coffee)) {
@@ -84,7 +82,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		var tasktype = Random.getUpTo(9);
 		switch (tasktype) {
 			case 0:
-				schedule.add(new MoveTask(this, monster));
+				schedule.add(new MoveTask(this, Player.current()));
 			case 1, 2:
 				createMichaelTask();
 			case 3, 4, 5, 6, 7, 8, 9:

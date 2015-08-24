@@ -6,8 +6,8 @@ import schedule.MoveTask;
 import sprites.IdSystem.IdCard;
 
 class Michael extends RandomGuy {
-	public function new(monster: Sprite, stuff: Array<InteractiveSprite>) {
-		super(monster, stuff);
+	public function new(stuff: Array<InteractiveSprite>) {
+		super(stuff);
 		IdCard = new IdCard("Michael");
 	}
 	
