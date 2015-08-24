@@ -526,7 +526,8 @@ class Empty extends Game {
 			g.font = font;
 			g.color = Color.Magenta;
 			g.pushTransformation(g.transformation.multmat(FastMatrix3.scale(3, 3)));
-			g.drawString("MONSTER", 180 + 10 * Math.cos(0.3 * kha.Sys.getTime()), 140 + 10 * Math.sin(0.6 * kha.Sys.getTime()));
+			g.drawString("Blupp", 180 + 10 * Math.cos(0.3 * kha.Sys.getTime()), 140 + 10 * Math.sin(0.6 * kha.Sys.getTime()));
+			g.drawString("The Gruesome", -65 + 180 + 10 * Math.cos(0.3 * kha.Sys.getTime()), 35 + 140 + 10 * Math.sin(0.6 * kha.Sys.getTime()));
 			g.popTransformation();
 			var b = Math.round(100 + 125 * Math.pow(Math.sin(0.5 * kha.Sys.getTime()),2));
 			g.color = Color.fromBytes(b, b, b);
