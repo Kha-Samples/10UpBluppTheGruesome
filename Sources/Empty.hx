@@ -41,6 +41,7 @@ import sprites.Computer;
 import sprites.Door;
 import sprites.Fishman;
 import sprites.InteractiveSprite;
+import sprites.Michael;
 import sprites.Player;
 import sprites.RandomGuy;
 
@@ -273,6 +274,14 @@ class Empty extends Game {
 			guy.x = pos.x;
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
+		
+		var michael = new Michael(monsterPlayer, interactiveSprites);
+		var pos : Vector2 = npcSpawns[Random.getIn(0, npcSpawns.length - 1)];
+		michael.x = pos.x;
+		michael.y = pos.y;
+		Scene.the.addOther(michael);
+		
+		RandomGuy.createAllTasks();
 		
 		setMainPlayer(agentPlayer);
 		
