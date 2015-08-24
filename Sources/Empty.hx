@@ -84,9 +84,11 @@ class Empty extends Game {
 	public var gotTC2 : Bool = false;
 	public var gotTC3 : Bool = false;
 	public var gotTC4 : Bool = false;
+	public var gotPl1 : Bool = false;
+	public var gotan2 : Bool = false;
 	
 	public function checkGameEnding() : Bool {
-		return gotTC1 && gotTC2 && gotTC3 && gotTC4;
+		return gotTC1 && gotTC2 && gotTC3 && gotTC4 && gotPl1 && gotan2;
 	}
 	
     var lastTime = 0.0;

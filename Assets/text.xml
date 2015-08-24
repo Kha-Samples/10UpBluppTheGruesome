@@ -139,11 +139,23 @@
 	<de>Teil der Zeitkanone (#4)</de>
 	<en>Part of the time cannon (#4)</en>
 </tc4>
+<Plan1>
+	<de>Teil des Planes</de>
+	<en>Part of the plan</en>
+</Plan1>
+<Plan2>
+	<de>Teil des Planes</de>
+	<en>Part of the plan</en>
+</Plan2>
 
 <itemfound>
 	<de>{0} gefunden</de>
 	<en>{0} found</en>
 </itemfound>
+<nothingfound>
+	<de>Nichts gefunden</de>
+	<en>Nothing found</en>
+</nothingfound>
 
 <idLogger_display>
 	<de>WARNUNG: Zeitstempel defekt.
