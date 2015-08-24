@@ -176,6 +176,16 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 		}
 	}
 	
+	public static function everybodyRunToPlayer(suspect: RandomGuy): Void {
+		for (guy in allguys) {
+			if (guy != suspect) {
+				guy.end();
+				guy.schedule.add(new MoveTask(guy, Player.current(), 100));
+			}
+		}
+		suspect.end();
+	}
+	
 	private function createTasks(): Void {
 		if (!visible) return;
 		while (schedule.length < 20) {

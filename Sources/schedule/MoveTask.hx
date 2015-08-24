@@ -1,5 +1,6 @@
 package schedule;
 
+import kha.math.Random;
 import kha2d.Sprite;
 import sprites.IdSystem;
 import sprites.RandomGuy;
@@ -11,10 +12,16 @@ class MoveTask extends Task {
 	private var inElevator: Bool;
 	private static inline var speed: Float = 2;
 	private var waitOnOpen: Int;
+	private var offset: Int;
 	
-	public function new(guy: RandomGuy, target: Sprite) {
+	public function new(guy: RandomGuy, target: Sprite, randomoffset: Int = 0) {
 		super(guy);
 		this.target = target;
+		if (randomoffset > 0) {
+			var value = Random.getUpTo(randomoffset);
+			value -= Std.int(randomoffset / 2);
+			offset = value;
+		}
 		step = 0;
 		waitOnOpen = 0;
 		inElevator = false;
@@ -64,10 +71,10 @@ class MoveTask extends Task {
 					step -= 2;
 				}
 				else {
-					if (guy.x + guy.width / 2 < target.x + target.width / 2 - 10) {
+					if (guy.x + guy.width / 2 < target.x + target.width / 2 - 10 + offset) {
 						guy.speedx = speed;
 					}
-					else if (guy.x + guy.width / 2 > target.x + target.width / 2 + 10) {
+					else if (guy.x + guy.width / 2 > target.x + target.width / 2 + 10 + offset) {
 						guy.speedx = -speed;
 					}
 					else {
