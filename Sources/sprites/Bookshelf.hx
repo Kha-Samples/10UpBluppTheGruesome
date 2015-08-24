@@ -40,18 +40,18 @@ class Bookshelf extends InteractiveSprite {
 			destroyed = true;
 			
 			var text = Localization.getText(Keys_text.ITEMFOUND, [ fk.name ]);
-			dlg.insert([new Bla(text, this, true)]);
+			Empty.the.playerDlg.insert([new Bla(text, this, true)]);
 		}
 	}
 	
-	function useComputerDialogue(): Void {
+	function useDialogue(): Void {
 		var choices = new Array<Array<DialogueItem>>();
 		var text = Localization.getText(Keys_text.BOOKSHELF_ACTIONS);
 		choices.push([new StartDialogue(search)]);
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.BOOKSHELF_SEARCH);
 		choices.push([]); // TODO Blabox FAIL
 		text += '\n${choices.length}: ' + Localization.getText(Keys_text.BOOKSHELF_LEAVE);
-		dlg.insert([new BlaWithChoices( text, this, choices)]);
+		Empty.the.playerDlg.insert([new BlaWithChoices( text, this, choices)]);
 	}
 	
 	override public function useFrom(dir:Direction, user:Dynamic): Bool 
@@ -60,7 +60,7 @@ class Bookshelf extends InteractiveSprite {
 		
 		if (user == Player.current() && Std.is(user, Fishman))
 		{
-			useComputerDialogue();
+			useDialogue();
 		}
 		return true;
 	}

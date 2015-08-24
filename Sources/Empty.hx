@@ -51,7 +51,8 @@ import dialogue.*;
 enum Mode {
 	StartScreen;
 	Game;
-	Menu;
+	PlayerSwitch;
+	//Menu;
 }
 
 class Empty extends Game {
@@ -67,23 +68,12 @@ class Empty extends Game {
 	private var npcSpawns : Array<Vector2> = new Array<Vector2>();
 	public var interactiveSprites: Array<InteractiveSprite>;
 	
-	public var mode(default, set) : Mode;
-	function set_mode(v: Mode): Mode {
-		mode = v; 
-		if (mode != Game) {
-			if (Player.current() != null) {
-				Player.current().left = false;
-				Player.current().right = false;
-				Player.current().up = false;
-				// TODO: cancel other actions?
-			}
-		}
-		return mode;
-	}
+	public var mode : Mode;
 	
 	public var renderOverlay : Bool;
 	public var overlayColor : Color;
-	public var dlg : Dialogue;
+	public var playerDlg : Dialogue = new Dialogue();
+	public var npcDlgs : Array<Dialogue> = new Array();
 	
     var lastTime = 0.0;
 	
@@ -93,7 +83,6 @@ class Empty extends Game {
 	public function new() {
 		super("10Up");
 		the = this;
-		dlg = new Dialogue();
 		lastTime = Scheduler.time();
 	}
 	
@@ -124,7 +113,7 @@ class Empty extends Game {
 				msg += '\n($i): ${Localization.availableLanguages[l]}';
 				++i;
 			}
-			dlg.set( [
+			playerDlg.set( [
 				new BlaWithChoices(msg, null, choices)
 				, new StartDialogue(Cfg.save)
 				, new StartDialogue(initTitleScreen)
@@ -188,7 +177,6 @@ class Empty extends Game {
 	}
 	
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
-		mode = Game;
 		Inventory.init();
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
@@ -287,8 +275,7 @@ class Empty extends Game {
 		onDayBegin();
 		Configuration.setScreen(this);
 		
-		nextDayChangeTime = -1;
-		overlayColor = Color.Black;
+		Dialogues.dusk();
 	}
 	
 	private function populateRandom(count : Int, positions : Array<Vector2>, creationFunction : Int->Vector2->Void) {
@@ -302,6 +289,7 @@ class Empty extends Game {
 	}
 	
 	public function setMainPlayer(player : Player, spawnPosition : Vector2) {
+		trace ("setMainPlayer!");
 		if (Player.current() != null) {
 			Scene.the.removeHero(Player.current());
 		}
@@ -371,25 +359,53 @@ class Empty extends Game {
 		var deltaTime = Scheduler.time() - lastTime;
 		lastTime = Scheduler.time();
 		
-		ElevatorManager.the.update(deltaTime);
+		if (mode == Game)
+		{
+			ElevatorManager.the.update(deltaTime);
+			
+			if (!playerDlg.isEmpty()) {
+				if (Player.current() != null) {
+					Player.current().left = false;
+					Player.current().right = false;
+					Player.current().up = false;
+					// TODO: Stop other actions?
+				}
+			}
+			else
+			{
+				if (Scheduler.time() >= nextDayChangeTime)
+				{
+					trace ('change day!');
+					for (dlg in npcDlgs)
+					{
+						dlg.cancel();
+					}
+					npcDlgs.splice(0, npcDlgs.length);
+					
+					isDay = !isDay;
+					nextDayChangeTime = Math.NaN;
+					if (isDay) Dialogues.dawn();
+					else Dialogues.dusk();
+				}
+				else
+				{
+					for (dlg in npcDlgs)
+					{
+						dlg.update();
+					}
+				}
+			}
+		}
+		
+		playerDlg.update();
+		
 		var player = Player.current();
 		if (player != null) {
 			Scene.the.camx = Std.int(player.x) + Std.int(player.width / 2);
 			Scene.the.camy = Std.int(player.y + player.height + 80 - 0.5 * height);
 		}
+		
 		Scene.the.update();
-		
-		if (dlg.isEmpty()) {
-			if (Scheduler.time() >= nextDayChangeTime)
-			{
-				isDay = !isDay;
-				nextDayChangeTime = Math.NaN;
-				if (isDay) Dialogues.dawn();
-				else Dialogues.dusk();
-			}
-		}
-		
-		dlg.update();
 	}
 	
 	public function onDayBegin() : Void {
@@ -420,8 +436,6 @@ class Empty extends Game {
 	
 	private function resetInteractiveSprites(resetLoggers : Bool) {
 		for (ias in interactiveSprites) {
-			ias.dlg.cancel();
-			
 			if (resetLoggers) {
 				var logger = Std.instance(ias, IdLoggerSprite);
 				if (logger != null) logger.idLogger.newDay();
@@ -439,7 +453,7 @@ class Empty extends Game {
 		case Congratulations:
 			var congrat = Loader.the.getImage("congratulations");
 			g.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);*/
-		case Game, Menu:
+		case Game, PlayerSwitch:
 			Scene.the.render(g);
 			/*g.transformation = FastMatrix3.identity();
 			g.color = Color.Black;
@@ -539,6 +553,7 @@ class Empty extends Game {
 	
 	private function keyboardDown(key: Key, char: String): Void {
 		if (mode != Game) return;
+		if (!playerDlg.isEmpty()) return;
 		
 		switch (key) {
 			case LEFT:
@@ -561,6 +576,7 @@ class Empty extends Game {
 	private function keyboardUp(key: Key, char: String): Void {
 		switch (mode) {
 		case Game:
+			if (!playerDlg.isEmpty()) return;
 			switch (key) {
 			case LEFT:
 				Player.current().left = false;
@@ -590,9 +606,10 @@ class Empty extends Game {
 			case Key.ESC:
 				Dialogues.escMenu();
 			default:
+				mode = PlayerSwitch;
 				overlayColor = Color.fromBytes(0, 0, 0, 0);
 				renderOverlay = true;
-				dlg.set([new Action(null, ActionType.FADE_TO_BLACK)
+				playerDlg.set([new Action(null, ActionType.FADE_TO_BLACK)
 						, new StartDialogue(function() {
 							Configuration.setScreen(new LoadingScreen());
 							Loader.the.loadRoom("testlevel", initLevel);

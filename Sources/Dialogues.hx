@@ -13,69 +13,64 @@ using Lambda;
 
 class Dialogues {
 	static public function escMenu() {
-		if (Player.current() != null) {
-			Player.current().left = false;
-			Player.current().right = false;
-			Player.current().up = false;
-		}
+		trace ('escMenu!');
 		var msg = "What to do?";
 		var choices = new Array<Array<DialogueItem>>();
 		var i = 1;
 		for (l in Localization.availableLanguages.keys()) {
 			if (l != Cfg.language) {
-				choices.push([new StartDialogue(function() { Cfg.language = l; } )]);
+				choices.push([new StartDialogue(function() { Localization.language = Cfg.language = l; Cfg.save(); } )]);
 				msg += '\n($i): Set language to "${Localization.availableLanguages[l]}"';
 				++i;
 			}
 		}
-		msg += '\n($i): Back"';
+		msg += '\n($i): ' + Localization.getText(Keys_text.BACK);
 		choices.push( [] );
-		Empty.the.dlg.insert( [
+		Empty.the.playerDlg.insert( [
 			new BlaWithChoices(msg, null, choices)
-			, new StartDialogue(Cfg.save)
-			, new StartDialogue(function () { Localization.language = Cfg.language; } )
 		], true );
 	}
 	
 	static public function dawn() {
+		trace ('DAWN!');
+		Empty.the.mode = PlayerSwitch;
 		Empty.the.renderOverlay = true;
-		Empty.the.dlg.insert([
+		Empty.the.playerDlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)
 			, new StartDialogue(Empty.the.onNightEnd)
-			, new Bla(Keys_text.DAWN, null, true)
-			, new StartDialogue(Empty.the.onDayBegin)
-			, new Action(null, ActionType.FADE_FROM_BLACK)
-			, new StartDialogue(function() { Empty.the.renderOverlay = false; } )
+			, new BlaWithChoices(Keys_text.DAWN, null, [
+				[
+					new StartDialogue(Empty.the.onDayBegin)
+					, new Action(null, ActionType.FADE_FROM_BLACK)
+					, new StartDialogue(function() {
+						trace ('after FADE_FROM_BLACK');
+						Empty.the.renderOverlay = false;
+						Empty.the.mode = Game;
+					})
+				]
+				, [new StartDialogue(escMenu), new StartDialogue(dawn)]
+			])
 		]);
 	}
 	static public function dusk() {
+		trace ('DUSK!');
+		Empty.the.mode = PlayerSwitch;
 		Empty.the.renderOverlay = true;
-		Empty.the.dlg.insert([
+		Empty.the.playerDlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)
 			, new StartDialogue(Empty.the.onDayEnd)
-			, new Bla(Keys_text.DUSK, null, true)
-			, new StartDialogue(Empty.the.onNightBegin)
-			, new Action(null, ActionType.FADE_FROM_BLACK)
-			, new StartDialogue(function() { Empty.the.renderOverlay = false; } )
+			, new BlaWithChoices(Keys_text.DUSK, null, [
+				[
+					new StartDialogue(Empty.the.onNightBegin)
+					, new Action(null, ActionType.FADE_FROM_BLACK)
+					, new StartDialogue(function() {
+						trace ('after FADE_FROM_BLACK');
+						Empty.the.renderOverlay = false;
+						Empty.the.mode = Game;
+					})
+				]
+				, [new StartDialogue(escMenu), new StartDialogue(dusk)]
+			])
 		]);
-	}
-	static public function startAsDetective() {
-		/*PlayerBullie.the.setCurrent();
-		PlayerBullie.the.dlg.insert( [
-			new Action( null, ActionType.FADE_FROM_BLACK )
-			, new Bla(Keys_text.START_AS_BULLY_1, PlayerBullie.the)
-			, new Action( [PlayerBullie.the], ActionType.AWAKE )
-			, new Bla(Keys_text.START_AS_BULLY_2, PlayerBullie.the)
-			, new Bla(Keys_text.START_AS_BULLY_3, PlayerBullie.the)
-		] );*/
-	}
-	static public function startAsMonster() {
-		/*PlayerBlondie.the.setCurrent();
-		PlayerBlondie.the.dlg.insert( [
-			new Action( null, ActionType.FADE_FROM_BLACK )
-			, new Action(null, ActionType.PAUSE )
-			, new Action( [PlayerBlondie.the], ActionType.AWAKE )
-			, new Bla(Keys_text.START_AS_MECHANIC, PlayerBlondie.the)
-		] );*/
 	}
 }
