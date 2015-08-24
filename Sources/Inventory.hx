@@ -74,6 +74,7 @@ class Inventory {
 		var itemY = y + spacing;
 		g.color = Color.Black;
 		g.fillRect(0, y, Game.the.width, itemHeight + 2 * spacing);
+		g.color = Color.White;
 		for (i in offset...items.length) {
 			items[i].renderForInventory(g, itemX, itemY, itemWidth, itemHeight);
 			if (i == selected) {
