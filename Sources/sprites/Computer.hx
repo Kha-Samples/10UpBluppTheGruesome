@@ -61,8 +61,8 @@ class Computer extends IdLoggerSprite {
 			}
 		}
 		else {
-				var text = Localization.getText(Keys_text.NOTHINGFOUND);
-				Empty.the.playerDlg.insert([new Bla(text, this, true)]);		
+			var text = Localization.getText(Keys_text.NOTHINGFOUND);
+			Empty.the.playerDlg.insert([new Bla(text, this, true)]);		
 		}
 	}
 	

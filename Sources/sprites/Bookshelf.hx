@@ -59,6 +59,11 @@ class Bookshelf extends InteractiveSprite {
 			Empty.the.playerDlg.insert([new Bla(text, this, true)]);
 			Empty.the.checkGameEnding();
 		}
+		else {
+			var text = Localization.getText(Keys_text.NOTHINGFOUND);
+			Empty.the.playerDlg.insert([new Bla(text, this, true)]);
+		}
+		stopUsing(true);
 	}
 	
 	function useDialogue(): Void {
@@ -73,7 +78,7 @@ class Bookshelf extends InteractiveSprite {
 	
 	override public function isUsableFrom(user:Dynamic):Bool 
 	{
-		return super.isUsableFrom(user) && !destroyed && user == Player.current() && Std.is(user, Fishman);
+		return super.isUsableFrom(user) && user == Player.current() && Std.is(user, Fishman);
 	}
 	override public function useFrom(user:Dynamic): Bool 
 	{
