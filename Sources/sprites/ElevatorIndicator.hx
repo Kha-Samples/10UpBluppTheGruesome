@@ -9,7 +9,7 @@ class ElevatorIndicator extends Sprite
 	
 	public function new(x : Float, y : Float) {
 		super(Loader.the.getImage("floorlevel"), 32, 32, 0);
-		this.x = x + 64 - 32 / 2;
+		this.x = x + 96 - 32 / 2;
 		this.y = y - 32;
 		floorAnimations = new Array<Animation>();
 		for (i in 0...10) {
