@@ -1,6 +1,7 @@
 package schedule;
 
 import kha2d.Sprite;
+import sprites.RandomGuy;
 
 class MoveTask extends Task {
 	private var target: Sprite;
@@ -9,8 +10,8 @@ class MoveTask extends Task {
 	private var inElevator: Bool;
 	private static inline var speed: Float = 2;
 	
-	public function new(sprite: Sprite, target: Sprite) {
-		super(sprite);
+	public function new(guy: RandomGuy, target: Sprite) {
+		super(guy);
 		this.target = target;
 		step = 0;
 		inElevator = false;
@@ -20,46 +21,46 @@ class MoveTask extends Task {
 		switch (step) {
 			case 0:
 				targetLevel = ElevatorManager.the.getLevel(target.y);
-				if (targetLevel == ElevatorManager.the.getLevel(sprite.y)) {
+				if (targetLevel == ElevatorManager.the.getLevel(guy.y)) {
 					step += 2;
 				}
 				else {
-					var elevatorX = ElevatorManager.the.getX(ElevatorManager.the.getLevel(sprite.y));
-					if (sprite.x + sprite.width / 2 < elevatorX - 10) {
-						sprite.speedx = speed;
+					var elevatorX = ElevatorManager.the.getX(ElevatorManager.the.getLevel(guy.y));
+					if (guy.x + guy.width / 2 < elevatorX - 10) {
+						guy.speedx = speed;
 					}
-					else if (sprite.x + sprite.width / 2 > elevatorX + 10) {
-						sprite.speedx = -speed;
+					else if (guy.x + guy.width / 2 > elevatorX + 10) {
+						guy.speedx = -speed;
 					}
 					else {
-						sprite.speedx = 0;
+						guy.speedx = 0;
 						++step;
 					}
 				}
 			case 1:
 				if (!inElevator) {
-					inElevator = ElevatorManager.the.getIn(sprite, ElevatorManager.the.getLevel(sprite.y), ElevatorManager.the.getLevel(target.y), function () {
+					inElevator = ElevatorManager.the.getIn(guy, ElevatorManager.the.getLevel(guy.y), ElevatorManager.the.getLevel(target.y), function () {
 						++step;
 						inElevator = false;
 					});
 					if (!inElevator) {
-						ElevatorManager.the.callTo(ElevatorManager.the.getLevel(sprite.y));
+						ElevatorManager.the.callTo(ElevatorManager.the.getLevel(guy.y));
 					}
 				}
 			case 2:
 				targetLevel = ElevatorManager.the.getLevel(target.y);
-				if (targetLevel != ElevatorManager.the.getLevel(sprite.y)) {
+				if (targetLevel != ElevatorManager.the.getLevel(guy.y)) {
 					step -= 2;
 				}
 				else {
-					if (sprite.x + sprite.width / 2 < target.x + target.width / 2 - 10) {
-						sprite.speedx = speed;
+					if (guy.x + guy.width / 2 < target.x + target.width / 2 - 10) {
+						guy.speedx = speed;
 					}
-					else if (sprite.x + sprite.width / 2 > target.x + target.width / 2 + 10) {
-						sprite.speedx = -speed;
+					else if (guy.x + guy.width / 2 > target.x + target.width / 2 + 10) {
+						guy.speedx = -speed;
 					}
 					else {
-						sprite.speedx = 0;
+						guy.speedx = 0;
 						done = true;
 					}
 				}
