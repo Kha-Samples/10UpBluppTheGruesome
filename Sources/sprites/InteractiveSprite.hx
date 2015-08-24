@@ -27,8 +27,16 @@ class InteractiveSprite extends Sprite {
 		return new Vector2(Math.round(x - collider.x) + 0.5 * width, Math.round(y - collider.y) + 0.5 * height);
 	}
 	
-	public function useFrom( dir : Direction, user: Dynamic ): Bool { return false; }
-	public function stopUsing(): Void {}
+	public function isUsableFrom( user: Dynamic ): Bool { return false; }
+	public function useFrom( user: Dynamic ): Bool
+	{
+		if (isUsableFrom(user)) {
+			isCurrentlyUsedFrom = user;
+			return true;
+		}
+		return false;
+	}
+	public function stopUsing(clean: Bool): Void { isCurrentlyUsedFrom = null; }
 	
 	override public function update():Void 
 	{
@@ -41,7 +49,7 @@ class InteractiveSprite extends Sprite {
 	var playerCanUseItClear = true;
 	override public function hit(sprite:Sprite):Void 
 	{
-		if (isUseable && isCurrentlyUsedFrom == null && sprite == Player.current()) {
+		if (isUseable && isCurrentlyUsedFrom == null && sprite == Player.current() && isUsableFrom(sprite) ) {
 			playerCanUseIt = true;
 			playerCanUseItClear = false;
 			// TODO: inform HUMAN about the possibility to USE this

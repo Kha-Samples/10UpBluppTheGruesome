@@ -262,11 +262,7 @@ class Player extends DestructibleSprite {
 		var touse = Empty.the.interactiveSprites.filter(function(sprite:InteractiveSprite):Bool { return sprite.playerCanUseIt; } );
 		var px = x + 0.5 * tempcollider.width;
 		for (ias in touse) {
-			if (px > ias.x + 0.5 * ias.tempcollider.width) {
-				ias.useFrom(Direction.RIGHT, this);
-			} else {
-				ias.useFrom(Direction.LEFT, this);
-			}
+			ias.useFrom(this);
 		}
 	}
 }
