@@ -37,4 +37,8 @@ class ComputerTask extends Task {
 			computer.stopUsing(false);
 		}
 	}
+	
+	override public function getDescription(): String {
+		return Localization.getText(Keys_text.TASK_COMPUTER, [Std.string(ElevatorManager.the.getLevel(computer.y))]);
+	}
 }

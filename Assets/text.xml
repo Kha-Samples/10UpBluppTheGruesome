@@ -96,10 +96,6 @@
 	<de>Stockwerk</de>
 	<en>Floor</en>
 </Floor>
-<Floor_0>
-	<de>Stockwerk 0</de>
-	<en>Floor 0</en>
-</Floor_0>
 	
 	
 <!-- Computer -->
@@ -257,3 +253,49 @@ The other player plays as {Agent}. In his youth he was a vicitm of these experim
 	<de>Hallo {0}</de>
 	<en>Hello {0}</en>
 </hello>
+
+<how_to_help>
+	<de>Wie kann ich ihnen Helfen?
+
+1: Ist Ihnen etwas seltsam vorgekommen in letzter Zeit?
+2: Was machen sie gerade?
+3: Sie sind das Monster!</de>
+	<en>How can I help you?
+
+1: Did something strange happend recently?
+2: What do you do now?
+3: You are the monsgter!</en>
+</how_to_help>
+
+<Task>
+	<de>Zuerst {0} und dann {1}.</de>
+	<en>First {0} and then {1}.</en>
+</Task>
+<Task_something>
+	<de>Irgendwas</de>
+	<en>something</en>
+</Task_something>
+<Task_coffee>
+	<de>Kaffeetrinken im {1}. Stock</de>
+	<en>trinking coffee at {0}. floor</en>
+</Task_coffee>
+<Task_sleep>
+	<de>Schlafen</de>
+	<en>sleeping</en>
+</Task_sleep>
+<Task_wait>
+	<de>Warten</de>
+	<en>waiting</en>
+</Task_wait>
+<Task_move>
+	<de>zu {0} auf {Floor} {1} Gehen</de>
+	<en>moving to {0} in {Floor} {1}</en>
+</Task_move>
+<Task_bla>
+	<de>mit {0} Reden</de>
+	<en>talking to {0}</en>
+</Task_bla>
+<Task_computer>
+	<de>an der {Computer} auf {Floor} {0} Arbeiten</de>
+	<en>working at the {Computer} at {Floor} {0}</en>
+</Task_computer>

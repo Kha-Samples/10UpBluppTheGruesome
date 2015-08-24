@@ -20,4 +20,8 @@ class SleepTask extends Task {
 			Scheduler.addTimeTask(function() { guy.sleeping = false; done = true; }, Random.getIn(15, 30));
 		}
 	}
+	
+	override public function getDescription(): String {
+		return Localization.getText(Keys_text.TASK_SLEEP);
+	}
 }

@@ -1,8 +1,8 @@
 package schedule;
 
 class Schedule {
-	private var tasks: Array<Task>;
-	private var currentTask: Task;
+	public var tasks: Array<Task>;
+	public var currentTask: Task;
 	
 	public function new() {
 		tasks = new Array<Task>();
@@ -52,5 +52,15 @@ class Schedule {
 		}
 		tasks = [];
 		currentTask = null;
+	}
+	
+	public function nextTwoTaskDescription(): String
+	{
+		var task1 = currentTask;
+		var index = 0;
+		while (Std.is(task1, MoveTask)) task1 = tasks[index++];
+		var task2 = tasks[index++];
+		while (Std.is(task2, MoveTask)) task2 = tasks[index++];
+		return Localization.getText(Keys_text.TASK, [task1.getDescription(), task2.getDescription()]);
 	}
 }

@@ -1,5 +1,8 @@
 package sprites;
 
+import dialogue.Bla;
+import dialogue.BlaWithChoices;
+import dialogue.StartDialogue;
 import kha.Color;
 import kha.graphics2.Graphics;
 import kha.Image;
@@ -20,7 +23,7 @@ import schedule.WaitTask;
 import sprites.IdSystem.IdCard;
 import sprites.IdSystem.IdCardOwner;
 
-class RandomGuy extends Sprite implements IdCardOwner {
+class RandomGuy extends InteractiveSprite implements IdCardOwner {
 	public var IdCard(default, null): IdCard;
 	
 	private var schedule: Schedule;
@@ -49,10 +52,10 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	public static var redused = false;
 	public static var greenused = false;
 	
-	public var paused = false;
-	
 	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool, customlook: Bool = false) {
 		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
+		isUseable = true;
+		Empty.the.interactiveSprites.push(this);
 		zzzzz = Loader.the.getImage("zzzzz");
 		zzzzzAnim = Animation.createRange(0, 2, 8);
 		this.youarethemonster = youarethemonster;
@@ -219,7 +222,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	
 	override public function update(): Void {
 		super.update();
-		if (paused) {
+		if (isCurrentlyUsedFrom != null) {
 			speedx = 0;
 			speedy = 0;
 		}
@@ -262,5 +265,37 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		else {
 			super.render(g);
 		}
+	}
+	
+	override public function isUsableFrom(user:Dynamic):Bool 
+	{
+		return super.isUsableFrom(user) && Empty.the.agentPlayer == user;
+	}
+	override public function useFrom(user:Dynamic):Bool 
+	{
+		if (super.useFrom(user))
+		{
+			var idUser : IdCardOwner = cast Player.current();
+			Empty.the.playerDlg.insert([
+				new Bla(Localization.getText(Keys_text.HELLO, [IdCard.Name + ', ${IdCard.Id}']), user, false)
+				, new Bla(Localization.getText(Keys_text.HELLO, [idUser.IdCard.Name]), this, false)
+				, new BlaWithChoices(Localization.getText(Keys_text.HOW_TO_HELP), this, [
+					[ /* Seltsames?*/ 
+					]
+					, [ /* tun gerade? */
+						new Bla(schedule.nextTwoTaskDescription(), this, false)
+					]
+					, [ /* YOU ARE THE MONSTER */
+					]
+				])
+				, new StartDialogue(stopUsing.bind(true))
+			]);
+			return true;
+		}
+		return false;
+	}
+	override public function stopUsing(clean:Bool):Void 
+	{
+		super.stopUsing(clean);
 	}
 }

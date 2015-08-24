@@ -18,4 +18,8 @@ class WaitTask extends Task {
 			Scheduler.addTimeTask(function() { done = true; }, Random.getIn(1, 5));
 		}
 	}
+	
+	override public function getDescription(): String {
+		return Localization.getText(Keys_text.TASK_WAIT);
+	}
 }

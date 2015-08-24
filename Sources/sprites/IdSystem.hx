@@ -36,7 +36,7 @@ class IdLogger
 {
 	var loggedIDs: Array<IdCard> = new Array();
 	var currendDayIndex: Int = 0;
-	var txtKey: String;
+	public var txtKey: String;
 
 	public function new(nameTxtKey: String) 
 	{
