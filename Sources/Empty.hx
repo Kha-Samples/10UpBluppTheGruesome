@@ -96,7 +96,7 @@ class Empty extends Game {
 	private var monster: Fishman;
 	
 	public function checkGameEnding() : Void {
-		if (true || gotTC1 && gotTC2 && gotTC3 && gotTC4 && gotPl1 && gotan2)
+		if (gotTC1 && gotTC2 && gotTC3 && gotTC4 && gotPl1 && gotan2)
 		{
 			mode = FischmanWins;
 			// TODO: extro
