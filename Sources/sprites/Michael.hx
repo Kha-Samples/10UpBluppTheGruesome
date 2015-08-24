@@ -7,7 +7,7 @@ import sprites.IdSystem.IdCard;
 
 class Michael extends RandomGuy {
 	public function new(stuff: Array<InteractiveSprite>) {
-		super(stuff);
+		super(stuff, false);
 		IdCard = new IdCard("Michael");
 	}
 	

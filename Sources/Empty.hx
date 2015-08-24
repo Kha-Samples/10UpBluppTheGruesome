@@ -270,7 +270,7 @@ class Empty extends Game {
 		}
 		
 		populateRandom(4, npcSpawns, function(pos : Vector2) {
-			var guy = new RandomGuy(interactiveSprites);
+			var guy = new RandomGuy(interactiveSprites, false);
 			guy.x = pos.x;
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );

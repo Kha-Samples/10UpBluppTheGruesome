@@ -2,6 +2,7 @@ package sprites;
 
 import kha.Loader;
 import kha.math.Random;
+import kha.math.Vector2;
 import kha2d.Animation;
 import kha2d.Sprite;
 import schedule.CoffeeTask;
@@ -26,11 +27,14 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	
 	private var stuff: Array<InteractiveSprite>;
 	
+	public var youarethemonster: Bool;
+	
 	private static var names = ["Augusto", "Ingo", "Christian", "Robert", "Björn", "Johannes", "Rebecca", "Stephen", "Alvar", "Michael", "Linh", "Roger", "Roman", "Max", "Paul", "Tobias", "Henno", "Niko", "Kai", "Julian"];
 	private static var allguys = new Array<RandomGuy>();
 	
-	public function new(stuff: Array<InteractiveSprite>) {
+	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool) {
 		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
+		this.youarethemonster = youarethemonster;
 		standLeft = Animation.create(9);
 		standRight = Animation.create(0);
 		walkLeft = Animation.createRange(10, 17, 4);
@@ -52,6 +56,15 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		schedule = new schedule.Schedule();
 		
 		allguys.push(this);
+	}
+	
+	public static function monsterPosition(): Vector2 {
+		for (guy in allguys) {
+			if (guy.youarethemonster) {
+				return new Vector2(guy.x, guy.y);
+			}
+		}
+		return new Vector2();
 	}
 	
 	public static function endDayForEverybody(): Void {
