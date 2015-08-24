@@ -24,13 +24,11 @@ class BlaWithChoices extends Bla {
 		this.finished = false;
 	}
 	
-	@:access(Dialogues.dlgChoices)
-	@:access(Empty.mode)
-	override function keyUpListener(key:Key, char: String) {
+	override function keyDownListener(key:Key, char: String) {
 		trace ('KEY UP: $char');
 		var choice = char.fastCodeAt(0) - '1'.fastCodeAt(0);
 		if (choice >= 0 && choice < choices.length) {
-			Keyboard.get().remove(null, keyUpListener);
+			Keyboard.get().remove(keyDownListener, null);
 			finished = true;
 			dlg.insert(choices[choice], true);
 		}
