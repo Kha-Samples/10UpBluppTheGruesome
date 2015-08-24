@@ -364,7 +364,7 @@
 				"7",
 				"8",
 				"9",
-        "bookshelf",
+    		    "bookshelf",
 				"elevator",
 				"Liberation Sans20.kravur",
 				"arial34.kravur",
@@ -374,9 +374,11 @@
 				"floorlevel",
 				"door",
 				"zzzzz",
-        "coffee",
+		        "coffee",
 				"broetchen1",
-				"broetchen2"
+				"broetchen2",
+				"rowdy",
+				"mechanic"
 			]
 		}
 	]
