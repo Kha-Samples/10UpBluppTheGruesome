@@ -409,6 +409,7 @@ class Empty extends Game {
 		
 		RandomGuy.createAllTasks();
 		nextDayChangeTime = Scheduler.time() + 60.0;
+		Empty.the.mode = Game;
 	}
 	
 	public function onDayEnd() : Void {
@@ -419,6 +420,7 @@ class Empty extends Game {
 		RandomGuy.endDayForEverybody();
 		setMainPlayer(monsterPlayer, RandomGuy.monsterPosition());
 		nextDayChangeTime = Scheduler.time() + 60.0;
+		Empty.the.mode = Game;
 	}
 	
 	public function onNightEnd() : Void {
@@ -604,14 +606,11 @@ class Empty extends Game {
 			case Key.ESC:
 				Dialogues.escMenu();
 			default:
-				mode = PlayerSwitch;
-				overlayColor = Color.fromBytes(0, 0, 0, 0);
-				renderOverlay = true;
-				playerDlg.set([new Action(null, ActionType.FADE_TO_BLACK)
-						, new StartDialogue(function() {
-							Configuration.setScreen(new LoadingScreen());
-							Loader.the.loadRoom("testlevel", initLevel);
-						}) ]);
+				if (playerDlg.isEmpty())
+				{
+					overlayColor = Color.fromBytes(0, 0, 0, 0);
+					Dialogues.startGame();
+				}
 			}
 		default:
 		}
