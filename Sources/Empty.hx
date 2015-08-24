@@ -45,6 +45,7 @@ import sprites.InteractiveSprite;
 import sprites.Mechanic;
 import sprites.Michael;
 import sprites.Player;
+import sprites.Professor;
 import sprites.RandomGuy;
 import sprites.Rowdy;
 import sprites.Wooddoor;
@@ -57,6 +58,7 @@ enum Mode {
 	Game;
 	PlayerSwitch;
 	//Menu;
+	Intro;
 }
 
 class Empty extends Game {
@@ -86,6 +88,10 @@ class Empty extends Game {
 	public var gotTC4 : Bool = false;
 	public var gotPl1 : Bool = false;
 	public var gotan2 : Bool = false;
+	
+	// intro
+	private var professor: Professor;
+	private var monster: Fishman;
 	
 	public function checkGameEnding() : Bool {
 		return gotTC1 && gotTC2 && gotTC3 && gotTC4 && gotPl1 && gotan2;
@@ -190,6 +196,29 @@ class Empty extends Game {
 			sprites.push(blob.readS32BE());
 		}
 		startGame(spriteCount, sprites);
+	}
+	
+	public function initIntro(): Void {
+		professor = new Professor(null, false);
+		professor.setPosition(new Vector2(200, 470));
+		monster = new Fishman(750, 478);
+		mode = Intro;
+		Configuration.setScreen(this);
+		
+		var drg = new Dialogue();
+		drg.insert([
+			new Bla(Localization.getText(Keys_text.INTRO_1_BLUB), monster, false),
+			new Bla(Localization.getText(Keys_text.INTRO_2_BLUB), monster, false),
+			new Bla(Localization.getText(Keys_text.INTRO_3_PROF), professor, false),
+			new Bla(Localization.getText(Keys_text.INTRO_4_PROF), professor, false),
+			new StartDialogue(function() {
+				Empty.the.mode = PlayerSwitch;
+				kha.Configuration.setScreen(new kha.LoadingScreen());
+				Empty.the.renderOverlay = true;
+				Loader.the.loadRoom("testlevel", Empty.the.initLevel);
+			})
+		]);
+		Empty.the.npcDlgs.push(drg);
 	}
 	
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
@@ -524,6 +553,14 @@ class Empty extends Game {
 		case Congratulations:
 			var congrat = Loader.the.getImage("congratulations");
 			g.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);*/
+		case Intro:
+			g.color = Color.Black;
+			g.fillRect(0, 0, width, height);
+			g.color = Color.White;
+			var lab = Loader.the.getImage("lab");
+			g.drawImage(lab, width / 2 - lab.width / 2, height / 2 - lab.height / 2);
+			professor.render(g);
+			monster.render(g);
 		case Game, PlayerSwitch:
 			g.font = font;
 			Scene.the.render(g);

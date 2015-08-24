@@ -94,7 +94,9 @@ class Dialogues {
 			, new StartDialogue(function() {
 				Empty.the.mode = PlayerSwitch;
 				kha.Configuration.setScreen(new kha.LoadingScreen());
-				Loader.the.loadRoom("testlevel", Empty.the.initLevel);
+				//Loader.the.loadRoom("testlevel", Empty.the.initLevel);
+				Empty.the.renderOverlay = false;
+				Loader.the.loadRoom("intro", Empty.the.initIntro);
 			})
 		]);
 	}

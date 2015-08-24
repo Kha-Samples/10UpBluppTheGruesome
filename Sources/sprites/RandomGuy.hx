@@ -55,7 +55,7 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool, customlook: Bool = false) {
 		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
 		isUseable = true;
-		Empty.the.interactiveSprites.push(this);
+		if (Empty.the.interactiveSprites != null) Empty.the.interactiveSprites.push(this);
 		zzzzz = Loader.the.getImage("zzzzz");
 		zzzzzAnim = Animation.createRange(0, 2, 8);
 		this.youarethemonster = youarethemonster;
@@ -68,17 +68,21 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 		setAnimation(standRight);
 		
 		this.stuff = [];
-		for (thing in stuff) {
-			if (thing.isUseable && thing.isUsableFrom(this) && (Std.is(thing, Computer) || Std.is(thing, Coffee))) {
-				this.stuff.push(thing);
+		if (stuff != null) {
+			for (thing in stuff) {
+				if (thing.isUseable && thing.isUsableFrom(this) && (Std.is(thing, Computer) || Std.is(thing, Coffee))) {
+					this.stuff.push(thing);
+				}
 			}
 		}
 		
 		primaryComputer = null;
-		while (primaryComputer == null) {
-			var thing = this.stuff[Random.getUpTo(this.stuff.length - 1)];
-			if (Std.is(thing, Computer)) {
-				primaryComputer = cast thing;
+		if (stuff != null) {
+			while (primaryComputer == null) {
+				var thing = this.stuff[Random.getUpTo(this.stuff.length - 1)];
+				if (Std.is(thing, Computer)) {
+					primaryComputer = cast thing;
+				}
 			}
 		}
 		
