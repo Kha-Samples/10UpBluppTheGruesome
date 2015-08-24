@@ -5,6 +5,7 @@ import Cfg;
 import haxe.macro.Expr.Var;
 import kha.Color;
 import kha.Loader;
+import kha.math.Random;
 import kha2d.Scene;
 import kha2d.Sprite;
 import sprites.IdSystem;
@@ -100,7 +101,33 @@ class Dialogues {
 	}
 	
 	public static function showdownChatter(accused: RandomGuy) {
+		function getChatter(): String {
+			return Keys_text.YOUMONSTER_CHATTER_ + Random.getUpTo(10);
+		}
+		var guyindex = 0;
+		function getGuy(): RandomGuy {
+			var guy = RandomGuy.allguys[(guyindex++) % RandomGuy.allguys.length];
+			while (guy == accused) guy = RandomGuy.allguys[(guyindex++) % RandomGuy.allguys.length];
+			return guy;
+		}
 		
+		new SpawnNpcDialog([
+			new Bla(getChatter(), getGuy(), false)
+			, new Bla(getChatter(), getGuy(), false)
+			, new Action(null, ActionType.PAUSE)
+			, new Bla(getChatter(), getGuy(), false)
+			, new Bla(getChatter(), getGuy(), false)
+			, new Bla(getChatter(), getGuy(), false)
+		]).execute(null);
+		new SpawnNpcDialog([
+			new Action(null, ActionType.PAUSE)
+			, new Bla(getChatter(), getGuy(), false)
+			, new Bla(getChatter(), getGuy(), false)
+			, new Action(null, ActionType.PAUSE)
+			, new Bla(getChatter(), getGuy(), false)
+			, new Bla(getChatter(), getGuy(), false)
+			, new Bla(getChatter(), getGuy(), false)
+		]).execute(null);
 	}
 	
 	public static function showdownShoot(accused: RandomGuy) {

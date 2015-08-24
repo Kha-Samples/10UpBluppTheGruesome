@@ -33,9 +33,13 @@ class Action implements DialogueItem {
 					counter = Empty.the.overlayColor.Ab;
 				case ActionType.FADE_FROM_BLACK:
 					counter = Empty.the.overlayColor.Ab;
+				case ActionType.FADE_FROM_BLACK_TO_DUSK:
+					Empty.the.renderOverlay = true;
+					Empty.the.overlayColor = Color.Black;
+					counter = Color.Black.Ab;
 				case ActionType.FADE_TO_DUSK:
 					Empty.the.renderOverlay = true;
-					Empty.the.overlayColor = Color.fromBytes(90, 0, 0, 0);
+					Empty.the.overlayColor = Color.fromBytes(100, 0, 0, 0);
 				case ActionType.PAUSE:
 					counter = 0;
 				case ActionType.AWAKE:
@@ -51,13 +55,6 @@ class Action implements DialogueItem {
 					} else {
 						Empty.the.overlayColor.Ab = counter;
 					}
-				case ActionType.FADE_TO_DUSK:
-					counter += 2;
-					if (!Empty.the.renderOverlay || counter >= 100) {
-						actionFinished(dlg);
-					} else {
-						Empty.the.overlayColor.Ab = counter;
-					}
 				case ActionType.FADE_FROM_BLACK:
 					counter -= 4;
 					if (!Empty.the.renderOverlay || counter <= 0) {
@@ -65,6 +62,21 @@ class Action implements DialogueItem {
 						actionFinished(dlg);
 					} else {
 						Empty.the.overlayColor.Ab = counter;
+					}
+				case ActionType.FADE_TO_DUSK:
+					counter += 2;
+					if (!Empty.the.renderOverlay || counter >= 100) {
+						actionFinished(dlg);
+					} else {
+						Empty.the.overlayColor.Ab = counter;
+					}
+				case ActionType.FADE_FROM_BLACK_TO_DUSK:
+					counter -= 1;
+					if (!Empty.the.renderOverlay || counter <= 100) {
+						actionFinished(dlg);
+					} else {
+						Empty.the.overlayColor.Ab = counter;
+						Empty.the.overlayColor.R = (255 - counter) * 100.0 / (255 - 100);
 					}
 				case ActionType.PAUSE:
 					++counter;
@@ -83,8 +95,8 @@ class Action implements DialogueItem {
 			Empty.the.overlayColor.Ab = 256;
 		case ActionType.FADE_FROM_BLACK:
 			Empty.the.overlayColor.Ab = 0;
-		case ActionType.FADE_TO_DUSK:
-			Empty.the.overlayColor.Ab = 100;
+		case ActionType.FADE_TO_DUSK, ActionType.FADE_FROM_BLACK_TO_DUSK:
+			Empty.the.overlayColor = Color.fromBytes(100, 0, 0, 100);
 		case ActionType.PAUSE:
 		case ActionType.AWAKE:
 		}
