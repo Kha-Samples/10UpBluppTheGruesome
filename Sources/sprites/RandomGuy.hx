@@ -51,7 +51,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		
 		this.stuff = [];
 		for (thing in stuff) {
-			if (Std.is(thing, Computer) || Std.is(thing, Coffee)) {
+			if (thing.isUseable && (Std.is(thing, Computer) || Std.is(thing, Coffee))) {
 				this.stuff.push(thing);
 			}
 		}
@@ -137,8 +137,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		var thing = stuff[value];
 		schedule.add(new MoveTask(this, thing));
 		if (Std.is(thing, Computer)) {
-			var computer = cast(thing, Computer);
-			if (computer.active) schedule.add(new ComputerTask(this, computer));
+			schedule.add(new ComputerTask(this, cast thing));
 		}
 		if (Std.is(thing, Coffee)) {
 			schedule.add(new CoffeeTask(this, cast thing));
