@@ -81,7 +81,7 @@ public class Editor extends JFrame {
 		main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
 		
 		JScrollPane levelScrollPane = new JScrollPane(Level.getInstance());
-		levelScrollPane.setPreferredSize(new Dimension(1000, 600));
+		levelScrollPane.setPreferredSize(new Dimension(1000, 1000));
 		main.add(levelScrollPane);
 		
 		JPanel bottom = new JPanel();
