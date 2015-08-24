@@ -209,12 +209,20 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	
 	private function createMichaelTask(): Void {
 		var guy: RandomGuy = this;
-		while (guy == this) {
-			var value = Random.getUpTo(RandomGuy.allguys.length - 1);
-			guy = RandomGuy.allguys[value];
+		var count = 0;
+		for (guy in allguys) {
+			if (guy.visible && guy != this) {
+				++count;
+			}
 		}
-		schedule.add(new MoveTask(this, guy));
-		schedule.add(new BlaTask(this, guy));
+		if (count > 0) {
+			while (guy == this || !guy.visible) {
+				var value = Random.getUpTo(RandomGuy.allguys.length - 1);
+				guy = RandomGuy.allguys[value];
+			}
+			schedule.add(new MoveTask(this, guy));
+			schedule.add(new BlaTask(this, guy));
+		}
 	}
 	
 	override public function update(): Void {
@@ -256,8 +264,8 @@ class RandomGuy extends Sprite implements IdCardOwner {
 				if (angle != 0) g.pushTransformation(g.transformation.multmat(FastMatrix3.translation(x + originX, y + originY)).multmat(FastMatrix3.rotation(angle)).multmat(FastMatrix3.translation(-x - originX, -y - originY)));
 				g.drawScaledSubImage(image, Std.int(animation.get() * w) % image.width, Math.floor(animation.get() * w / image.width) * h, w, h, Math.round(x - collider.x * scaleX), Math.round(y - collider.y * scaleY), width, height);
 				if (angle != 0) g.popTransformation();
+				g.drawSubImage(zzzzz, x + 40, y + 40, zzzzz.width * zzzzzAnim.getIndex() / 3, 0, zzzzz.width / 3, zzzzz.height);
 			}
-			g.drawSubImage(zzzzz, x + 40, y + 40, zzzzz.width * zzzzzAnim.getIndex() / 3, 0, zzzzz.width / 3, zzzzz.height);
 		}
 		else {
 			super.render(g);
