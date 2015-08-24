@@ -273,13 +273,19 @@ class Empty extends Game {
 		}
 		
 		populateRandom(1, npcSpawns, function(pos : Vector2) {
-			var michael = new RandomGuy(monsterPlayer, interactiveSprites);
+			var michael = new RandomGuy(interactiveSprites, false);
 			michael.x = pos.x;
 			michael.y = pos.y;
 			Scene.the.addOther(michael); } );
 		
-		populateRandom(4, npcSpawns, function(pos : Vector2) {
-			var guy = new RandomGuy(monsterPlayer, interactiveSprites);
+		populateRandom(1, npcSpawns, function(pos : Vector2) {
+			var guy = new RandomGuy(interactiveSprites, true);
+			guy.x = pos.x;
+			guy.y = pos.y;
+			Scene.the.addOther(guy); } );
+		
+		populateRandom(3, npcSpawns, function(pos : Vector2) {
+			var guy = new RandomGuy(interactiveSprites, false);
 			guy.x = pos.x;
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
