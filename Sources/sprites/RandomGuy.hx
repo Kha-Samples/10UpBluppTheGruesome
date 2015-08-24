@@ -1,6 +1,9 @@
 package sprites;
 
+import kha.Color;
+import kha.graphics2.Graphics;
 import kha.Loader;
+import kha.math.FastMatrix3;
 import kha.math.Random;
 import kha.math.Vector2;
 import kha2d.Animation;
@@ -168,6 +171,24 @@ class RandomGuy extends Sprite implements IdCardOwner {
 			else {
 				setAnimation(standRight);
 			}
+		}
+	}
+	
+	override public function render(g: Graphics): Void {
+		if (sleeping) {
+			if (image != null && visible) {
+				g.color = Color.White;
+				var angle = Math.PI / 2;
+				var x = this.x + 40;
+				var y = this.y + 80;
+				lookLeft = true;
+				if (angle != 0) g.pushTransformation(g.transformation.multmat(FastMatrix3.translation(x + originX, y + originY)).multmat(FastMatrix3.rotation(angle)).multmat(FastMatrix3.translation(-x - originX, -y - originY)));
+				g.drawScaledSubImage(image, Std.int(animation.get() * w) % image.width, Math.floor(animation.get() * w / image.width) * h, w, h, Math.round(x - collider.x * scaleX), Math.round(y - collider.y * scaleY), width, height);
+				if (angle != 0) g.popTransformation();
+			}
+		}
+		else {
+			super.render(g);
 		}
 	}
 }
