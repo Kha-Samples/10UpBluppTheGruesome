@@ -30,4 +30,9 @@ class DestructibleSprite extends InteractiveSprite {
 	@:noCompletion private inline function get_health() : Int {
 		return _health;
 	}
+	
+	override public function isUsableFrom(user:Dynamic):Bool 
+	{
+		return super.isUsableFrom(user) || this.health > 0;
+	}
 }

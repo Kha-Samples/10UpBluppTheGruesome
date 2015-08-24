@@ -27,7 +27,7 @@ class InteractiveSprite extends Sprite {
 		return new Vector2(Math.round(x - collider.x) + 0.5 * width, Math.round(y - collider.y) + 0.5 * height);
 	}
 	
-	public function isUsableFrom( user: Dynamic ): Bool { return false; }
+	public function isUsableFrom( user: Dynamic ): Bool { return isUseable; }
 	public function useFrom( user: Dynamic ): Bool
 	{
 		if (isUsableFrom(user)) {

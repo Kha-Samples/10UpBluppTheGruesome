@@ -17,8 +17,6 @@ class Computer extends IdLoggerSprite {
 	var offAnimation: Animation;
 	var missingAnimation: Animation;
 	
-		super(Keys_text.COMPUTER, Loader.the.getImage("computer"), 46 * 2, 60 * 2, 0);
-	
 	public function new(x: Float, y: Float, active: Bool) {
 		super(Keys_text.COMPUTER, Loader.the.getImage("computer"), 192, 128, 0);
 		this.x = x;

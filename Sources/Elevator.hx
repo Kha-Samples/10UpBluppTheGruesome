@@ -52,6 +52,7 @@ class Elevator extends IdLoggerSprite {
 	override public function useFrom(user:Dynamic):Bool 
 	{
 		if (!super.useFrom(user)) return false;
+		// TODO: agent reading logs
 		if (open)
 		{
 			var text : String = "";

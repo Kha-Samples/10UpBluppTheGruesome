@@ -52,7 +52,7 @@ class Coffee extends InteractiveSprite {
 	
 	override public function isUsableFrom(user:Dynamic):Bool 
 	{
-		return true;
+		return super.isUsableFrom(user);
 	}
 	override public function useFrom(user:Dynamic): Bool 
 	{

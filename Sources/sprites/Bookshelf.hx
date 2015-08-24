@@ -56,7 +56,7 @@ class Bookshelf extends InteractiveSprite {
 	
 	override public function isUsableFrom(user:Dynamic):Bool 
 	{
-		return !destroyed && user == Player.current() && Std.is(user, Fishman);
+		return super.isUsableFrom(user) && !destroyed && user == Player.current() && Std.is(user, Fishman);
 	}
 	override public function useFrom(user:Dynamic): Bool 
 	{

@@ -95,7 +95,7 @@ class IdLoggerSprite extends InteractiveSprite
 	
 	override public function isUsableFrom(user:Dynamic):Bool 
 	{
-		return Std.is(user, sprites.IdCardOwner);
+		return super.isUsableFrom(user) && Std.is(user, sprites.IdCardOwner);
 	}
 	override public function useFrom(user: Dynamic): Bool
 	{
