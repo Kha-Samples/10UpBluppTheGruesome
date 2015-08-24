@@ -471,6 +471,16 @@
 				"green": 174,
 				"blue": 201
 			}
+		},
+		{
+			"file": "pl.png",
+			"name": "pl",
+			"type": "image"
+		},
+		{
+			"file": "an.png",
+			"name": "an",
+			"type": "image"
 		}
 	],
 	"rooms": [
@@ -516,6 +526,8 @@
 				"tc-2",
 				"tc-3",
 				"tc-4",
+				"pl",
+				"an",
 				"bookshelf",
 				"elevator",
 				"Liberation Sans20.kravur",
