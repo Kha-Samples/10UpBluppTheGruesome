@@ -44,12 +44,12 @@ class Fishman extends Player implements IdCardOwner {
 	}
 	
 	override public function attack(): Void {
-		attacking = 30;
+		attacking = 9;
 	}
 	
 	override public function render(g: Graphics): Void {
 		if (attacking > 0) {
-			if (attacking > 15) {
+			if (attacking > 6 || attacking < 3) {
 				if (lookRight) {
 					g.drawSubImage(attackImage, x - 66, y - 24, 0, attackImage.height / 2, attackImage.width / 2, attackImage.height / 2);
 				}

@@ -596,45 +596,47 @@ class Empty extends Game {
 	}
 	
 	private function axisListener(axis: Int, value: Float): Void {
-		/*switch (axis) {
+		switch (axis) {
 			case 0:
 				if (value < -0.2) {
-					Jumpman.getInstance().left = true;
-					Jumpman.getInstance().right = false;
+					Player.current().left = true;
+					Player.current().right = false;
 				}
 				else if (value > 0.2) {
-					Jumpman.getInstance().right = true;
-					Jumpman.getInstance().left = false;
+					Player.current().right = true;
+					Player.current().left = false;
 				}
 				else {
-					Jumpman.getInstance().left = false;
-					Jumpman.getInstance().right = false;
+					Player.current().left = false;
+					Player.current().right = false;
 				}
-		}*/
+			case 1:
+				if (value > 0.2) {
+					Player.current().setUp();
+				}
+				else {
+					Player.current().up = false;
+				}
+		}
 	}
 	
+	private var gamepadUseAvailable = true;
 	private function buttonListener(button: Int, value: Float): Void {
 		/*switch (button) {
-			case 0, 1, 2, 3:
-				if (value > 0.5) Jumpman.getInstance().setUp();
-				else Jumpman.getInstance().up = false;
-			case 14:
-				if (value > 0.5) {
-					Jumpman.getInstance().left = true;
-					Jumpman.getInstance().right = false;
+			case 0:
+				if (value > 0.5 && gamepadUseAvailable) {
+					// Only once per press
+					if (gamepadUseAvailable) {
+						Player.current().use();
+						gamepadUseAvailable = false;
+					}
 				}
 				else {
-					Jumpman.getInstance().left = false;
-					Jumpman.getInstance().right = false;
+					gamepadUseAvailable = true;
 				}
-			case 15:
+			case 1:
 				if (value > 0.5) {
-					Jumpman.getInstance().right = true;
-					Jumpman.getInstance().left = false;
-				}
-				else {
-					Jumpman.getInstance().right = false;
-					Jumpman.getInstance().left = false;
+					Player.current().attack();
 				}
 		}*/
 	}
@@ -653,8 +655,17 @@ class Empty extends Game {
 			case UP:
 				Player.current().setUp();
 			case Key.CHAR:
-				if (char == 'a') {
-					Player.current().attack();
+				switch(char) {
+					case 'w':
+						Player.current().setUp();
+					case 'a':
+						Player.current().left = true;
+						Player.current().right = false;
+					case 'd':
+						Player.current().right = true;
+						Player.current().left = false;
+					case 'q':
+						Player.current().attack();
 				}
 			default:
 				
@@ -671,20 +682,17 @@ class Empty extends Game {
 			case RIGHT:
 				Player.current().right = false;
 			case UP:
-				/*if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
-				elevator.goup();
-				}
-				else {*/
-					Player.current().up = false;
-				//}
-			case DOWN:
-				/*if (Math.abs(Player.current().x-elevator.x)<elevatorOffset && elevator.canMove) {
-				elevator.godown();	
-				}*/
+				Player.current().up = false;
 			case Key.CHAR:
 				switch(char) {
 				case "e":
 					Player.current().use();
+				case 'w':
+					Player.current().up = false;
+				case 'a':
+					Player.current().left = false;
+				case 'd':
+					Player.current().right = false;
 				}
 			default:
 				
