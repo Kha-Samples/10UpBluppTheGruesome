@@ -78,7 +78,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	public static function monsterPosition(): Vector2 {
 		for (guy in allguys) {
 			if (guy.youarethemonster) {
-				return new Vector2(guy.x, guy.y);
+				return new Vector2(guy.x, guy.y + guy.height);
 			}
 		}
 		return new Vector2();
