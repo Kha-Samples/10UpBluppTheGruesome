@@ -24,7 +24,8 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener,
 	public static final int TILE_HEIGHT = 32;
 	
 	private static Level instance;
-	
+
+	private boolean drawSprites = true;
 	private int levelWidth = 256;
 	private int levelHeight = 224 / 16;
 	private int[][] map;
@@ -81,11 +82,13 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener,
 		for (int x = rect.x / TILE_WIDTH * TILE_WIDTH; x < rect.x + rect.width; x += TILE_WIDTH) g.drawLine(x, rect.y, x, rect.y + rect.height);
 		for (int y = rect.y / TILE_HEIGHT * TILE_HEIGHT; y < rect.y + rect.height; y += TILE_HEIGHT) g.drawLine(rect.x, y, rect.x + rect.width, y);
 		
-		for (PlacedSprite sprite : sprites) {
-			g.setColor(Color.BLUE);
-			g.fillRect(sprite.x, sprite.y, sprite.sprite.width, sprite.sprite.height);
-			sprite.sprite.paint(g, sprite.x, sprite.y, false, true);
-			g.drawString("" + sprite.id, sprite.x + 5, sprite.y + 15);
+		if (drawSprites) {
+			for (PlacedSprite sprite : sprites) {
+				g.setColor(Color.BLUE);
+				g.fillRect(sprite.x, sprite.y, sprite.sprite.width, sprite.sprite.height);
+				sprite.sprite.paint(g, sprite.x, sprite.y, false, true);
+				g.drawString("" + sprite.id, sprite.x + 5, sprite.y + 15);
+			}
 		}
 	}
 
@@ -239,6 +242,10 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener,
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT) shift = false;
 		if (e.getKeyCode() == KeyEvent.VK_CONTROL) ctrl = false;
+		if (e.getKeyChar() == 's') {
+			drawSprites = !drawSprites;
+			repaint();
+		}
 	}
 
 	@Override
