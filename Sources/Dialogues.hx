@@ -41,16 +41,9 @@ class Dialogues {
 		Empty.the.renderOverlay = true;
 		Empty.the.dlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)
-			, new StartDialogue(function() {
-				for (ias in Empty.the.interactiveSprites)
-				{
-					ias.dlg.cancel();
-					var logger = Std.instance(ias, IdLoggerSprite);
-					if (logger != null) logger.idLogger.newDay();
-				}
-			})
+			, new StartDialogue(Empty.the.onNightEnd)
 			, new Bla(Keys_text.DAWN, null, true)
-			, new StartDialogue(Empty.the.setMainPlayer.bind(Empty.the.agentPlayer))
+			, new StartDialogue(Empty.the.onDayBegin)
 			, new Action(null, ActionType.FADE_FROM_BLACK)
 			, new StartDialogue(function() { Empty.the.renderOverlay = false; } )
 		]);
@@ -59,14 +52,9 @@ class Dialogues {
 		Empty.the.renderOverlay = true;
 		Empty.the.dlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)
-			, new StartDialogue(function() {
-				for (ias in Empty.the.interactiveSprites)
-				{
-					ias.dlg.cancel();
-				}
-			})
+			, new StartDialogue(Empty.the.onDayEnd)
 			, new Bla(Keys_text.DUSK, null, true)
-			, new StartDialogue(Empty.the.setMainPlayer.bind(Empty.the.monsterPlayer))
+			, new StartDialogue(Empty.the.onNightBegin)
 			, new Action(null, ActionType.FADE_FROM_BLACK)
 			, new StartDialogue(function() { Empty.the.renderOverlay = false; } )
 		]);

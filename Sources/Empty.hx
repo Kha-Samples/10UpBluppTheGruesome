@@ -40,6 +40,7 @@ import sprites.Coffee;
 import sprites.Computer;
 import sprites.Door;
 import sprites.Fishman;
+import sprites.IdSystem;
 import sprites.InteractiveSprite;
 import sprites.Player;
 import sprites.RandomGuy;
@@ -61,6 +62,7 @@ class Empty extends Game {
 	private var backbuffer: Image;
 	public var monsterPlayer : Player;
 	public var agentPlayer : Player;
+	private var agentSpawn : Vector2;
 	public var interactiveSprites: Array<InteractiveSprite>;
 	
 	public var mode(default, set) : Mode;
@@ -231,6 +233,7 @@ class Empty extends Game {
 			case 0:
 				monsterPlayer = new Fishman(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 				agentPlayer = new Agent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				agentSpawn = new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 			case 1:
 				computers.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			case 2:
@@ -274,7 +277,8 @@ class Empty extends Game {
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
 		
-		setMainPlayer(agentPlayer);
+		setMainPlayer(agentPlayer, agentSpawn);
+		// TODO: simulate first day
 		
 		Configuration.setScreen(this);
 		
@@ -292,13 +296,13 @@ class Empty extends Game {
 		}
 	}
 	
-	public function setMainPlayer(player : Player) {
+	public function setMainPlayer(player : Player, spawnPosition : Vector2) {
 		if (Player.current() != null) {
 			Scene.the.removeHero(Player.current());
 		}
+		player.setPosition(spawnPosition);
 		player.setCurrent();
 		Scene.the.addHero(player);
-		nextDayChangeTime = Scheduler.time() + 60.0;
 	}
 	
 	private static function isCollidable(tilenumber: Int): Bool {
@@ -363,6 +367,38 @@ class Empty extends Game {
 		
 		
 		dlg.update();
+	}
+	
+	public function onDayBegin() : Void {
+		//SpawnNPCs (with new goals)
+		setMainPlayer(agentPlayer, agentSpawn);
+		nextDayChangeTime = Scheduler.time() + 60.0;
+	}
+	
+	public function onDayEnd() : Void {
+		resetInteractiveSprites(false);
+	}
+	
+	public function onNightBegin() : Void {
+		//NPCs vorspulen
+		//Remove npcs or set them sleeping
+		//setMainPlayer(monsterPlayer, monsterNPC.position);
+		nextDayChangeTime = Scheduler.time() + 60.0;
+	}
+	
+	public function onNightEnd() : Void {
+		resetInteractiveSprites(true);
+	}
+	
+	private function resetInteractiveSprites(resetLoggers : Bool) {
+		for (ias in interactiveSprites) {
+			ias.dlg.cancel();
+			
+			if (resetLoggers) {
+				var logger = Std.instance(ias, IdLoggerSprite);
+				if (logger != null) logger.idLogger.newDay();
+			}
+		}
 	}
 	
 	public override function render(frame: Framebuffer) {
