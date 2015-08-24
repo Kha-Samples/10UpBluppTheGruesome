@@ -324,13 +324,23 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 					]
 					, [ /* YOU ARE THE MONSTER */
 						new StartDialogue(everybodyRunToPlayer.bind(this))
-						, new StartDialogue(function() { Empty.the.mode = Empty.Mode.PlayerSwitch; } )
-						, new SpawnNpcDialog([new Action(null, ActionType.FADE_TO_DUSK)])
+						, new StartDialogue(function() { 
+							//Empty.the.mode = Empty.Mode.PlayerSwitch;
+							Empty.the.renderOverlay = true;
+							Empty.the.overlayColor = Color.fromBytes(0, 0, 0, 0);
+						})
+						, new Action(null, FADE_TO_BLACK)
+						, new Bla(Keys_text.YOUMONSTER_SHOWDOWN_1, user, true)
+						, new SpawnNpcDialog([new Action(null, ActionType.FADE_FROM_BLACK_TO_DUSK)])
+						, new Bla(Keys_text.YOUMONSTER_SHOWDOWN_1, user, false)
+						, new Bla(Keys_text.YOUMONSTER_SHOWDOWN_1, user, false)
 						, new Action(null, PAUSE)
 						, new Bla(Keys_text.YOUMONSTER_REACTION_ + Random.getUpTo(6), this, false)
-						, new SpawnNpcDialog([new StartDialogue(Dialogues.showdownChatter.bind(this))])
-						, new Action(null, PAUSE)
-						, new BlaWithChoices(Keys_text.YOUMONSTER_SHOWDOWN, null, [
+						, new StartDialogue(Dialogues.showdownChatter.bind(this))
+						, new Bla(Localization.getText(Keys_text.YOUMONSTER_SHOWDOWN_2, [this.IdCard.Name]), null, false)
+						, new Bla(Localization.getText(Keys_text.YOUMONSTER_SHOWDOWN_2, [this.IdCard.Name]), null, false)
+						, new Bla(Localization.getText(Keys_text.YOUMONSTER_SHOWDOWN_2, [this.IdCard.Name]), null, false)
+						, new BlaWithChoices(Keys_text.YOUMONSTER_SHOWDOWN_3, null, [
 							[new StartDialogue(Dialogues.showdownShoot.bind(this))]
 							, [new StartDialogue(Dialogues.showdownHesitate.bind(this))]
 						])
