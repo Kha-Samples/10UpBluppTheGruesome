@@ -73,6 +73,7 @@ class Player extends DestructibleSprite {
 	
 	public function setCurrent(): Void {
 		currentPlayer = this;
+		this.accx = 0;
 	}
 	
 	public function reset() {

@@ -22,14 +22,11 @@ class Computer extends IdLoggerSprite {
 		this.x = x;
 		this.y = y;
 		
+		this.isUseable = active;
 		offAnimation = Animation.create(0);
 		onAnimation = Animation.create(1);
 		missingAnimation = Animation.create(2);
-		if (active) {
-			this.isUseable = true;
-		} else {
-			setAnimation(missingAnimation);
-		}
+		if (!active) setAnimation(missingAnimation);
 	}
 	
 	function searchCriticalFiles(): Void {

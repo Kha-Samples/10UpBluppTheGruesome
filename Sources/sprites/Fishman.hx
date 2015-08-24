@@ -28,7 +28,7 @@ class Fishman extends Player implements IdCardOwner {
 		setAnimation(walkLeft);
 		collider = new Rectangle(20, 25, (594 * 2 / 9) - 40, ((146 * 2 / 2) - 1) - 25);
 		attackImage = Loader.the.getImage("fishy_attack");
-		IdCard = new IdCard(Keys_text.FISCHMENSCH);
+		IdCard = new IdCard(RandomGuy.monsterName());
 	}
 	
 	override public function hitFrom(dir: Direction): Void {
