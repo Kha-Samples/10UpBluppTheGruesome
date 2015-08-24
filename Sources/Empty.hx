@@ -337,7 +337,7 @@ class Empty extends Game {
 			Scene.the.removeHero(Player.current());
 		}
 		player.x = spawnPosition.x;
-		player.y = spawnPosition.y - player.height - 5; // -5, just to be sure
+		player.y = spawnPosition.y - player.collisionRect().height - 2; // -2, just to be sure
 		player.setCurrent();
 		Scene.the.addHero(player);
 	}
