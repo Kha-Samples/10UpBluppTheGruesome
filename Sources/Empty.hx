@@ -272,23 +272,22 @@ class Empty extends Game {
 			bookshelves.remove(pos);
 		}
 		
+		populateRandom(1, npcSpawns, function(pos : Vector2) {
+			var michael = new RandomGuy(monsterPlayer, interactiveSprites);
+			michael.x = pos.x;
+			michael.y = pos.y;
+			Scene.the.addOther(michael); } );
+		
 		populateRandom(4, npcSpawns, function(pos : Vector2) {
 			var guy = new RandomGuy(monsterPlayer, interactiveSprites);
 			guy.x = pos.x;
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
 		
-		var michael = new Michael(monsterPlayer, interactiveSprites);
-		var pos : Vector2 = npcSpawns[Random.getIn(0, npcSpawns.length - 1)];
-		michael.x = pos.x;
-		michael.y = pos.y;
-		Scene.the.addOther(michael);
-		
+		// Simulate first day
 		RandomGuy.createAllTasks();
-		RandomGuy.endDayForEverybody();
-
+		
 		setMainPlayer(agentPlayer, agentSpawn);
-		// TODO: simulate first day		
 		Configuration.setScreen(this);
 		
 		nextDayChangeTime = -1;
@@ -331,12 +330,31 @@ class Empty extends Game {
 		case 60: return true;
 		case 61: return true;
 		case 62: return true;*/
-		case 63: return true;
+		case 32: return true;
+		case 33: return true;
+		case 34: return true;
+		case 39: return true;
+		
+		case 48: return true;
+		case 49: return true;
+		case 50: return true;
+		case 55: return true;
+		
+		case 64: return true;
+		case 65: return true;
+		case 66: return true;
+		case 71: return true;
+		
+		case 80: return true;
+		case 81: return true;
+		case 82: return true;
+		case 87: return true;	
+		/*case 63: return true;
 		case 64: return true;
 		case 65: return true;
 		case 66: return true;
 		case 67: return true;
-		case 68: return true;
+		case 68: return true;*/
 		/*case 70: return true;
 		case 74: return true;
 		case 75: return true;
@@ -374,12 +392,12 @@ class Empty extends Game {
 			}
 		}
 		
-		
 		dlg.update();
 	}
 	
 	public function onDayBegin() : Void {
-		//SpawnNPCs (with new goals)
+		// Spawn npcs
+		RandomGuy.createAllTasks();
 		setMainPlayer(agentPlayer, agentSpawn);
 		nextDayChangeTime = Scheduler.time() + 60.0;
 	}
@@ -389,9 +407,8 @@ class Empty extends Game {
 	}
 	
 	public function onNightBegin() : Void {
-		//NPCs vorspulen
-		//Remove npcs or set them sleeping
-		//setMainPlayer(monsterPlayer, monsterNPC.position);
+		RandomGuy.endDayForEverybody();
+		//setMainPlayer(monsterPlayer, RandomGuy.monsterNPCPosition);
 		nextDayChangeTime = Scheduler.time() + 60.0;
 	}
 	
