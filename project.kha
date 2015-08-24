@@ -238,7 +238,6 @@
 			"file": "computer.png",
 			"name": "computer",
 			"type": "image",
-			"scale": 2,
 			"background": {
 				"red": 255,
 				"green": 174,
