@@ -12,7 +12,7 @@ class BlaTask extends Task {
 	private var taskScheduled: Bool;
 	private var aim: RandomGuy;
 	
-	public function new(sprite: RandomGuy, aim: RandomGuy) {
+	public function new(guy: RandomGuy, aim: RandomGuy) {
 		super(guy);
 		taskScheduled = false;
 		this.aim = aim;
@@ -23,6 +23,7 @@ class BlaTask extends Task {
 			var drg = new Dialogue();
 			drg.insert([new Bla(Localization.getText(Keys_text.HELLO, [aim.IdCard.Name]), guy, false)]);
 			Empty.the.npcDlgs.push(drg);
+			taskScheduled = true;
 		}
 	}
 }
