@@ -2,6 +2,7 @@ package sprites;
 
 import kha.Color;
 import kha.graphics2.Graphics;
+import kha.Image;
 import kha.Loader;
 import kha.math.FastMatrix3;
 import kha.math.Random;
@@ -40,8 +41,13 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	private static var names = ["Augusto", "Ingo", "Christian", "Robert", "Björn", "Johannes", "Rebecca", "Stephen", "Alvar", "Michael", "Linh", "Roger", "Roman", "Max", "Paul", "Tobias", "Henno", "Niko", "Kai", "Julian"];
 	public static var allguys = new Array<RandomGuy>();
 	
+	private var zzzzz: Image;
+	private var zzzzzAnim: Animation;
+	
 	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool) {
 		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
+		zzzzz = Loader.the.getImage("zzzzz");
+		zzzzzAnim = Animation.createRange(0, 2, 8);
 		this.youarethemonster = youarethemonster;
 		standLeft = Animation.create(9);
 		standRight = Animation.create(0);
@@ -212,6 +218,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 				setAnimation(standRight);
 			}
 		}
+		zzzzzAnim.next();
 	}
 	
 	override public function render(g: Graphics): Void {
@@ -226,6 +233,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 				g.drawScaledSubImage(image, Std.int(animation.get() * w) % image.width, Math.floor(animation.get() * w / image.width) * h, w, h, Math.round(x - collider.x * scaleX), Math.round(y - collider.y * scaleY), width, height);
 				if (angle != 0) g.popTransformation();
 			}
+			g.drawSubImage(zzzzz, x + 40, y + 40, zzzzz.width * zzzzzAnim.getIndex() / 3, 0, zzzzz.width / 3, zzzzz.height);
 		}
 		else {
 			super.render(g);
