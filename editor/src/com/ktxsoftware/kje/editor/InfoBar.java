@@ -8,10 +8,11 @@ public class InfoBar extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static InfoBar instance;
 	private JLabel label;
+	private int tile, x, y;
 	
 	private InfoBar() {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		label = new JLabel("X: ? Y: ?");
+		label = new JLabel("Tile: ? X: ? Y: ?");
 		add(label);
 	}
 	
@@ -20,7 +21,18 @@ public class InfoBar extends JPanel {
 		return instance;
 	}
 	
+	public void update(int tile) {
+		this.tile = tile;
+		updateText();
+	}
+	
 	public void update(int x, int y) {
-		label.setText("X: " + x + " Y: " + y);
+		this.x = x;
+		this.y = y;
+		updateText();
+	}
+	
+	private void updateText() {
+		label.setText("Tile: " + tile + " X: " + x + " Y: " + y);
 	}
 }

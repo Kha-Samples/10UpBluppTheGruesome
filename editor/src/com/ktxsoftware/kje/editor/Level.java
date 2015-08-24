@@ -201,11 +201,13 @@ public class Level extends JPanel implements MouseListener, MouseMotionListener,
 	public void mouseDragged(MouseEvent e) {
 		InfoBar.getInstance().update(e.getX(), e.getY());
 		map[e.getX() / TILE_WIDTH][e.getY() / TILE_HEIGHT] = TilesetPanel.getInstance().getSelectedElements().get(0);
+		InfoBar.getInstance().update(map[e.getX() / TILE_WIDTH][e.getY() / TILE_HEIGHT]);
 		repaint();
 	}
 	
 	public void mouseMoved(MouseEvent e) {
 		InfoBar.getInstance().update(e.getX(), e.getY());
+		InfoBar.getInstance().update(map[e.getX() / TILE_WIDTH][e.getY() / TILE_HEIGHT]);
 	}
 	
 	public void resizeLevel(int w, int h) {
