@@ -283,6 +283,10 @@ The other player plays as {Agent}. In his youth he was a vicitm of these experim
 	<de>Zuerst {0} und dann {1}.</de>
 	<en>First {0} and then {1}.</en>
 </Task>
+<Task_nothing>
+	<de>nichts</de>
+	<en>nothing</en>
+</Task_nothing>
 <Task_something>
 	<de>Irgendwas</de>
 	<en>something</en>
@@ -308,6 +312,6 @@ The other player plays as {Agent}. In his youth he was a vicitm of these experim
 	<en>talking to {0}</en>
 </Task_bla>
 <Task_computer>
-	<de>an der {Computer} auf {Floor} {0} Arbeiten</de>
-	<en>working at the {Computer} at {Floor} {0}</en>
+	<de>an der {computer} auf {Floor} {0} Arbeiten</de>
+	<en>working at the {computer} at {Floor} {0}</en>
 </Task_computer>

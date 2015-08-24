@@ -58,9 +58,20 @@ class Schedule {
 	{
 		var task1 = currentTask;
 		var index = 0;
-		while (Std.is(task1, MoveTask)) task1 = tasks[index++];
-		var task2 = tasks[index++];
-		while (Std.is(task2, MoveTask)) task2 = tasks[index++];
-		return Localization.getText(Keys_text.TASK, [task1.getDescription(), task2.getDescription()]);
+		while (task1 != null && index < tasks.length && Std.is(task1, MoveTask) || Std.is(task1, WaitTask)) task1 = tasks[index++];
+		var task2 = index < tasks.length ? tasks[index++] : null;
+		while (task2 != null && index < tasks.length && Std.is(task2, MoveTask) || Std.is(task2, WaitTask)) task2 = tasks[index++];
+		if (task1 == null)
+		{
+			return Localization.getText(Keys_text.TASK_NOTHING);
+		}
+		else if (task2 == null)
+		{
+			return Localization.getText(Keys_text.TASK, [task1.getDescription(), Keys_text.TASK_NOTHING]);
+		}
+		else
+		{
+			return Localization.getText(Keys_text.TASK, [task1.getDescription(), task2.getDescription()]);
+		}
 	}
 }
