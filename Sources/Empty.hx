@@ -51,6 +51,7 @@ import sprites.Rowdy;
 import dialogue.*;
 
 enum Mode {
+	Loading;
 	StartScreen;
 	Game;
 	PlayerSwitch;
@@ -70,7 +71,7 @@ class Empty extends Game {
 	private var npcSpawns : Array<Vector2> = new Array<Vector2>();
 	public var interactiveSprites: Array<InteractiveSprite>;
 	
-	public var mode : Mode;
+	public var mode : Mode = Mode.Loading;
 	
 	public var renderOverlay : Bool;
 	public var overlayColor : Color;
@@ -518,6 +519,8 @@ class Empty extends Game {
 			g.color = Color.fromBytes(b, b, b);
 			var str = Localization.getText(Keys_text.CLICK_TO_START);
 			g.drawString(str, 0.5 * (width - font.stringWidth(str)), 650);
+		case Loading:
+			
 		}
 		
 		g.transformation = FastMatrix3.identity();

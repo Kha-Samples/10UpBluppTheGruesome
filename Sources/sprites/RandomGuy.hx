@@ -114,8 +114,10 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		for (i in 0...sleeperCount) {
 			var guy = guys[Random.getUpTo(guys.length - 1)];
 			guys.remove(guy);
-			guy.visible = true;
-			guy.schedule.add(new SleepTask(guy));
+			if (!guy.youarethemonster) {
+				guy.visible = true;
+				guy.schedule.add(new SleepTask(guy));
+			}
 		}
 		createAllTasks();
 	}
