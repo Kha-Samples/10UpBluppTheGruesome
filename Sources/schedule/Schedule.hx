@@ -33,7 +33,7 @@ class Schedule {
 		}
 	}
 	
-	public function endDay(): Void {
+	public function end(): Void {
 		if (tasks.length < 10) {
 			for (i in 0...5) {
 				var task = tasks.shift();

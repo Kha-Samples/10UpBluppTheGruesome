@@ -2,9 +2,10 @@ package schedule;
 
 import kha.math.Random;
 import kha.Scheduler;
+import kha2d.Sprite;
 import sprites.RandomGuy;
 
-class WaitTask extends Task {
+class SleepTask extends Task {
 	private var taskScheduled: Bool;
 	
 	public function new(guy: RandomGuy) {
@@ -15,7 +16,8 @@ class WaitTask extends Task {
 	override public function update(): Void {
 		if (!taskScheduled) {
 			taskScheduled = true;
-			Scheduler.addTimeTask(function() { done = true; }, Random.getIn(1, 15));
+			guy.sleeping = true;
+			Scheduler.addTimeTask(function() { guy.sleeping = false; done = true; }, Random.getIn(15, 30));
 		}
 	}
 }

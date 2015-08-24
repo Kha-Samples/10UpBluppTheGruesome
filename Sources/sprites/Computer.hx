@@ -15,15 +15,23 @@ class Computer extends IdLoggerSprite {
 	var currentUser: IdCardOwner;
 	var onAnimation: Animation;
 	var offAnimation: Animation;
+	var missingAnimation: Animation;
 	
-	public function new(x: Float, y: Float ) {
 		super(Keys_text.COMPUTER, Loader.the.getImage("computer"), 46 * 2, 60 * 2, 0);
+	
+	public function new(x: Float, y: Float, active: Bool) {
+		super(Keys_text.COMPUTER, Loader.the.getImage("computer"), 192, 128, 0);
 		this.x = x;
-		this.y = y - 90;
+		this.y = y;
 		
-		this.isUseable = true;
 		offAnimation = Animation.create(0);
 		onAnimation = Animation.create(1);
+		missingAnimation = Animation.create(2);
+		if (active) {
+			this.isUseable = true;
+		} else {
+			setAnimation(missingAnimation);
+		}
 	}
 	
 	function searchCriticalFiles(): Void {

@@ -22,9 +22,9 @@ class Elevator extends IdLoggerSprite {
 	public var open(default, set_open) : Bool;
 	
 	public function new(x : Float, y : Float, level : Int) {
-		super(Keys_text.ELEVATOR, Loader.the.getImage("elevator"), 64 * 2, 62 * 2, 0);
-		this.x = x - 64 * 2 / 2;
-		this.y = y - 78 - 14;
+		super(Keys_text.ELEVATOR, Loader.the.getImage("elevator"), 192, 128, 0);
+		this.x = x;
+		this.y = y;
 		this.level = level;
 		openAnimation = Animation.create(1);
 		closedAnimation = Animation.create(0);

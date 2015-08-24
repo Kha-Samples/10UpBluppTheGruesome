@@ -1,6 +1,9 @@
 package sprites;
 
+import kha.Color;
+import kha.graphics2.Graphics;
 import kha.Loader;
+import kha.math.FastMatrix3;
 import kha.math.Random;
 import kha.math.Vector2;
 import kha2d.Animation;
@@ -9,6 +12,7 @@ import schedule.CoffeeTask;
 import schedule.ComputerTask;
 import schedule.MoveTask;
 import schedule.Schedule;
+import schedule.SleepTask;
 import schedule.Task;
 import schedule.WaitTask;
 import sprites.IdSystem.IdCard;
@@ -29,6 +33,8 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	
 	public var youarethemonster: Bool;
 	
+	public var sleeping: Bool;
+	
 	private static var names = ["Augusto", "Ingo", "Christian", "Robert", "Björn", "Johannes", "Rebecca", "Stephen", "Alvar", "Michael", "Linh", "Roger", "Roman", "Max", "Paul", "Tobias", "Henno", "Niko", "Kai", "Julian"];
 	public static var allguys = new Array<RandomGuy>();
 	
@@ -40,11 +46,12 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		walkLeft = Animation.createRange(10, 17, 4);
 		walkRight = Animation.createRange(1, 8, 4);
 		lookLeft = false;
+		sleeping = false;
 		setAnimation(standRight);
 		
 		this.stuff = [];
 		for (thing in stuff) {
-			if (Std.is(thing, Computer) || Std.is(thing, Coffee)) {
+			if (thing.isUseable && (Std.is(thing, Computer) || Std.is(thing, Coffee))) {
 				this.stuff.push(thing);
 			}
 		}
@@ -69,13 +76,34 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	
 	public static function endDayForEverybody(): Void {
 		for (guy in allguys) {
-			guy.endDay();
+			guy.end();
+		}
+		for (guy in allguys) {
+			guy.visible = false;
+		}
+		var sleeperCount = Random.getIn(1, 3);
+		var guys = allguys.copy();
+		for (i in 0...sleeperCount) {
+			var guy = guys[Random.getUpTo(guys.length - 1)];
+			guys.remove(guy);
+			guy.visible = true;
+			guy.schedule.add(new SleepTask(guy));
 		}
 		createAllTasks();
 	}
 	
-	public function endDay(): Void {
-		schedule.endDay();
+	public static function endNightForEverybody(): Void {
+		for (guy in allguys) {
+			guy.end();
+		}
+		for (guy in allguys) {
+			guy.visible = true;
+		}
+		createAllTasks();
+	}
+	
+	public function end(): Void {
+		schedule.end();
 	}
 	
 	public static function createAllTasks(): Void {
@@ -85,8 +113,9 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	}
 	
 	private function createTasks(): Void {
+		if (!visible) return;
 		while (schedule.length < 20) {
-			schedule.add(new WaitTask(this, Random.getUpTo(30)));
+			schedule.add(new WaitTask(this));
 			createRandomTask();
 		}
 	}
@@ -142,6 +171,24 @@ class RandomGuy extends Sprite implements IdCardOwner {
 			else {
 				setAnimation(standRight);
 			}
+		}
+	}
+	
+	override public function render(g: Graphics): Void {
+		if (sleeping) {
+			if (image != null && visible) {
+				g.color = Color.White;
+				var angle = Math.PI / 2;
+				var x = this.x + 40;
+				var y = this.y + 80;
+				lookLeft = true;
+				if (angle != 0) g.pushTransformation(g.transformation.multmat(FastMatrix3.translation(x + originX, y + originY)).multmat(FastMatrix3.rotation(angle)).multmat(FastMatrix3.translation(-x - originX, -y - originY)));
+				g.drawScaledSubImage(image, Std.int(animation.get() * w) % image.width, Math.floor(animation.get() * w / image.width) * h, w, h, Math.round(x - collider.x * scaleX), Math.round(y - collider.y * scaleY), width, height);
+				if (angle != 0) g.popTransformation();
+			}
+		}
+		else {
+			super.render(g);
 		}
 	}
 }

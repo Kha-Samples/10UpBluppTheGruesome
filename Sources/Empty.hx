@@ -146,7 +146,7 @@ class Empty extends Game {
 
 	public function initLevel(): Void {
 		tileColissions = new Array<Tile>();
-		for (i in 0...512) {
+		for (i in 0...1024) {
 			tileColissions.push(new Tile(i, isCollidable(i)));
 		}
 		var blob = Loader.the.getBlob("testlevel.map");
@@ -229,7 +229,7 @@ class Empty extends Game {
 			case 2:
 				elevatorPositions.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			case 3:
-				var door : Door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]-96);
+				var door : Door = new Door(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 				Scene.the.addOther(door);
 				interactiveSprites.push(door);
 			case 4:
@@ -244,8 +244,8 @@ class Empty extends Game {
 			}
 		}
 		ElevatorManager.the.initSprites(elevatorPositions);
-		populateRandom(8, computers, function(index : Int, pos : Vector2) {
-			var computer = new Computer(pos.x, pos.y);
+		populateRandom(computers.length, computers, function(index : Int, pos : Vector2) {
+			var computer = new Computer(pos.x, pos.y, index < 8);
 			interactiveSprites.push(computer);
 			Scene.the.addOther(computer); } );
 			

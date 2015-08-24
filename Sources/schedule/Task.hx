@@ -1,13 +1,13 @@
 package schedule;
 
-import kha2d.Sprite;
+import sprites.RandomGuy;
 
 class Task {
-	private var sprite: Sprite;
+	private var guy: RandomGuy;
 	private var done: Bool;
 	
-	public function new(sprite: Sprite) {
-		this.sprite = sprite;
+	public function new(guy: RandomGuy) {
+		this.guy = guy;
 		done = false;
 	}
 	
