@@ -26,4 +26,11 @@ class BlaTask extends Task {
 			taskScheduled = true;
 		}
 	}
+	
+	
+	override public function getDescription(): String {
+		var to: String = aim.IdCard.Name;
+		var floor: String = Std.string(ElevatorManager.the.getLevel(aim.y));
+		return Localization.getText(Keys_text.TASK_BLA, [to, floor]);
+	}
 }

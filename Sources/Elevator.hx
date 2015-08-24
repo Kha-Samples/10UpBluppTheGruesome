@@ -56,16 +56,15 @@ class Elevator extends IdLoggerSprite {
 		// TODO: agent reading logs
 		if (open)
 		{
-			var text : String = "";
 			var choices = new Array<Array<DialogueItem>>();
+			choices.push([new StartDialogue(ElevatorManager.the.getIn.bind(user, level, 0, null))]);
+			var text = '${ElevatorManager.the.levels}: ' + Localization.getText(Keys_text.FLOOR) + ' ${ElevatorManager.the.levels-1}';
 			for (i in 1...ElevatorManager.the.levels)
 			{
 				var to = ElevatorManager.the.levels - i;
-				choices.push([new StartDialogue(ElevatorManager.the.getIn.bind(user, level, to, null))]);
-				text += '$i: ' + Localization.getText(Keys_text.FLOOR) + ' $to\n';
+				choices.push([new StartDialogue(ElevatorManager.the.getIn.bind(user, level, i, null))]);
+				text += '\n$to: ' + Localization.getText(Keys_text.FLOOR) + ' ${to-1}';
 			}
-			choices.push([new StartDialogue(ElevatorManager.the.getIn.bind(user, level, 0, null))]);
-			text += '${ElevatorManager.the.levels}: ' + Localization.getText(Keys_text.FLOOR_0) + "\n";
 			Empty.the.playerDlg.insert([new BlaWithChoices(text, this, choices), new StartDialogue(function() { isCurrentlyUsedFrom = null; })]);
 		}
 		else

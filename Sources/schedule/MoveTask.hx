@@ -1,6 +1,7 @@
 package schedule;
 
 import kha2d.Sprite;
+import sprites.IdSystem;
 import sprites.RandomGuy;
 
 class MoveTask extends Task {
@@ -75,5 +76,23 @@ class MoveTask extends Task {
 					}
 				}
 		}
+	}
+	
+	override public function getDescription(): String {
+		var to: String;
+		var floor: String = Std.string(ElevatorManager.the.getLevel(target.y));
+		if (Std.is(target, IdCardOwner))
+		{
+			to = (cast target : IdCardOwner).IdCard.Name;
+		}
+		else if (Std.is(target, IdLoggerSprite))
+		{
+			to = (cast target : IdLoggerSprite).idLogger.txtKey;
+		}
+		else
+		{
+			to = Keys_text.TASK_SOMETHING;
+		}
+		return Localization.getText(Keys_text.TASK_MOVE, [to, floor]);
 	}
 }

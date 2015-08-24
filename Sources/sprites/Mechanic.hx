@@ -14,6 +14,6 @@ class Mechanic extends RandomGuy {
 		standRight = Animation.create(0);
 		walkLeft = Animation.createRange(11, 18, 4);
 		walkRight = Animation.createRange(1, 8, 4);
-		IdCard = new IdCard("Mechanic");
+		IdCard = new IdCard("Ms M");
 	}
 }

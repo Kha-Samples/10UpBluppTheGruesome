@@ -22,4 +22,8 @@ class Task {
 	public function doImmediately(): Void {
 		
 	}
+	
+	public function getDescription(): String {
+		return Localization.getText(Keys_text.TASK_SOMETHING);
+	}
 }
