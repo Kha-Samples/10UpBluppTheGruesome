@@ -221,8 +221,6 @@ class Empty extends Game {
 			var sprite : kha2d.Sprite = null;
 			switch (sprites[i * 3]) {
 			case 0:
-				monsterPlayer = new Fishman(sprites[i * 3 + 1], sprites[i * 3 + 2]);
-				agentPlayer = new Agent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 				agentSpawn = new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 			case 1:
 				computers.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
@@ -271,6 +269,8 @@ class Empty extends Game {
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
 		
+		monsterPlayer = new Fishman(agentSpawn.x, agentSpawn.y);
+		agentPlayer = new Agent(agentSpawn.x, agentSpawn.y);
 		setMainPlayer(agentPlayer, agentSpawn);
 		onDayBegin();
 		Configuration.setScreen(this);

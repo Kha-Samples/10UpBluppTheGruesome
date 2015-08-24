@@ -17,15 +17,12 @@ class Computer extends IdLoggerSprite {
 	var offAnimation: Animation;
 	var missingAnimation: Animation;
 	
-	public var active : Bool;
-	
 	public function new(x: Float, y: Float, active: Bool) {
 		super(Keys_text.COMPUTER, Loader.the.getImage("computer"), 192, 128, 0);
 		this.x = x;
 		this.y = y;
-		this.active = active;
 		
-		this.isUseable = true;
+		this.isUseable = active;
 		offAnimation = Animation.create(0);
 		onAnimation = Animation.create(1);
 		missingAnimation = Animation.create(2);
@@ -53,8 +50,6 @@ class Computer extends IdLoggerSprite {
 	}
 	override public function useFrom(dir:Direction, user:Dynamic): Bool 
 	{
-		if (!active) return false;
-		
 		if (currentUser != null || super.useFrom(dir, user))
 		{
 			if (currentUser == null) currentUser = cast user;
