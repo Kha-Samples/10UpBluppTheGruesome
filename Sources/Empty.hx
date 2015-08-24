@@ -79,6 +79,15 @@ class Empty extends Game {
 	public var playerDlg : Dialogue = new Dialogue();
 	public var npcDlgs : Array<Dialogue> = new Array();
 	
+	public var gotTC1 : Bool = false;
+	public var gotTC2 : Bool = false;
+	public var gotTC3 : Bool = false;
+	public var gotTC4 : Bool = false;
+	
+	public function checkGameEnding() : Bool {
+		return gotTC1 && gotTC2 && gotTC3 && gotTC4;
+	}
+	
     var lastTime = 0.0;
 	
 	var nextDayChangeTime: Float = Math.NaN;
@@ -253,17 +262,10 @@ class Empty extends Game {
 			interactiveSprites.push(computer);
 			Scene.the.addOther(computer); } );
 			
-		var bookshelfCount : Int = 4;
-		var importantBookshelfCount : Int = 2;
-		for (i in 0...bookshelfCount) {
-			if (bookshelves.length <= 0) break;
-			
-			var pos : Vector2 = bookshelves[Random.getIn(0, bookshelves.length - 1)];
-			var bookshelf = new Bookshelf(pos.x, pos.y, i < importantBookshelfCount);
+		populateRandom(12, bookshelves, function(index : Int, pos : Vector2) {
+			var bookshelf = new Bookshelf(pos.x, pos.y, (index < 4) ? index : -1);
 			interactiveSprites.push(bookshelf);
-			Scene.the.addOther(bookshelf);
-			bookshelves.remove(pos);
-		}
+			Scene.the.addOther(bookshelf); } );
 		
 		var  npcSpawnsCopy : Array<Vector2> = npcSpawns.copy();
 		populateRandom(5, npcSpawnsCopy, function(index : Int, pos : Vector2) {
@@ -318,7 +320,10 @@ class Empty extends Game {
 	
 	private function populateRandom(count : Int, positions : Array<Vector2>, creationFunction : Int->Vector2->Void) {
 		for (i in 0...count) {
-			if (positions.length <= 0) break;
+			if (positions.length <= 0) {
+				trace("WARNING: Not enough elements for population");
+				break;
+			}
 			
 			var pos : Vector2 = positions[Random.getIn(0, positions.length - 1)];
 			creationFunction(i, pos);

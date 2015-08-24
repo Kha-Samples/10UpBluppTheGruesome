@@ -429,6 +429,46 @@
 			"file": "waterflow.png",
 			"name": "waterflow",
 			"type": "image"
+		},
+		{
+			"file": "tc-1.png",
+			"name": "tc-1",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "tc-2.png",
+			"name": "tc-2",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "tc-3.png",
+			"name": "tc-3",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "tc-4.png",
+			"name": "tc-4",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		}
 	],
 	"rooms": [
@@ -470,6 +510,10 @@
 				"7",
 				"8",
 				"9",
+				"tc-1",
+				"tc-2",
+				"tc-3",
+				"tc-4",
 				"bookshelf",
 				"elevator",
 				"Liberation Sans20.kravur",
