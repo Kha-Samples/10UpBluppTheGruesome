@@ -3,15 +3,14 @@ package schedule;
 import kha.math.Random;
 import kha.Scheduler;
 import kha2d.Direction;
-import kha2d.Sprite;
 import sprites.Coffee;
+import sprites.RandomGuy;
 
 class CoffeeTask extends Task {
 	private var taskScheduled: Bool;
 	
-	public function new(sprite: Sprite, coffee: Coffee) {
-		super(sprite);
-		this.sprite = sprite;
+	public function new(sprite: RandomGuy, coffee: Coffee) {
+		super(guy);
 		taskScheduled = false;
 	}
 	
