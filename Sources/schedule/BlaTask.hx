@@ -12,7 +12,7 @@ class BlaTask extends Task {
 	private var taskScheduled: Bool;
 	private var aim: RandomGuy;
 	
-	public function new(sprite: RandomGuy, aim: RandomGuy) {
+	public function new(guy: RandomGuy, aim: RandomGuy) {
 		super(guy);
 		taskScheduled = false;
 		this.aim = aim;

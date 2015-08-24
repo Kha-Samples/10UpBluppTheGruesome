@@ -49,6 +49,8 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	public static var redused = false;
 	public static var greenused = false;
 	
+	public var paused = false;
+	
 	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool, customlook: Bool = false) {
 		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
 		zzzzz = Loader.the.getImage("zzzzz");
@@ -217,7 +219,13 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	
 	override public function update(): Void {
 		super.update();
-		schedule.update();
+		if (paused) {
+			speedx = 0;
+			speedy = 0;
+		}
+		else {
+			schedule.update();
+		}
 		if (speedx > 0) {
 			setAnimation(walkRight);
 			lookLeft = false;
