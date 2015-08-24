@@ -19,9 +19,11 @@ class MoveTask extends Task {
 		this.target = target;
 		this.hurry = hurry;
 		if (randomoffset > 0) {
-			var value = Random.getUpTo(randomoffset);
-			value -= Std.int(randomoffset / 2);
-			offset = value;
+			while (Math.abs(offset) < randomoffset / 3) {
+				var value = Random.getUpTo(randomoffset);
+				value -= Std.int(randomoffset / 2);
+				offset = value;
+			}
 		}
 		step = 0;
 		waitOnOpen = 0;

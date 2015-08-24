@@ -99,7 +99,7 @@
 			"file": "professor.png",
 			"name": "professor",
 			"type": "image",
-			"scale": 2,
+			"scale": 1,
 			"background": {
 				"red": 255,
 				"green": 174,
@@ -487,6 +487,11 @@
 			"file": "an.png",
 			"name": "an",
 			"type": "image"
+		},
+		{
+			"file": "lab.png",
+			"name": "lab",
+			"type": "image"
 		}
 	],
 	"rooms": [
@@ -494,7 +499,7 @@
 			"name": "titlescreen",
 			"parent": null,
 			"neighbours": [
-				"testlevel"
+				"intro"
 			],
 			"assets": [
 				"localizations",
@@ -504,6 +509,18 @@
 				"arial34.kravur",
 				"Arial12.kravur",
 				"Kahlesv270.kravur"
+			]
+		},
+		{
+			"name": "intro",
+			"parent": null,
+			"neighbours": [
+				"testlevel"
+			],
+			"assets": [
+				"lab",
+				"professor",
+				"fishy"
 			]
 		},
 		{

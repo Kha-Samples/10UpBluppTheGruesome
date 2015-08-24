@@ -25,8 +25,6 @@ class Dialogues {
 				msg += '\n(${choices.length}): Set language to "${Localization.availableLanguages[l]}"';
 			}
 		}
-		choices.push([ new StartDialogue(howToPlay) ]);
-		msg += '\n(${choices.length}): How to Play?';
 		choices.push( [] );
 		msg += '\n(${choices.length}): ' + Localization.getText(Keys_text.BACK);
 		Empty.the.playerDlg.insert( [
@@ -95,7 +93,9 @@ class Dialogues {
 			, new StartDialogue(function() {
 				Empty.the.mode = PlayerSwitch;
 				kha.Configuration.setScreen(new kha.LoadingScreen());
-				Loader.the.loadRoom("testlevel", Empty.the.initLevel);
+				//Loader.the.loadRoom("testlevel", Empty.the.initLevel);
+				Empty.the.renderOverlay = false;
+				Loader.the.loadRoom("intro", Empty.the.initIntro);
 			})
 		]);
 	}
