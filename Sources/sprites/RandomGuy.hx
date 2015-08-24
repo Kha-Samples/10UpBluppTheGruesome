@@ -305,7 +305,8 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 						new Bla(schedule.nextTwoTaskDescription(), this, true)
 					]
 					, [ /* YOU ARE THE MONSTER */
-						new Bla(Keys_text.YOUMONSTER_REACTION_ + Random.getUpTo(6), this, true)
+						new StartDialogue(everybodyRunToPlayer.bind(this))
+						, new Bla(Keys_text.YOUMONSTER_REACTION_ + Random.getUpTo(6), this, true)
 						, new BlaWithChoices(Keys_text.YOUMONSTER_SHOWDOWN, null, [
 							[new StartDialogue(Dialogues.showdownShoot.bind(this))]
 							, [new StartDialogue(Dialogues.showdownHesitate.bind(this))]
