@@ -8,6 +8,7 @@ import kha.Loader;
 import kha2d.Animation;
 import kha2d.Direction;
 import kha2d.Sprite;
+import manipulatables.UseableSprite;
 
 import sprites.IdSystem;
 
@@ -16,11 +17,13 @@ class Computer extends IdLoggerSprite {
 	var onAnimation: Animation;
 	var offAnimation: Animation;
 	var missingAnimation: Animation;
+	var plan : Int = -1;
 	
-	public function new(x: Float, y: Float, active: Bool) {
+	public function new(x: Float, y: Float, active: Bool, plan : Int) {
 		super(Keys_text.COMPUTER, Loader.the.getImage("computer"), 192, 128, 0);
 		this.x = x;
 		this.y = y;
+		this.plan = plan;
 		
 		this.isUseable = active;
 		offAnimation = Animation.create(0);
@@ -30,8 +33,39 @@ class Computer extends IdLoggerSprite {
 	}
 	
 	function searchCriticalFiles(): Void {
-		// TODO: implement
+		
+		if (plan > -1) {
+			var part : UseableSprite;
+			switch (plan) {
+				case 0:
+					part = new UseableSprite(Localization.getText(Keys_text.PLAN1), Loader.the.getImage("pl"), 0, 0, 60, 60, 0);
+					Empty.the.gotPl1 = true;
+				case 1:
+					part = new UseableSprite(Localization.getText(Keys_text.PLAN2), Loader.the.getImage("an"), 0, 0, 60, 60, 0);
+					Empty.the.gotan2 = true;
+				default:
+					trace("invalid plan part");
+					return;
+			}
+			if (Player.current() == Empty.the.monsterPlayer) {
+				Inventory.pick(part);
+				plan = -1;
+				
+				var text = Localization.getText(Keys_text.ITEMFOUND, [ part.name ]);
+				Empty.the.playerDlg.insert([new Bla(text, this, true)]);
+				Empty.the.checkGameEnding();
+			}
+			else {
+				var text = Localization.getText(Keys_text.ITEMFOUND, [ part.name ]);
+				Empty.the.playerDlg.insert([new Bla(text, this, true)]);
+			}
+		}
+		else {
+				var text = Localization.getText(Keys_text.NOTHINGFOUND);
+				Empty.the.playerDlg.insert([new Bla(text, this, true)]);		
+		}
 	}
+	
 	function useDialogue(): Void {
 		if (currentUser == null) return;
 		var choices = new Array<Array<DialogueItem>>();

@@ -84,9 +84,11 @@ class Empty extends Game {
 	public var gotTC2 : Bool = false;
 	public var gotTC3 : Bool = false;
 	public var gotTC4 : Bool = false;
+	public var gotPl1 : Bool = false;
+	public var gotan2 : Bool = false;
 	
 	public function checkGameEnding() : Bool {
-		return gotTC1 && gotTC2 && gotTC3 && gotTC4;
+		return gotTC1 && gotTC2 && gotTC3 && gotTC4 && gotPl1 && gotan2;
 	}
 	
     var lastTime = 0.0;
@@ -260,7 +262,7 @@ class Empty extends Game {
 		}
 		ElevatorManager.the.initSprites(elevatorPositions);
 		populateRandom(computers.length, computers, function(index : Int, pos : Vector2) {
-			var computer = new Computer(pos.x, pos.y, index < 8);
+			var computer = new Computer(pos.x, pos.y, index < 8, (index < 2) ? index : -1);
 			interactiveSprites.push(computer);
 			Scene.the.addOther(computer); } );
 			
@@ -397,6 +399,8 @@ class Empty extends Game {
 		}
 	}
 	
+	private var dayTimesLeft = 13;
+	
 	public override function update() {
 		super.update();
 		
@@ -422,8 +426,14 @@ class Empty extends Game {
 					trace ('change day!');
 					nextDayChangeTime = Math.NaN;
 					mode = PlayerSwitch;
-					if (Player.current() == monsterPlayer) Dialogues.dawn();
-					else Dialogues.dusk();
+					if (Player.current() == monsterPlayer) {
+						Dialogues.dawn();
+						--dayTimesLeft;
+					}
+					else {
+						Dialogues.dusk();
+						--dayTimesLeft;
+					}
 				}
 				else
 				{
@@ -515,14 +525,23 @@ class Empty extends Game {
 			var congrat = Loader.the.getImage("congratulations");
 			g.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);*/
 		case Game, PlayerSwitch:
+			g.font = font;
 			Scene.the.render(g);
 			
+			g.transformation = FastMatrix3.identity();
 			if (Player.currentPlayer == monsterPlayer) {
 				// Night, make it dark
-				g.transformation = FastMatrix3.identity();
 				g.set_color(Color.fromBytes(0, 0, 0, 191));
 				g.fillRect(0, 0, width, height);
 			}
+			
+			g.font = font;
+			g.color = Color.White;
+			var daysLeft = Std.int(dayTimesLeft / 2);
+			var hoursLeft = (nextDayChangeTime - Scheduler.time()) / 60 * 12;
+			if (dayTimesLeft % 2 == 1) hoursLeft += 12;
+			var text = Std.int(hoursLeft) + " hours and " + daysLeft + " days left";
+			g.drawString(text, width - g.font.stringWidth(text) - 10, 10);
 			
 			/*g.transformation = FastMatrix3.identity();
 			g.color = Color.Black;
