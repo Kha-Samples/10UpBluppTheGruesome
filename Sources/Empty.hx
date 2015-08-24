@@ -399,7 +399,7 @@ class Empty extends Game {
 		}
 	}
 	
-	private var daysLeft = 7;
+	private var dayTimesLeft = 13;
 	
 	public override function update() {
 		super.update();
@@ -428,9 +428,12 @@ class Empty extends Game {
 					mode = PlayerSwitch;
 					if (Player.current() == monsterPlayer) {
 						Dialogues.dawn();
-						--daysLeft;
+						--dayTimesLeft;
 					}
-					else Dialogues.dusk();
+					else {
+						Dialogues.dusk();
+						--dayTimesLeft;
+					}
 				}
 				else
 				{
@@ -525,16 +528,19 @@ class Empty extends Game {
 			g.font = font;
 			Scene.the.render(g);
 			
+			g.transformation = FastMatrix3.identity();
 			if (Player.currentPlayer == monsterPlayer) {
 				// Night, make it dark
-				g.transformation = FastMatrix3.identity();
 				g.set_color(Color.fromBytes(0, 0, 0, 191));
 				g.fillRect(0, 0, width, height);
 			}
 			
 			g.font = font;
 			g.color = Color.White;
-			var text = daysLeft + " Days Left";
+			var daysLeft = Std.int(dayTimesLeft / 2);
+			var hoursLeft = (nextDayChangeTime - Scheduler.time()) / 60 * 12;
+			if (dayTimesLeft % 2 == 1) hoursLeft += 12;
+			var text = Std.int(hoursLeft) + " hours and " + daysLeft + " days left";
 			g.drawString(text, width - g.font.stringWidth(text) - 10, 10);
 			
 			/*g.transformation = FastMatrix3.identity();
