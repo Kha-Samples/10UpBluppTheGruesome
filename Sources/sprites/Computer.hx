@@ -16,11 +16,13 @@ class Computer extends IdLoggerSprite {
 	var onAnimation: Animation;
 	var offAnimation: Animation;
 	var missingAnimation: Animation;
+	var plan : Int = -1;
 	
-	public function new(x: Float, y: Float, active: Bool) {
+	public function new(x: Float, y: Float, active: Bool, plan : Int) {
 		super(Keys_text.COMPUTER, Loader.the.getImage("computer"), 192, 128, 0);
 		this.x = x;
 		this.y = y;
+		this.plan = plan;
 		
 		this.isUseable = active;
 		offAnimation = Animation.create(0);
@@ -31,6 +33,8 @@ class Computer extends IdLoggerSprite {
 	
 	function searchCriticalFiles(): Void {
 		// TODO: implement
+		
+		
 	}
 	function useDialogue(): Void {
 		if (currentUser == null) return;

@@ -260,7 +260,7 @@ class Empty extends Game {
 		}
 		ElevatorManager.the.initSprites(elevatorPositions);
 		populateRandom(computers.length, computers, function(index : Int, pos : Vector2) {
-			var computer = new Computer(pos.x, pos.y, index < 8);
+			var computer = new Computer(pos.x, pos.y, index < 8, (index < 2) ? index : -1);
 			interactiveSprites.push(computer);
 			Scene.the.addOther(computer); } );
 			
