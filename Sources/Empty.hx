@@ -274,7 +274,11 @@ class Empty extends Game {
 			guy.x = pos.x;
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
+		
 		var michael = new Michael(monsterPlayer, interactiveSprites);
+		var pos : Vector2 = npcSpawns[Random.getIn(0, npcSpawns.length - 1)];
+		michael.x = pos.x;
+		michael.y = pos.y;
 		Scene.the.addOther(michael);
 		
 		setMainPlayer(agentPlayer);
