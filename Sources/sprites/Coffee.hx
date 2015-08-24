@@ -19,7 +19,7 @@ class Coffee extends InteractiveSprite {
 	public function new(x: Float, y: Float) {
 		super(Loader.the.getImage("coffee"), 32, 64, 0);
 		this.x = x;
-		this.y = y;
+		this.y = y + 2;
 		this.isUseable = true;
 		accy = 0;
 		
