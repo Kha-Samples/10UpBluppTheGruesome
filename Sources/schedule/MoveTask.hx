@@ -54,7 +54,7 @@ class MoveTask extends Task {
 					}
 					else {
 						ElevatorManager.the.callTo(ElevatorManager.the.getLevel(guy.y));
-						waitOnOpen = 60;
+						waitOnOpen = 60 * 3;
 					}
 				}
 			case 2:

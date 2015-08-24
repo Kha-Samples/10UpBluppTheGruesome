@@ -42,9 +42,11 @@ import sprites.Door;
 import sprites.Fishman;
 import sprites.IdSystem;
 import sprites.InteractiveSprite;
+import sprites.Mechanic;
 import sprites.Michael;
 import sprites.Player;
 import sprites.RandomGuy;
+import sprites.Rowdy;
 
 import dialogue.*;
 
@@ -261,9 +263,9 @@ class Empty extends Game {
 		var  npcSpawnsCopy : Array<Vector2> = npcSpawns.copy();
 		populateRandom(5, npcSpawnsCopy, function(index : Int, pos : Vector2) {
 			var guy;
-			if (index == 0) guy = new RandomGuy(interactiveSprites, true);
+			if (index == 0) guy = createMonsterGuy(interactiveSprites);
 			else if (index == 1) guy = new Michael(interactiveSprites);
-			else guy = new RandomGuy(interactiveSprites, false);
+			else guy = createGuy(interactiveSprites);
 			guy.x = pos.x;
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
@@ -275,6 +277,38 @@ class Empty extends Game {
 		Configuration.setScreen(this);
 		
 		Dialogues.dusk();
+	}
+	
+	private var gotMechanic = false;
+	private var gotRowdy = false;
+	
+	private function createMonsterGuy(interacticeSprites: Array<InteractiveSprite>): RandomGuy {
+		var value = Random.getUpTo(5);
+		if (value == 0) {
+			gotMechanic = true;
+			return new Mechanic(interacticeSprites, true);
+		}
+		else if (value == 1) {
+			gotRowdy = true;
+			return new Rowdy(interacticeSprites, true);
+		}
+		else {
+			return new RandomGuy(interacticeSprites, true);
+		}
+	}
+	
+	private function createGuy(interacticeSprites: Array<InteractiveSprite>): RandomGuy {
+		if (!gotMechanic) {
+			gotMechanic = true;
+			return new Mechanic(interacticeSprites, false);
+		}
+		else if (!gotRowdy) {
+			gotRowdy = true;
+			return new Rowdy(interacticeSprites, false);
+		}
+		else {
+			return new RandomGuy(interacticeSprites, false);
+		}
 	}
 	
 	private function populateRandom(count : Int, positions : Array<Vector2>, creationFunction : Int->Vector2->Void) {
