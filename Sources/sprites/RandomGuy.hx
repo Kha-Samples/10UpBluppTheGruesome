@@ -74,6 +74,15 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		return new Vector2();
 	}
 	
+	public static function monsterName(): String {
+		for (guy in allguys) {
+			if (guy.youarethemonster) {
+				return guy.IdCard.Name;
+			}
+		}
+		return "Blubb der Schreckliche";
+	}
+	
 	public static function endDayForEverybody(): Void {
 		for (guy in allguys) {
 			guy.end();
