@@ -4,6 +4,7 @@ import dialogue.*;
 import Cfg;
 import haxe.macro.Expr.Var;
 import kha.Color;
+import kha.Loader;
 import kha2d.Scene;
 import kha2d.Sprite;
 import sprites.IdSystem;
@@ -16,16 +17,16 @@ class Dialogues {
 		trace ('escMenu!');
 		var msg = "What to do?";
 		var choices = new Array<Array<DialogueItem>>();
-		var i = 1;
 		for (l in Localization.availableLanguages.keys()) {
 			if (l != Cfg.language) {
 				choices.push([new StartDialogue(function() { Localization.language = Cfg.language = l; Cfg.save(); } )]);
-				msg += '\n($i): Set language to "${Localization.availableLanguages[l]}"';
-				++i;
+				msg += '\n(${choices.length}): Set language to "${Localization.availableLanguages[l]}"';
 			}
 		}
-		msg += '\n($i): ' + Localization.getText(Keys_text.BACK);
+		choices.push([ new StartDialogue(howToPlay) ]);
+		msg += '\n(${choices.length}): How to Play?';
 		choices.push( [] );
+		msg += '\n(${choices.length}): ' + Localization.getText(Keys_text.BACK);
 		Empty.the.playerDlg.insert( [
 			new BlaWithChoices(msg, null, choices)
 		], true );
@@ -45,7 +46,6 @@ class Dialogues {
 					, new StartDialogue(function() {
 						trace ('after FADE_FROM_BLACK');
 						Empty.the.renderOverlay = false;
-						Empty.the.mode = Game;
 					})
 				]
 				, [new StartDialogue(escMenu), new StartDialogue(dawn)]
@@ -66,11 +66,35 @@ class Dialogues {
 					, new StartDialogue(function() {
 						trace ('after FADE_FROM_BLACK');
 						Empty.the.renderOverlay = false;
-						Empty.the.mode = Game;
 					})
 				]
 				, [new StartDialogue(escMenu), new StartDialogue(dusk)]
 			])
+		]);
+	}
+	static function howToPlay() {
+		Empty.the.playerDlg.insert([
+			new BlaWithChoices(Keys_text.MENU_HOW_TO_PLAY, null, [
+				[] //  OK
+				, [] // Nicht OK
+				, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/")), new StartDialogue(howToPlay)]
+				, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/mountainbrew/")), new StartDialogue(howToPlay)]
+				, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/interdimensionalliquids/")), new StartDialogue(howToPlay)]
+				, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/justanordinaryday/")), new StartDialogue(howToPlay)]
+				, [new StartDialogue(Loader.the.loadURL.bind("http://10upunity.robdangero.us/")), new StartDialogue(howToPlay)]
+			])
+		], true);
+	}
+	public static function startGame() {
+		Empty.the.renderOverlay = true;
+		Empty.the.playerDlg.set([
+			new StartDialogue(howToPlay)
+			, new Action(null, ActionType.FADE_TO_BLACK)
+			, new StartDialogue(function() {
+				Empty.the.mode = PlayerSwitch;
+				kha.Configuration.setScreen(new kha.LoadingScreen());
+				Loader.the.loadRoom("testlevel", Empty.the.initLevel);
+			})
 		]);
 	}
 }

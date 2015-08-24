@@ -69,6 +69,32 @@ class Localization
 					text = t[fallbackLanguage];
 				}
 			}
+			var front: Int = text.indexOf("{");
+			var back: Int = text.indexOf("}", front+1);
+			var fix: Int = front;
+			while (back >= 0)
+			{
+				key = text.substring(front + 1, back);
+				t = texts[key];
+				if (t != null)
+				{
+					if (t.exists(language)) {
+						text = StringTools.replace(text, text.substring(front, back+1), t[language]);
+					} else if (t.exists(fallbackLanguage)) {
+						text = StringTools.replace(text, text.substring(front, back+1), t[fallbackLanguage]);
+					} else {
+						text = StringTools.replace(text, text.substring(front, back+1), key);
+					}
+					front = text.indexOf("{", fix);
+					back = text.indexOf("}", front+1);
+				}
+				else
+				{
+					front = text.indexOf("{", fix+1);
+					back = text.indexOf("}", front+1);
+				}
+				fix = front;
+			}
 		}
 		if (paramKeys != null)
 		{

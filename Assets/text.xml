@@ -7,6 +7,11 @@
 -->
 <DefaultLanguage>de</DefaultLanguage>
 
+<Title>
+	<de>10Up: {Fischmensch}</de>
+</Title>
+
+
 <Agent>
 	<de>Mr. S</de>
 	<en>Mr. S</en>
@@ -21,14 +26,14 @@
 </Professor>
 <Fischmensch>
 	<de>Blupp der Grausame</de>
-	<en>Blupp the Cruel</en>
+	<en>Blupp the Gruesome</en>
 </Fischmensch>
 
 
 
 <click_to_start>
-	<de>Beliebige Taste zum Starten (ESC for language selection)</de>
-	<en>Press any key to start (ESC for language selection)</en>
+	<de>Beliebige Taste zum Starten (ESC for options)</de>
+	<en>Press any key to start (ESC for options)</en>
 </click_to_start>
 
 
@@ -168,3 +173,42 @@ what do we do now?</en>
 	<de>[Weggehen]</de>
 	<en>[Leave]</en>
 </bookshelf_leave>
+
+<!-- Menu -->
+<menu_how_to_play>
+	<de>{Title} ist ein rundenbasiertes Echzeit-Detektievspiel für zwei Spieler.
+
+Ein Spieler spielt {Fischmensch}, das tragische Opfer eines Experimentes.
+Nachts ist er unterwegs und sucht alle Teile der Dimensionskanone um in seine Heimat zu kommen (siehe 10Up: Interdimensional Liquids).
+[Tipp: Untersuche als {Fischmensch} Bücherschränke und Computer um hinweise zu finden, wie dieses Ziel zu erreichen ist.]
+
+Der andere Spieler spielt {Agent}. In seiner Jugend war er selbst das Opfer von Experimenten (Siehe 10Up: Mountain Brew).
+Dennoch wurde er zu einem wertvollem Mitglied der 10Up Spezialeinheit (siehe 10Up).
+Nachdem er von den neuesten Experimenten des Professors erfahren hat (siehe 10Up: Unity) setzt er alles daran um andere von diesem Schicksal zu erlösen.
+[Tipp: Beobachte als {Agent} die anderen Mitarbeiter und die Umgebung genau, um hinweise zu finden, wer von ihnen das Opfer dieser Experimente ist.]
+
+[WICHTIG: Für ein optimales Spielerlebnis spielt {Title} zu zweit und schaut euch nicht gegenseitig über die Schulter.]
+
+1. OK
+2. Nicht OK
+3. [Play 10Up]
+4. [Play 10Up: Mountain Brew]
+5. [Play 10Up: Interdimensional Liquids]
+6. [Play Just an ordinary Day (10Up edition)]
+7. [Play 10Up: Unity]
+</de>
+</menu_how_to_play>
+
+<!-- Intro -->
+<intro_1_Blub>
+	<de>Blub? [verwundert]</de>
+</intro_1_Blub>
+<intro_2_Blub>
+	<de>Blub! [verärgert]</de>
+</intro_2_Blub>
+<intro_3_Prof>
+	<de>Oh. Da ist wohl 'was schiefgelaufen.</de>
+</intro_3_Prof>
+<intro_4_Prof>
+	<de>Zum glück hab ich jetzt {0} Wochen Urlaub ...</de>
+</intro_4_Prof>

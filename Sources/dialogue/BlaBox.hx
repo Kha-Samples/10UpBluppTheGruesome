@@ -13,7 +13,7 @@ import sprites.Player;
 class BlaBox {
 	static public var boxes(default, null) : Array<BlaBox> = new Array();
 	private var padding = 15;
-	private var maxWidth = 500;
+	private var maxWidth = 800;
 	private var font: Font;
 	private var width : Float;
 	private var height : Float;
