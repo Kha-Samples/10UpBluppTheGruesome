@@ -134,6 +134,8 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	
 	public function end(): Void {
 		schedule.end();
+		speedx = 0;
+		speedy = 0;
 	}
 	
 	public static function createAllTasks(): Void {
@@ -211,7 +213,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 			if (image != null && visible) {
 				g.color = Color.White;
 				var angle = Math.PI / 2;
-				var x = this.x + 40;
+				var x = this.x + 80;
 				var y = this.y + 80;
 				lookLeft = true;
 				if (angle != 0) g.pushTransformation(g.transformation.multmat(FastMatrix3.translation(x + originX, y + originY)).multmat(FastMatrix3.rotation(angle)).multmat(FastMatrix3.translation(-x - originX, -y - originY)));

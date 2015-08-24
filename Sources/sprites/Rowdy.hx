@@ -8,6 +8,8 @@ class Rowdy extends RandomGuy {
 	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool) {
 		super(stuff, youarethemonster);
 		image = Loader.the.getImage("rowdy");
+		w = Std.int(410 / 10);
+		h = Std.int(455 / 7);
 		standLeft = Animation.create(10);
 		standRight = Animation.create(0);
 		walkLeft = Animation.createRange(11, 18, 4);
