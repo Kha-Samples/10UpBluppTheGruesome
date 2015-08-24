@@ -44,7 +44,11 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	private var zzzzz: Image;
 	private var zzzzzAnim: Animation;
 	
-	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool) {
+	public static var whiteused = false;
+	public static var redused = false;
+	public static var greenused = false;
+	
+	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool, customlook: Bool = false) {
 		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
 		zzzzz = Loader.the.getImage("zzzzz");
 		zzzzzAnim = Animation.createRange(0, 2, 8);
@@ -76,19 +80,29 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		names.remove(name);
 		IdCard = new IdCard(name);
 		
-		if (name == "Rebecca") {
-			image = Loader.the.getImage("nullachtsechzehnfrau");
-			w = 820 / 10;
-			h = 402 / 3;
-			standLeft = Animation.create(10);
-			standRight = Animation.create(0);
-			walkLeft = Animation.createRange(11, 18, 4);
-			walkRight = Animation.createRange(1, 8, 4);
-		}
-		else {
-			var value = Random.getUpTo(2);
-			if (value == 1) image = Loader.the.getImage("nullachtsechzehnmann-rot");
-			else if (value == 2) image = Loader.the.getImage("nullachtsechzehn-gruen");
+		if (!customlook) {
+			if (name == "Rebecca") {
+				image = Loader.the.getImage("nullachtsechzehnfrau");
+				w = 820 / 10;
+				h = 402 / 3;
+				standLeft = Animation.create(10);
+				standRight = Animation.create(0);
+				walkLeft = Animation.createRange(11, 18, 4);
+				walkRight = Animation.createRange(1, 8, 4);
+			}
+			else {
+				if (!whiteused) {
+					whiteused = true;
+				}
+				else if (!redused) {
+					image = Loader.the.getImage("nullachtsechzehnmann-rot");
+					redused = true;
+				}
+				else if (!greenused) {
+					image = Loader.the.getImage("nullachtsechzehn-gruen");
+					greenused = true;
+				}
+			}
 		}
 		
 		schedule = new schedule.Schedule();

@@ -433,6 +433,12 @@
 			"type": "image"
 		},
 		{
+			"file": "Kahlesv2.ttf",
+			"name": "Kahlesv2",
+			"type": "font",
+			"size": "70"
+		},
+		{
 			"file": "tc-1.png",
 			"name": "tc-1",
 			"type": "image",
@@ -496,7 +502,8 @@
 				"10up-logo",
 				"Liberation Sans20.kravur",
 				"arial34.kravur",
-				"Arial12.kravur"
+				"Arial12.kravur",
+				"Kahlesv270.kravur"
 			]
 		},
 		{

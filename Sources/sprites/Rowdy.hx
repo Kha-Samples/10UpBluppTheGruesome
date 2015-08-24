@@ -6,7 +6,7 @@ import sprites.IdSystem.IdCard;
 
 class Rowdy extends RandomGuy {
 	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool) {
-		super(stuff, youarethemonster);
+		super(stuff, youarethemonster, true);
 		image = Loader.the.getImage("rowdy");
 		w = Std.int(410 * 2 / 10);
 		h = Std.int(455 * 2 / 7);
