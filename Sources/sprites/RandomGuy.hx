@@ -70,6 +70,15 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		names.remove(name);
 		IdCard = new IdCard(name);
 		
+		if (name == "Rebecca") {
+			image = Loader.the.getImage("nullachtsechzehnfrau");
+		}
+		else {
+			var value = Random.getUpTo(2);
+			if (value == 1) image = Loader.the.getImage("nullachtsechzehnmann-rot");
+			else if (value == 2) image = Loader.the.getImage("nullachtsechzehn-gruen");
+		}
+		
 		schedule = new schedule.Schedule();
 		
 		allguys.push(this);
