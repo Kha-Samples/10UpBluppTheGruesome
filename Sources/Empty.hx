@@ -79,6 +79,16 @@ class Empty extends Game {
 	public var playerDlg : Dialogue = new Dialogue();
 	public var npcDlgs : Array<Dialogue> = new Array();
 	
+	private var title: Image = null;
+	public var gotTC1 : Bool = false;
+	public var gotTC2 : Bool = false;
+	public var gotTC3 : Bool = false;
+	public var gotTC4 : Bool = false;
+	
+	public function checkGameEnding() : Bool {
+		return gotTC1 && gotTC2 && gotTC3 && gotTC4;
+	}
+	
     var lastTime = 0.0;
 	
 	var nextDayChangeTime: Float = Math.NaN;
@@ -98,6 +108,7 @@ class Empty extends Game {
 	
 	function initFirst() {
 		backbuffer = Image.createRenderTarget(1024, 768);
+		
 		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
 		
 		Configuration.setScreen(this);
@@ -253,17 +264,10 @@ class Empty extends Game {
 			interactiveSprites.push(computer);
 			Scene.the.addOther(computer); } );
 			
-		var bookshelfCount : Int = 4;
-		var importantBookshelfCount : Int = 2;
-		for (i in 0...bookshelfCount) {
-			if (bookshelves.length <= 0) break;
-			
-			var pos : Vector2 = bookshelves[Random.getIn(0, bookshelves.length - 1)];
-			var bookshelf = new Bookshelf(pos.x, pos.y, i < importantBookshelfCount);
+		populateRandom(12, bookshelves, function(index : Int, pos : Vector2) {
+			var bookshelf = new Bookshelf(pos.x, pos.y, (index < 4) ? index : -1);
 			interactiveSprites.push(bookshelf);
-			Scene.the.addOther(bookshelf);
-			bookshelves.remove(pos);
-		}
+			Scene.the.addOther(bookshelf); } );
 		
 		var  npcSpawnsCopy : Array<Vector2> = npcSpawns.copy();
 		populateRandom(5, npcSpawnsCopy, function(index : Int, pos : Vector2) {
@@ -318,7 +322,10 @@ class Empty extends Game {
 	
 	private function populateRandom(count : Int, positions : Array<Vector2>, creationFunction : Int->Vector2->Void) {
 		for (i in 0...count) {
-			if (positions.length <= 0) break;
+			if (positions.length <= 0) {
+				trace("WARNING: Not enough elements for population");
+				break;
+			}
 			
 			var pos : Vector2 = positions[Random.getIn(0, positions.length - 1)];
 			creationFunction(i, pos);
@@ -484,6 +491,16 @@ class Empty extends Game {
 	}
 	
 	public override function render(frame: Framebuffer) {
+		if (title == null && Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70) != null) {
+			title = Image.createRenderTarget(512, 512);
+			title.g2.begin(true, Color.fromBytes(0, 0, 0, 0));
+			title.g2.font = Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70);
+			title.g2.color = Color.Magenta;
+			title.g2.drawString("Blupp", 150, 0);
+			title.g2.drawString("The Gruesome", 0, 60);
+			title.g2.end();
+		}
+		
 		var g = backbuffer.g2;
 		g.begin();
 		switch (mode) {
@@ -523,11 +540,9 @@ class Empty extends Game {
 			//if (Player.current() != null) drawPlayerInfo(g);
 		case StartScreen:
 			Scene.the.render(g);
+			g.color = Color.White;
+			g.drawImage(title, 3 * (150 + 10 * Math.cos(0.3 * kha.Sys.getTime())), 3 * (140 + 10 * Math.sin(0.6 * kha.Sys.getTime())));
 			g.font = font;
-			g.color = Color.Magenta;
-			g.pushTransformation(g.transformation.multmat(FastMatrix3.scale(3, 3)));
-			g.drawString("MONSTER", 180 + 10 * Math.cos(0.3 * kha.Sys.getTime()), 140 + 10 * Math.sin(0.6 * kha.Sys.getTime()));
-			g.popTransformation();
 			var b = Math.round(100 + 125 * Math.pow(Math.sin(0.5 * kha.Sys.getTime()),2));
 			g.color = Color.fromBytes(b, b, b);
 			var str = Localization.getText(Keys_text.CLICK_TO_START);
