@@ -37,9 +37,10 @@ class Dialogues {
 		Empty.the.renderOverlay = true;
 		Empty.the.playerDlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)
+			, new StartDialogue(Empty.the.onNightEnd)
 			, new BlaWithChoices(Keys_text.DAWN, null, [
 				[
-					new StartDialogue(Empty.the.setMainPlayer.bind(Empty.the.agentPlayer))
+					new StartDialogue(Empty.the.onDayBegin)
 					, new Action(null, ActionType.FADE_FROM_BLACK)
 					, new StartDialogue(function() {
 						trace ('after FADE_FROM_BLACK');
@@ -57,9 +58,10 @@ class Dialogues {
 		Empty.the.renderOverlay = true;
 		Empty.the.playerDlg.insert([
 			new Action(null, ActionType.FADE_TO_BLACK)
+			, new StartDialogue(Empty.the.onDayEnd)
 			, new BlaWithChoices(Keys_text.DUSK, null, [
 				[
-					new StartDialogue(Empty.the.setMainPlayer.bind(Empty.the.monsterPlayer))
+					new StartDialogue(Empty.the.onNightBegin)
 					, new Action(null, ActionType.FADE_FROM_BLACK)
 					, new StartDialogue(function() {
 						trace ('after FADE_FROM_BLACK');

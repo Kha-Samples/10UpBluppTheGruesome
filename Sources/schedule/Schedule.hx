@@ -32,4 +32,24 @@ class Schedule {
 			}
 		}
 	}
+	
+	public function endDay(): Void {
+		if (tasks.length < 10) {
+			for (i in 0...5) {
+				var task = tasks.shift();
+				if (task != null) {
+					task.doImmediately();
+				}
+			}
+		}
+		else {
+			for (i in 0...15) {
+				var task = tasks.shift();
+				if (task != null) {
+					task.doImmediately();
+				}
+			}
+		}
+		tasks = [];
+	}
 }

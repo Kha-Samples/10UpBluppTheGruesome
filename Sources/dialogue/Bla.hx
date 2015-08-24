@@ -4,6 +4,8 @@ import kha.input.Keyboard;
 import kha.Key;
 import kha2d.Sprite;
 
+using StringTools;
+
 class Bla implements DialogueItem {
 	var text : String;
 	var speaker : Sprite;
@@ -48,5 +50,5 @@ class Bla implements DialogueItem {
 		dlg.blaBox = null;
 	}
 	
-	function toString(): String { return 'Bla<${StringTools.replace(text, "\n", "\\n")}>'; }
+	function toString(): String { return 'Bla<${text.replace("\n", "|").replace("\r","|")}>'; }
 }

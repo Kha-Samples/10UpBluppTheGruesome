@@ -36,11 +36,13 @@ import kha2d.Tile;
 import kha2d.Tilemap;
 import sprites.Agent;
 import sprites.Bookshelf;
+import sprites.Coffee;
 import sprites.Computer;
 import sprites.Door;
 import sprites.Fishman;
-import sprites.IdSystem.IdLoggerSprite;
+import sprites.IdSystem;
 import sprites.InteractiveSprite;
+import sprites.Michael;
 import sprites.Player;
 import sprites.RandomGuy;
 
@@ -62,6 +64,7 @@ class Empty extends Game {
 	private var backbuffer: Image;
 	public var monsterPlayer : Player;
 	public var agentPlayer : Player;
+	private var agentSpawn : Vector2;
 	public var interactiveSprites: Array<InteractiveSprite>;
 	
 	public var mode : Mode;
@@ -219,6 +222,7 @@ class Empty extends Game {
 			case 0:
 				monsterPlayer = new Fishman(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 				agentPlayer = new Agent(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				agentSpawn = new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]);
 			case 1:
 				computers.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			case 2:
@@ -231,6 +235,11 @@ class Empty extends Game {
 				bookshelves.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
 			case 5:
 				npcSpawns.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+			case 6:
+				npcSpawns.push(new Vector2(sprites[i * 3 + 1], sprites[i * 3 + 2]));
+				var coffee : Coffee = new Coffee(sprites[i * 3 + 1], sprites[i * 3 + 2]);
+				Scene.the.addOther(coffee);
+				interactiveSprites.push(coffee);
 			}
 		}
 		ElevatorManager.the.initSprites(elevatorPositions);
@@ -251,13 +260,27 @@ class Empty extends Game {
 			bookshelves.remove(pos);
 		}
 		
-		populateRandom(4, npcSpawns, function(pos : Vector2) {
-			var guy = new RandomGuy(monsterPlayer, interactiveSprites);
+		populateRandom(1, npcSpawns, function(pos : Vector2) {
+			var michael = new RandomGuy(interactiveSprites, false);
+			michael.x = pos.x;
+			michael.y = pos.y;
+			Scene.the.addOther(michael); } );
+		
+		populateRandom(1, npcSpawns, function(pos : Vector2) {
+			var guy = new RandomGuy(interactiveSprites, true);
 			guy.x = pos.x;
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
 		
-		setMainPlayer(agentPlayer);
+		populateRandom(3, npcSpawns, function(pos : Vector2) {
+			var guy = new RandomGuy(interactiveSprites, false);
+			guy.x = pos.x;
+			guy.y = pos.y;
+			Scene.the.addOther(guy); } );
+		
+		// Simulate first day
+		setMainPlayer(agentPlayer, agentSpawn);
+		RandomGuy.createAllTasks();
 		
 		Configuration.setScreen(this);
 		
@@ -274,14 +297,14 @@ class Empty extends Game {
 		}
 	}
 	
-	public function setMainPlayer(player : Player) {
+	public function setMainPlayer(player : Player, spawnPosition : Vector2) {
 		trace ("setMainPlayer!");
 		if (Player.current() != null) {
 			Scene.the.removeHero(Player.current());
 		}
+		player.setPosition(spawnPosition);
 		player.setCurrent();
 		Scene.the.addHero(player);
-		nextDayChangeTime = Scheduler.time() + 60.0;
 	}
 	
 	private static function isCollidable(tilenumber: Int): Bool {
@@ -301,20 +324,39 @@ class Empty extends Game {
 		case 60: return true;
 		case 61: return true;
 		case 62: return true;*/
-		case 63: return true;
+		case 32: return true;
+		case 33: return true;
+		case 34: return true;
+		case 39: return true;
+		
+		case 48: return true;
+		case 49: return true;
+		case 50: return true;
+		case 55: return true;
+		
+		case 64: return true;
+		case 65: return true;
+		case 66: return true;
+		case 71: return true;
+		
+		case 80: return true;
+		case 81: return true;
+		case 82: return true;
+		case 87: return true;	
+		/*case 63: return true;
 		case 64: return true;
 		case 65: return true;
 		case 66: return true;
 		case 67: return true;
-		case 68: return true;
-		case 70: return true;
+		case 68: return true;*/
+		/*case 70: return true;
 		case 74: return true;
 		case 75: return true;
 		case 76: return true;
 		case 77: return true;
 		case 84: return true;
 		case 86: return true;
-		case 87: return true;
+		case 87: return true;*/
 		default:
 			return false;
 		}
@@ -352,16 +394,7 @@ class Empty extends Game {
 					isDay = !isDay;
 					nextDayChangeTime = Math.NaN;
 					if (isDay) Dialogues.dawn();
-					else 
-					{
-						// delete old id entries
-						for (ias in Empty.the.interactiveSprites)
-						{
-							var logger = Std.instance(ias, IdLoggerSprite);
-							if (logger != null) logger.idLogger.newDay();
-						}
-						Dialogues.dusk();
-					}
+					else Dialogues.dusk();
 				}
 				else
 				{
@@ -382,6 +415,36 @@ class Empty extends Game {
 		}
 		
 		Scene.the.update();
+	}
+	
+	public function onDayBegin() : Void {
+		// Spawn npcs
+		RandomGuy.createAllTasks();
+		setMainPlayer(agentPlayer, agentSpawn);
+		nextDayChangeTime = Scheduler.time() + 60.0;
+	}
+	
+	public function onDayEnd() : Void {
+		resetInteractiveSprites(false);
+	}
+	
+	public function onNightBegin() : Void {
+		RandomGuy.endDayForEverybody();
+		//setMainPlayer(monsterPlayer, RandomGuy.monsterNPCPosition);
+		nextDayChangeTime = Scheduler.time() + 60.0;
+	}
+	
+	public function onNightEnd() : Void {
+		resetInteractiveSprites(true);
+	}
+	
+	private function resetInteractiveSprites(resetLoggers : Bool) {
+		for (ias in interactiveSprites) {
+			if (resetLoggers) {
+				var logger = Std.instance(ias, IdLoggerSprite);
+				if (logger != null) logger.idLogger.newDay();
+			}
+		}
 	}
 	
 	public override function render(frame: Framebuffer) {
