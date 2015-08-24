@@ -63,25 +63,21 @@
 <dawn>
 	<de>Zum nächsten Morgengrauen ...
 
-[Bitte den Spieler wechseln]
-1: Weiter
+1: Weiter [Zug vom Agenten]
 2: Optionen</de>
 	<en>At next dawn ...
 
-[Please change the player]
-1: Weiter
+1: Weiter [Agent's turn]
 2: Options</en>
 </dawn>
 <dusk>
 	<de>Zum nächsten Abendrot ...
 
-[Bitte den Spieler wechseln]
-1: Weiter
+1: Weiter [Zug vom Monster]
 2: Optionen</de>
 	<en>At next dusk ...
 
-[Please change the player]
-1: Weiter
+1: Weiter [Monster's turn]
 2: Options</en>
 </dusk>
 

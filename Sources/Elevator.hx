@@ -39,8 +39,9 @@ class Elevator extends IdLoggerSprite {
 		setAnimation(open ? openAnimation : closedAnimation);
 		if (!open) {
 			if (isCurrentlyUsedFrom == Player.current()) {
-				Empty.the.playerDlg.cancel();
+				Empty.the.playerDlg.cancel(); // TODO: FIXME!
 			}
+			stopUsing(false);
 		}
 		return open;
 	}
