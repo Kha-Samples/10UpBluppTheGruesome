@@ -22,12 +22,16 @@ class Dialogue {
 			items = null;
 		}
 		index = -1;
+		BlaBox.boxes.remove(blaBox);
+		blaBox = null;
 	}
 	
 	public function set(newItems: Array<DialogueItem>): Void {
 		cancel();
-		items = newItems;
-		index = -1;
+		if (newItems != null && newItems.length > 0) {
+			items = newItems;
+			index = 0;
+		}
 	}
 	
 	public function insert(insert: Array<DialogueItem>, toFront = false) {
