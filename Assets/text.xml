@@ -280,7 +280,7 @@ The other player plays as {Agent}. In his youth he was a vicitm of these experim
 
 1: Did something strange happend recently?
 2: What do you do now?
-3: You are the monsgter!</en>
+3: You are the monster!</en>
 </how_to_help>
 
 <Strange_nothing_>
@@ -295,7 +295,7 @@ The other player plays as {Agent}. In his youth he was a vicitm of these experim
 	<de>Ob ich {Fischmann} gesehen habe?
 Was hast du denn eingeschmissen?</de>
 	<en>You want to know if I saw {Fischmann}?
-Are you high?</en>
+Are you on drugs?</en>
 </Strange_nothing_1>
 
 <Task>
@@ -307,90 +307,114 @@ Are you high?</en>
 	<en>nothing</en>
 </Task_nothing>
 <Task_something>
-	<de>Irgendwas</de>
+	<de>irgendwas</de>
 	<en>something</en>
 </Task_something>
 <Task_coffee>
-	<de>Kaffeetrinken im {1}. Stock</de>
-	<en>trinking coffee at {0}. floor</en>
+	<de>kaffeetrinken im {0}. Stock</de>
+	<en>trinking coffee on {0}. floor</en>
 </Task_coffee>
 <Task_sleep>
-	<de>Schlafen</de>
+	<de>schlafen</de>
 	<en>sleeping</en>
 </Task_sleep>
 <Task_wait>
-	<de>Warten</de>
+	<de>Wwarten</de>
 	<en>waiting</en>
 </Task_wait>
 <Task_move>
-	<de>zu {0} auf {Floor} {1} Gehen</de>
-	<en>moving to {0} in {Floor} {1}</en>
+	<de>zu {0} auf {Floor} {1} gehen</de>
+	<en>moving to {0} on {Floor} {1}</en>
 </Task_move>
 <Task_bla>
-	<de>mit {0} Reden</de>
+	<de>mit {0} reden</de>
 	<en>talking to {0}</en>
 </Task_bla>
 <Task_computer>
-	<de>an der {computer} auf {Floor} {0} Arbeiten</de>
-	<en>working at the {computer} at {Floor} {0}</en>
+	<de>an dem {computer} auf {Floor} {0} arbeiten</de>
+	<en>working at the {computer} on {Floor} {0}</en>
 </Task_computer>
 
-<YouMonster_reaction_><de>DUMMY</de></YouMonster_reaction_>
+<YouMonster_reaction_>
+  <de>DUMMY</de>
+  <en>DUMMY</en>
+</YouMonster_reaction_>
 <YouMonster_reaction_0>
 	<de>Niemals!</de>
+	<en>Never!</en>
 </YouMonster_reaction_0>
 <YouMonster_reaction_1>
 	<de>Ich weiß nicht, wovon sie reden!</de>
+	<en>I don't know what you are talking about!</en>
 </YouMonster_reaction_1>
 <YouMonster_reaction_2>
 	<de>Blub!</de>
+	<en>Blub!</en>
 </YouMonster_reaction_2>
 <YouMonster_reaction_3>
 	<de>Blub. Blubb, Ahahahahaha.</de>
+	<en>Blub. Blubb, ahahahahaha.</en>
 </YouMonster_reaction_3>
 <YouMonster_reaction_4>
 	<de>Das ist durchaus wahrscheinlich.</de>
+	<en>That's very likely.</en>
 </YouMonster_reaction_4>
 <YouMonster_reaction_5>
 	<de>[Starrt dich ungläubig an]</de>
+	<en>[Stares at you in disbelief]</en>
 </YouMonster_reaction_5>
 <YouMonster_reaction_6>
 	<de>[Starrt dich blutrünstig an]</de>
+	<en>[Stares at you bloodthirstily]</en>
 </YouMonster_reaction_6>
 
-<YouMonster_chatter_><de>DUMMY</de></YouMonster_chatter_>
+<YouMonster_chatter_>
+  <de>DUMMY</de>
+  <en>DUMMY</en>
+</YouMonster_chatter_>
 <YouMonster_chatter_0>
 	<de>Nicht möglich!</de>
+	<en>Impossible!</en>
 </YouMonster_chatter_0>
 <YouMonster_chatter_1>
 	<de>Das glaube ich nicht!</de>
+	<en>I don't think so!</en>
 </YouMonster_chatter_1>
 <YouMonster_chatter_2>
 	<de>Nein, ich bin es!</de>
+	<en>No, I am!</en>
 </YouMonster_chatter_2>
 <YouMonster_chatter_3>
 	<de>[Weint]</de>
+	<en>[Cries]</en>
 </YouMonster_chatter_3>
 <YouMonster_chatter_4>
 	<de>Töte das Monster!</de>
+	<en>Kill the monster!</en>
 </YouMonster_chatter_4>
 <YouMonster_chatter_5>
 	<de>Na los tu es!</de>
+	<en>Do it!</en>
 </YouMonster_chatter_5>
 <YouMonster_chatter_6>
 	<de>Der traut sich doch niemals...</de>
+	<en>He won't do it...</en>
 </YouMonster_chatter_6>
 <YouMonster_chatter_7>
 	<de>Verrückt.</de>
+	<en>That's crazy.</en>
 </YouMonster_chatter_7>
 <YouMonster_chatter_8>
 	<de>[Starr vor entsetzen]</de>
+	<en>[Frozen in disbelief]</en>
 </YouMonster_chatter_8>
 <YouMonster_chatter_9>
 	<de>Was macht ein 20 Kilo schwerer Spatz auf einem Baum?</de>
+	<en>Why is there a 40 pounds sparrow on the tree?</en>
 </YouMonster_chatter_9>
 <YouMonster_chatter_10>
 	<de>Ein Spatz von 20 Kilo? Das muss ein Kapitalist sein!</de>
+	<en>A 40 pounds sparrow? He must be capitalist!</en>
 </YouMonster_chatter_10>
 
 <YouMonster_showdown_1>
@@ -399,8 +423,11 @@ Are you high?</en>
 </YouMonster_showdown_1>
 <YouMonster_showdown_2>
 	<de>[{Agent}: Hebt die Waffe und zielt auf {0}]</de>
+	<en>[{Agent}: Points a gun at {0}]</en>
 </YouMonster_showdown_2>
 <YouMonster_showdown_3>
 	<de>1: [schießen]
 2: [zögern]</de>
+	<en>1: [shoot]
+2: [hesitate]</en>
 </YouMonster_showdown_3>
