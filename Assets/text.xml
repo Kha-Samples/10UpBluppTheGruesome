@@ -9,6 +9,7 @@
 
 <Title>
 	<de>10Up: {Fischmensch}</de>
+	<en>10Up: {Fischmensch}</en>
 </Title>
 
 
@@ -56,47 +57,47 @@
 	<en>Repair</en>
 </ability_Repair>
 <ability_Use>
-	<de>Drück</de>
-	<en>Press</en>
+	<de>Benutzen</de>
+	<en>Use</en>
 </ability_Use>
 	
 <!-- misc -->
 <back>
-	<de>zurück</de>
-	<en>back</en>
+	<de>Zurück</de>
+	<en>Back</en>
 </back>
 <dawn>
 	<de>Zum nächsten Morgengrauen ...
 
-1: Weiter [Zug vom Agenten]
+1: Weiter [Zug des Agenten]
 2: Optionen</de>
 	<en>At next dawn ...
 
-1: Weiter [Agent's turn]
+1: Continue [Agent's turn]
 2: Options</en>
 </dawn>
 <dusk>
 	<de>Zum nächsten Abendrot ...
 
-1: Weiter [Zug vom Monster]
+1: Weiter [Zug des Monsters]
 2: Optionen</de>
 	<en>At next dusk ...
 
-1: Weiter [Monster's turn]
+1: Continue [Monster's turn]
 2: Options</en>
 </dusk>
 
 <!-- Elevator -->
 <Elevator>
 	<de>Aufzugseinheit des Stockwerks</de>
-	<en>floor's Elevator</en>
+	<en>Floor's Elevator</en>
 </Elevator>
 <Floor>
 	<de>Stockwerk</de>
 	<en>Floor</en>
 </Floor>
 <Floor_0>
-	<de>Luftgeschosss</de>
+	<de>Erdgeschoss</de>
 	<en>Ground floor</en>
 </Floor_0>
 	
@@ -144,12 +145,12 @@ Was machen wir jetzt?</de>
 what do we do now?</en>
 </computer_hello>
 <computer_show_users>
-	<de>Wer haddn dat Ding o'gschalt?</de>
-	<en>List recent users</en>
+	<de>Letzte Benutzer</de>
+	<en>Recent users</en>
 </computer_show_users>
 <computer_search>
-	<de>Suche nach sicherheitskritischen Geheiminformationen.</de>
-	<en>Search secret files. Only the most security compromising ones.</en>
+	<de>Suche Geheiminformationen.</de>
+	<en>Search secret files.</en>
 </computer_search>
 <computer_logout>
 	<de>Abmelden</de>
@@ -158,7 +159,7 @@ what do we do now?</en>
 </computer_logout>
 <computer_just_leave>
 	<de>[Einfach weggehen]</de>
-	<en>[just leave]</en>
+	<en>[Just leave]</en>
 </computer_just_leave>
 
 <bookshelf_actions>
@@ -176,39 +177,62 @@ what do we do now?</en>
 
 <!-- Menu -->
 <menu_how_to_play>
-	<de>{Title} ist ein rundenbasiertes Echzeit-Detektievspiel für zwei Spieler.
+	<de>{Title} ist ein rundenbasiertes Echzeit-Detektivspiel für zwei Spieler.
 
-Ein Spieler spielt {Fischmensch}, das tragische Opfer eines Experimentes.
-Nachts ist er unterwegs und sucht alle Teile der Dimensionskanone um in seine Heimat zu kommen (siehe 10Up: Interdimensional Liquids).
-[Tipp: Untersuche als {Fischmensch} Bücherschränke und Computer um hinweise zu finden, wie dieses Ziel zu erreichen ist.]
+Ein Spieler spielt {Fischmensch}, das tragische Opfer eines Experimentes. Ein normaler Mitarbeiter am Tag, sucht er Nachts alle Teile der Dimensionskanone um in seine Heimat zu kommen (siehe 10Up: Interdimensional Liquids).
 
-Der andere Spieler spielt {Agent}. In seiner Jugend war er selbst das Opfer von Experimenten (Siehe 10Up: Mountain Brew).
-Dennoch wurde er zu einem wertvollem Mitglied der 10Up Spezialeinheit (siehe 10Up).
-Nachdem er von den neuesten Experimenten des Professors erfahren hat (siehe 10Up: Unity) setzt er alles daran um andere von diesem Schicksal zu erlösen.
-[Tipp: Beobachte als {Agent} die anderen Mitarbeiter und die Umgebung genau, um hinweise zu finden, wer von ihnen das Opfer dieser Experimente ist.]
+[Tipp: Untersuche als {Fischmensch} Bücherschränke und Computer um Hinweise zu finden, wie dieses Ziel zu erreichen ist.]
 
-[WICHTIG: Für ein optimales Spielerlebnis spielt {Title} zu zweit und schaut euch nicht gegenseitig über die Schulter.]
+Der andere Spieler spielt {Agent}. In seiner Jugend war er selbst das Opfer von Experimenten (siehe 10Up: Mountain Brew), dennoch wurde er zu einem wertvollem Mitglied der 10Up Spezialeinheit (siehe 10Up). Nachdem er von den neuesten Experimenten des Professors erfahren hat (siehe 10Up: Unity), setzt er alles daran um das neueste Opfer von diesem Schicksal zu erlösen.
+
+[Tipp: Beobachte als {Agent} die anderen Mitarbeiter und die Umgebung genau, um Hinweise zu finden, wer von ihnen das gesuchte Opfer dieser Experimente ist.]
+
+[WICHTIG: Für ein optimales Spielerlebnis spielt {Title} zu zweit und schaut nicht auf den Monitor solange der andere Spieler aktiv ist.]
 
 1. OK
 2. Nicht OK
+3. [Spiele 10Up]
+4. [Spiele 10Up: Mountain Brew]
+5. [Spiele 10Up: Interdimensional Liquids]
+6. [Spiele Just an ordinary Day (10Up edition)]
+7. [Spiele 10Up: Unity]
+</de>
+	<en>{Title} is a turn-based real-time detective-thriller for two players.
+
+One player is {Fischmensch}, victim of a gruesome experiment. Being a normal worker at day, he searches for parts of an dimensional cannon at night in order to return to his home planet (see 10Up: Interdimensional Liquids).
+
+[Tip: As {Fischmensch}, investigate bookshelves and computers in order to find clues on how to reach that goal.]
+
+The other player plays as {Agent}. In his youth he was a vicitm of these experiments himself (see 10Up: Mountain Brew), but nevertheless became a valueable member of the 10up special unit (see 10Up). After hearing from the newest experiments (see 10Up: Unity) he is determined to put the newest victim to rest.
+
+[Tip: As {Agent} observe all workers and their surroundings in order to identify the victim.]
+
+[IMPORTANT: For the best experience play {Title} with another player, but do not look at the monitor during his / her turn.]
+
+1. OK
+2. Not OK
 3. [Play 10Up]
 4. [Play 10Up: Mountain Brew]
 5. [Play 10Up: Interdimensional Liquids]
 6. [Play Just an ordinary Day (10Up edition)]
 7. [Play 10Up: Unity]
-</de>
+</en>
 </menu_how_to_play>
 
 <!-- Intro -->
 <intro_1_Blub>
 	<de>Blub? [verwundert]</de>
+	<en>Blub? [confused]</en>
 </intro_1_Blub>
 <intro_2_Blub>
 	<de>Blub! [verärgert]</de>
+	<en>Blub! [angry]</en>
 </intro_2_Blub>
 <intro_3_Prof>
-	<de>Oh. Da ist wohl 'was schiefgelaufen.</de>
+	<de>Oh. Da ist wohl was schiefgelaufen.</de>
+	<en>Oh. Something went wrong there.</en>
 </intro_3_Prof>
 <intro_4_Prof>
-	<de>Zum glück hab ich jetzt {0} Wochen Urlaub ...</de>
+	<de>Zum Glück hab ich jetzt erstmal {0} Wochen Urlaub...</de>
+	<en>Luckily I'm on vacation for the next {0} weeks...</en>
 </intro_4_Prof>

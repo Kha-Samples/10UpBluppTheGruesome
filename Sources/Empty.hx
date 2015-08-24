@@ -495,6 +495,14 @@ class Empty extends Game {
 			g.drawImage(congrat, width / 2 - congrat.width / 2, height / 2 - congrat.height / 2);*/
 		case Game, PlayerSwitch:
 			Scene.the.render(g);
+			
+			if (Player.currentPlayer == monsterPlayer) {
+				// Night, make it dark
+				g.transformation = FastMatrix3.identity();
+				g.set_color(Color.fromBytes(0, 0, 0, 191));
+				g.fillRect(0, 0, width, height);
+			}
+			
 			/*g.transformation = FastMatrix3.identity();
 			g.color = Color.Black;
 			for (door in Level.the.doors) {
