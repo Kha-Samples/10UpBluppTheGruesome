@@ -440,6 +440,7 @@ class Empty extends Game {
 	
 	public function onDayBegin() : Void {
 		setMainPlayer(agentPlayer, agentSpawn);
+		RandomGuy.endNightForEverybody();
 		
 		// Spawn npcs
 		var npcSpawnsCopy : Array<Vector2> = npcSpawns.copy();
