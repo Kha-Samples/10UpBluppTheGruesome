@@ -1,7 +1,10 @@
 package sprites;
 
+import dialogue.Action;
+import dialogue.ActionType;
 import dialogue.Bla;
 import dialogue.BlaWithChoices;
+import dialogue.SpawnNpcDialog;
 import dialogue.StartDialogue;
 import kha.Color;
 import kha.graphics2.Graphics;
@@ -10,6 +13,7 @@ import kha.Loader;
 import kha.math.FastMatrix3;
 import kha.math.Random;
 import kha.math.Vector2;
+import kha.Rectangle;
 import kha2d.Animation;
 import kha2d.Sprite;
 import schedule.BlaTask;
@@ -54,6 +58,7 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 	
 	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool, customlook: Bool = false) {
 		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
+		collider = new Rectangle(-20, 0, width + 40, height);
 		isUseable = true;
 		Empty.the.interactiveSprites.push(this);
 		zzzzz = Loader.the.getImage("zzzzz");
@@ -282,6 +287,15 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 		}
 		else {
 			super.render(g);
+			#if debug
+			g.set_color( kha.Color.fromBytes(255,0,0) );
+			var rect = collisionRect();
+			g.drawRect( rect.x, rect.y, rect.width, rect.height );
+			g.color = Color.Black;
+			g.drawRect( x - collider.x, y - collider.y, width, height );
+			g.color = Color.fromBytes(0,255,0);
+			g.fillRect( x - 2, y - 2, 5, 5 );
+			#end
 		}
 	}
 	
@@ -295,18 +309,23 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 		{
 			var idUser : IdCardOwner = cast Player.current();
 			Empty.the.playerDlg.insert([
-				new Bla(Localization.getText(Keys_text.HELLO, [IdCard.Name + ', ${IdCard.Id}']), user, true)
-				, new Bla(Localization.getText(Keys_text.HELLO, [idUser.IdCard.Name]), this, true)
+				new Bla(Localization.getText(Keys_text.HELLO, [IdCard.Name + ', ${IdCard.Id}']), user, false)
+				, new Bla(Localization.getText(Keys_text.HELLO, [idUser.IdCard.Name]), this, false)
 				, new BlaWithChoices(Localization.getText(Keys_text.HOW_TO_HELP), this, [
 					[ /* Seltsames?*/ 
-						new Bla(Keys_text.STRANGE_NOTHING_ + Random.getUpTo(1), this, true)
+						new Bla(Keys_text.STRANGE_NOTHING_ + Random.getUpTo(1), this, false)
 					]
 					, [ /* tun gerade? */
 						new Bla(schedule.nextTwoTaskDescription(), this, true)
 					]
 					, [ /* YOU ARE THE MONSTER */
 						new StartDialogue(everybodyRunToPlayer.bind(this))
-						, new Bla(Keys_text.YOUMONSTER_REACTION_ + Random.getUpTo(6), this, true)
+						, new StartDialogue(function() { Empty.the.mode = Empty.Mode.PlayerSwitch; } )
+						, new SpawnNpcDialog([new Action(null, ActionType.FADE_TO_DUSK)])
+						, new Action(null, PAUSE)
+						, new Bla(Keys_text.YOUMONSTER_REACTION_ + Random.getUpTo(6), this, false)
+						, new SpawnNpcDialog([new StartDialogue(Dialogues.showdownChatter.bind(this))])
+						, new Action(null, PAUSE)
 						, new BlaWithChoices(Keys_text.YOUMONSTER_SHOWDOWN, null, [
 							[new StartDialogue(Dialogues.showdownShoot.bind(this))]
 							, [new StartDialogue(Dialogues.showdownHesitate.bind(this))]
