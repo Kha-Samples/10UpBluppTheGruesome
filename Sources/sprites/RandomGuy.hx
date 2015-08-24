@@ -72,6 +72,12 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		
 		if (name == "Rebecca") {
 			image = Loader.the.getImage("nullachtsechzehnfrau");
+			w = 820 / 10;
+			h = 402 / 3;
+			standLeft = Animation.create(10);
+			standRight = Animation.create(0);
+			walkLeft = Animation.createRange(11, 18, 4);
+			walkRight = Animation.createRange(1, 8, 4);
 		}
 		else {
 			var value = Random.getUpTo(2);

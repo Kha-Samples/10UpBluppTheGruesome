@@ -404,6 +404,7 @@
 			"file": "nullachtsechzehnfrau.png",
 			"name": "nullachtsechzehnfrau",
 			"type": "image",
+			"scale": 2,
 			"background": {
 				"red": 255,
 				"green": 174,
