@@ -42,6 +42,7 @@ import sprites.Door;
 import sprites.Fishman;
 import sprites.IdSystem;
 import sprites.InteractiveSprite;
+import sprites.Michael;
 import sprites.Player;
 import sprites.RandomGuy;
 
@@ -277,9 +278,17 @@ class Empty extends Game {
 			guy.y = pos.y;
 			Scene.the.addOther(guy); } );
 		
-		setMainPlayer(agentPlayer, agentSpawn);
-		// TODO: simulate first day
+		var michael = new Michael(monsterPlayer, interactiveSprites);
+		var pos : Vector2 = npcSpawns[Random.getIn(0, npcSpawns.length - 1)];
+		michael.x = pos.x;
+		michael.y = pos.y;
+		Scene.the.addOther(michael);
 		
+		RandomGuy.createAllTasks();
+		RandomGuy.endDayForEverybody();
+
+		setMainPlayer(agentPlayer, agentSpawn);
+		// TODO: simulate first day		
 		Configuration.setScreen(this);
 		
 		nextDayChangeTime = -1;

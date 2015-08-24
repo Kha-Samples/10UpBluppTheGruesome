@@ -18,4 +18,8 @@ class Task {
 	public function isDone(): Bool {
 		return done;
 	}
+	
+	public function doImmediately(): Void {
+		
+	}
 }

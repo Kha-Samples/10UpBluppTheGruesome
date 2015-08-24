@@ -8,7 +8,6 @@ import sprites.Coffee;
 
 class CoffeeTask extends Task {
 	private var taskScheduled: Bool;
-	private var computer: Computer;
 	
 	public function new(sprite: Sprite, coffee: Coffee) {
 		super(sprite);
