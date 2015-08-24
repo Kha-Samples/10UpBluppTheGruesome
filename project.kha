@@ -323,6 +323,106 @@
 			"file": "coffee.png",
 			"name": "coffee",
 			"type": "image"
+		},
+		{
+			"file": "gasflow.png",
+			"name": "gasflow",
+			"type": "image"
+		},
+		{
+			"file": "lavaflow.png",
+			"name": "lavaflow",
+			"type": "image"
+		},
+		{
+			"file": "Martin/Buerofrau - Kopie.png",
+			"name": "Martin/Buerofrau - Kopie",
+			"type": "image"
+		},
+		{
+			"file": "Martin/Buerofrau.png",
+			"name": "Martin/Buerofrau",
+			"type": "image"
+		},
+		{
+			"file": "Martin/fishwork-kpaint-a.png",
+			"name": "Martin/fishwork-kpaint-a",
+			"type": "image"
+		},
+		{
+			"file": "Martin/fishwork-kpaint.png",
+			"name": "Martin/fishwork-kpaint",
+			"type": "image"
+		},
+		{
+			"file": "Martin/fishwork.png",
+			"name": "Martin/fishwork",
+			"type": "image"
+		},
+		{
+			"file": "Martin/monster.png",
+			"name": "Martin/monster",
+			"type": "image"
+		},
+		{
+			"file": "Martin/monster2.png",
+			"name": "Martin/monster2",
+			"type": "image"
+		},
+		{
+			"file": "Martin/monster3.png",
+			"name": "Martin/monster3",
+			"type": "image"
+		},
+		{
+			"file": "noflow.png",
+			"name": "noflow",
+			"type": "image"
+		},
+		{
+			"file": "nullachtsechzehn-gruen.png",
+			"name": "nullachtsechzehn-gruen",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "nullachtsechzehnfrau.png",
+			"name": "nullachtsechzehnfrau",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "nullachtsechzehnmann-rot.png",
+			"name": "nullachtsechzehnmann-rot",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "timecannon.png",
+			"name": "timecannon",
+			"type": "image"
+		},
+		{
+			"file": "waterflow.png",
+			"name": "waterflow",
+			"type": "image"
+		},
+		{
+			"file": "wooddoor.png",
+			"name": "wooddoor",
+			"type": "image"
 		}
 	],
 	"rooms": [
@@ -364,7 +464,7 @@
 				"7",
 				"8",
 				"9",
-    		    "bookshelf",
+				"bookshelf",
 				"elevator",
 				"Liberation Sans20.kravur",
 				"arial34.kravur",
@@ -374,11 +474,14 @@
 				"floorlevel",
 				"door",
 				"zzzzz",
-		        "coffee",
+				"coffee",
 				"broetchen1",
 				"broetchen2",
 				"rowdy",
-				"mechanic"
+				"mechanic",
+				"nullachtsechzehn-gruen",
+				"nullachtsechzehnmann-rot",
+				"nullachtsechzehnfrau"
 			]
 		}
 	]
