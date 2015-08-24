@@ -280,13 +280,13 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 			if (image != null && visible) {
 				g.color = Color.White;
 				var angle = Math.PI / 2;
-				var x = this.x + 80;
-				var y = this.y + 80;
+				var x = this.x + 100;
+				var y = this.y + 60;
 				lookLeft = true;
 				if (angle != 0) g.pushTransformation(g.transformation.multmat(FastMatrix3.translation(x + originX, y + originY)).multmat(FastMatrix3.rotation(angle)).multmat(FastMatrix3.translation(-x - originX, -y - originY)));
 				g.drawScaledSubImage(image, Std.int(animation.get() * w) % image.width, Math.floor(animation.get() * w / image.width) * h, w, h, Math.round(x - collider.x * scaleX), Math.round(y - collider.y * scaleY), width, height);
 				if (angle != 0) g.popTransformation();
-				g.drawSubImage(zzzzz, x + 40, y + 40, zzzzz.width * zzzzzAnim.getIndex() / 3, 0, zzzzz.width / 3, zzzzz.height);
+				g.drawSubImage(zzzzz, x - 40, y - 20, zzzzz.width * zzzzzAnim.getIndex() / 3, 0, zzzzz.width / 3, zzzzz.height);
 			}
 		}
 		else {
