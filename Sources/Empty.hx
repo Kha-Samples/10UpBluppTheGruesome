@@ -452,17 +452,7 @@ class Empty extends Game {
 			{
 				if (Scheduler.time() >= nextDayChangeTime)
 				{
-					trace ('change day!');
-					nextDayChangeTime = Math.NaN;
-					mode = PlayerSwitch;
-					if (Player.current() == monsterPlayer) {
-						Dialogues.dawn();
-						--dayTimesLeft;
-					}
-					else {
-						Dialogues.dusk();
-						--dayTimesLeft;
-					}
+					nextPlayer();
 				}
 				else
 				{
@@ -486,6 +476,20 @@ class Empty extends Game {
 		}
 		
 		Scene.the.update();
+	}
+	
+	function nextPlayer(): Void {
+		trace ('change day!');
+		nextDayChangeTime = Math.NaN;
+		mode = PlayerSwitch;
+		if (Player.current() == monsterPlayer) {
+			Dialogues.dawn();
+			--dayTimesLeft;
+		}
+		else {
+			Dialogues.dusk();
+			--dayTimesLeft;
+		}
 	}
 	
 	public function onDayBegin() : Void {
@@ -703,6 +707,9 @@ class Empty extends Game {
 						Player.current().left = false;
 					case 'q':
 						Player.current().attack();
+					case 'n':
+						// TODO: FIXME! IMPORTANT: REMOVE FOR RELEASE VERSION!!!!!11!11elf
+						nextPlayer();
 				}
 			default:
 				

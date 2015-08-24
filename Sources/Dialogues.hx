@@ -101,6 +101,10 @@ class Dialogues {
 		]);
 	}
 	
+	public static function showdownChatter(accused: RandomGuy) {
+		
+	}
+	
 	public static function showdownShoot(accused: RandomGuy) {
 		
 	}
