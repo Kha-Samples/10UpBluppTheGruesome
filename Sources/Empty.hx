@@ -348,52 +348,21 @@ class Empty extends Game {
 	
 	private static function isCollidable(tilenumber: Int): Bool {
 		switch (tilenumber) {
-		/*case 1: return true;
-		case 6: return true;
-		case 7: return true;
-		case 8: return true;
-		case 26: return true;
-		case 33: return true;
-		case 39: return true;
-		case 48: return true;
-		case 49: return true;
-		case 50: return true;
-		case 53: return true;
-		case 56: return true;
-		case 60: return true;
-		case 61: return true;
-		case 62: return true;*/
-		case 6: return true;
-		
+		case 464: return true;
+		case 465: return true;
+		case 466: return true;
+		case 467: return true;
+		case 468: return true;
+		case 469: return true;
+		case 480: return true;
 		case 481: return true;
 		case 482: return true;
-		
-		case 163: return true;
-		case 179: return true;
-		
-		case 64: return true;
-		case 65: return true;
-		
-		case 34: return true;
-		case 39: return true;
-		case 50: return true;
-		case 55: return true;
-		case 66: return true;
-		case 71: return true;
-		/*case 63: return true;
-		case 64: return true;
-		case 65: return true;
-		case 66: return true;
-		case 67: return true;
-		case 68: return true;*/
-		/*case 70: return true;
-		case 74: return true;
-		case 75: return true;
-		case 76: return true;
-		case 77: return true;
-		case 84: return true;
-		case 86: return true;
-		case 87: return true;*/
+		case 483: return true;
+		case 484: return true;
+		case 485: return true;
+		case 496: return true;
+		case 501: return true;
+		case 512: return true;
 		default:
 			return false;
 		}
