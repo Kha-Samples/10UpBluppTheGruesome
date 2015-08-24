@@ -27,6 +27,7 @@ class RandomGuy extends Sprite implements IdCardOwner {
 	private var stuff: Array<InteractiveSprite>;
 	
 	private static var names = ["Ingo", "Christian", "Robert", "Björn", "Johannes", "Rebecca", "Stephen", "Alvar", "Michael", "Linh", "Roger", "Roman", "Max", "Paul", "Tobias", "Henno", "Niko", "Kai", "Julian"];
+	private static var allguys = new Array<RandomGuy>();
 	
 	public function new(monster: Sprite, stuff: Array<InteractiveSprite>) {
 		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
@@ -50,6 +51,12 @@ class RandomGuy extends Sprite implements IdCardOwner {
 		IdCard = new IdCard(name);
 		
 		schedule = new schedule.Schedule();
+		createTasks();
+		
+		allguys.push(this);
+	}
+	
+	private function createTasks(): Void {
 		while (schedule.length < 20) {
 			schedule.add(new WaitTask(this, Random.getUpTo(30)));
 			createRandomTask();
