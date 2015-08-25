@@ -211,20 +211,12 @@ class Empty extends Game {
 		mode = Intro;
 		Configuration.setScreen(this);
 		
-		var drg = new Dialogue();
-		drg.insert([
+		playerDlg.insert([
 			new Bla(Localization.getText(Keys_text.INTRO_1_BLUB), monster, false),
 			new Bla(Localization.getText(Keys_text.INTRO_2_BLUB), monster, false),
 			new Bla(Localization.getText(Keys_text.INTRO_3_PROF), professor, false),
-			new Bla(Localization.getText(Keys_text.INTRO_4_PROF), professor, false),
-			new StartDialogue(function() {
-				Empty.the.mode = PlayerSwitch;
-				kha.Configuration.setScreen(new kha.LoadingScreen());
-				Empty.the.renderOverlay = true;
-				Loader.the.loadRoom("testlevel", Empty.the.initLevel);
-			})
+			new Bla(Localization.getText(Keys_text.INTRO_4_PROF), professor, false)
 		]);
-		Empty.the.npcDlgs.push(drg);
 	}
 	
 	public function startGame(spriteCount: Int, sprites: Array<Int>) {
@@ -434,6 +426,16 @@ class Empty extends Game {
 				}
 			}
 		}
+		else if (mode == Intro)
+		{
+			if (playerDlg.isEmpty())
+			{
+				Empty.the.mode = PlayerSwitch;
+				kha.Configuration.setScreen(new kha.LoadingScreen());
+				Empty.the.renderOverlay = true;
+				Loader.the.loadRoom("testlevel", Empty.the.initLevel);
+			}
+		}
 		else if (mode == FischmanWins) {
 			fancyMonsterAnimation -= deltaTime / 10;
 		}
@@ -467,6 +469,11 @@ class Empty extends Game {
 		else {
 			Dialogues.dusk();
 			--dayTimesLeft;
+		}
+		if (dayTimesLeft < 0)
+		{
+			mode = ProfessorWins;
+			// TODO: spawn professor with fancy extro
 		}
 	}
 	
@@ -762,6 +769,13 @@ class Empty extends Game {
 					overlayColor = Color.fromBytes(0, 0, 0, 0);
 					Dialogues.startGame();
 				}
+			}
+		case Intro:
+			switch (key) {
+			case Key.ESC:
+				playerDlg.cancel();
+			default:
+				if (char == " ") BlaBox.boxes.remove(playerDlg.blaBox);
 			}
 		default:
 		}

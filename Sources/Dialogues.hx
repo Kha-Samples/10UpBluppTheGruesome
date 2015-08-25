@@ -6,6 +6,7 @@ import haxe.macro.Expr.Var;
 import kha.Color;
 import kha.Loader;
 import kha.math.Random;
+import kha.math.Vector2;
 import kha2d.Scene;
 import kha2d.Sprite;
 import sprites.IdSystem;
@@ -130,11 +131,45 @@ class Dialogues {
 		]).execute(null);
 	}
 	
+	static function spawnMonster(): Void {
+		var monsterGuy = RandomGuy.monsterGuy();
+		Empty.the.monsterPlayer.x = monsterGuy.x;
+		Empty.the.monsterPlayer.y = monsterGuy.y + monsterGuy.collisionRect().height - Empty.the.monsterPlayer.collisionRect().height - 2; // -2, just to be sure
+		Scene.the.removeOther(monsterGuy);
+		Scene.the.addEnemy(Empty.the.monsterPlayer);
+		Empty.the.monsterPlayer.visible = true;
+	}
+	
 	public static function showdownShoot(accused: RandomGuy) {
-		
+		spawnMonster();
+		if (accused.youarethemonster)
+		{
+			Empty.the.mode = Empty.Mode.AgentWins;
+			Empty.the.monsterPlayer.health = 0;
+			// TODO: BLOOD! we need BLOOD!!!!
+		}
+		else
+		{
+			accused.sleeping = true; // TODO: KILL HIM!
+			Empty.the.mode = Empty.Mode.ProfessorWins;
+		}
 	}
 	
 	public static function showdownHesitate(accused: RandomGuy) {
-		
+		spawnMonster();
+		if (accused.youarethemonster)
+		{
+			Empty.the.mode = Empty.Mode.FischmanWins;
+			Empty.the.agentPlayer.health = -77;
+			// TODO: BLOOD! we need BLOOD!!!!s
+		}
+		else
+		{
+			Empty.the.mode = Empty.Mode.ProfessorWins;
+			for (guy in RandomGuy.allguys) {
+				guy.sleeping = true; // TODO: KILL HIM!
+			}
+			// TODO: spawn professor!
+		}
 	}
 }
