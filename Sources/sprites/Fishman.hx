@@ -1,8 +1,10 @@
 package sprites;
 
+import kha.Color;
 import kha.graphics2.Graphics;
 import kha.Image;
 import kha.Loader;
+import kha.math.FastMatrix3;
 import kha.Rectangle;
 import kha2d.Animation;
 import kha2d.Direction;
@@ -68,7 +70,14 @@ class Fishman extends Player implements IdCardOwner {
 			--attacking;
 		}
 		else {
-			super.render(g);
+			if (image != null && visible) {
+			g.color = Color.fromFloats(1, 1, 1);
+			g.opacity = Math.max(0, Empty.the.fancyMonsterAnimation);
+			if (angle != 0) g.pushTransformation(g.transformation.multmat(FastMatrix3.translation(x + originX, y + originY)).multmat(FastMatrix3.rotation(angle)).multmat(FastMatrix3.translation(-x - originX, -y - originY)));
+			g.drawScaledSubImage(image, Std.int(animation.get() * w) % image.width, Math.floor(animation.get() * w / image.width) * h, w, h, Math.round(x - collider.x * scaleX), Math.round(y - collider.y * scaleY), width, height);
+			if (angle != 0) g.popTransformation();
+			g.opacity = 1;
+		}
 		}
 	}
 }

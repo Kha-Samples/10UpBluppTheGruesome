@@ -434,6 +434,9 @@ class Empty extends Game {
 				}
 			}
 		}
+		else if (mode == FischmanWins) {
+			fancyMonsterAnimation -= deltaTime / 10;
+		}
 		
 		var index = npcDlgs.length - 1;
 		while (index >= 0)
@@ -512,6 +515,7 @@ class Empty extends Game {
 		}
 	}
 	
+	public var fancyMonsterAnimation : Float = 1;
 	public override function render(frame: Framebuffer) {
 		if (title == null && Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70) != null) {
 			title = Image.createRenderTarget(512, 512);
@@ -601,6 +605,11 @@ class Empty extends Game {
 			g.font = font;
 			Scene.the.render(g);
 			g.transformation = FastMatrix3.identity();
+			
+			// Night, make it dark
+			g.set_color(Color.fromBytes(0, 0, 0, 191));
+			g.fillRect(0, 0, width, height);
+			
 			g.color = Color.fromBytes(0, 0, 0, 180);
 			g.fillRect(0, 0, width, 200);
 			g.font = Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70);
@@ -631,6 +640,7 @@ class Empty extends Game {
 			box.render(g);
 		}
 		
+		g.font = font;
 		Inventory.paint(g);
 		
 		g.end();
@@ -641,7 +651,7 @@ class Empty extends Game {
 	}
 	
 	private function axisListener(axis: Int, value: Float): Void {
-		switch (axis) {
+		/*switch (axis) {
 			case 0:
 				if (value < -0.2) {
 					Player.current().left = true;
@@ -662,7 +672,7 @@ class Empty extends Game {
 				else {
 					Player.current().up = false;
 				}
-		}
+		}*/
 	}
 	
 	private var gamepadUseAvailable = true;
@@ -711,9 +721,6 @@ class Empty extends Game {
 						Player.current().left = false;
 					case 'q':
 						Player.current().attack();
-					case 'n':
-						// TODO: FIXME! IMPORTANT: REMOVE FOR RELEASE VERSION!!!!!11!11elf
-						nextPlayer();
 				}
 			default:
 				
