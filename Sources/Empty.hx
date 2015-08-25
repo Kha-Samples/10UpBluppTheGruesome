@@ -728,6 +728,15 @@ class Empty extends Game {
 						Player.current().left = false;
 					case 'q':
 						Player.current().attack();
+				#if debug
+					case 'p':
+						mode = ProfessorWins;
+					case 'm':
+						mode = FischmanWins;
+					case 'n':
+						// TODO: FIXME! IMPORTANT: REMOVE FOR RELEASE VERSION!!!!!11!11elf
+						nextPlayer();
+				#end
 				}
 			default:
 				
