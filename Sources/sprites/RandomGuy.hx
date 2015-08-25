@@ -133,6 +133,7 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 		}
 		return null;
 	}
+	
 	public static function monsterPosition(): Vector2 {
 		for (guy in allguys) {
 			if (guy.youarethemonster) {
@@ -140,6 +141,15 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 			}
 		}
 		return new Vector2();
+	}
+	
+	public static function monsterId(): IdCard {
+		for (guy in allguys) {
+			if (guy.youarethemonster) {
+				return guy.IdCard;
+			}
+		}
+		return null;
 	}
 	
 	public static function monsterName(): String {
