@@ -333,7 +333,7 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 					, [ /* YOU ARE THE MONSTER */
 						new StartDialogue(everybodyRunToPlayer.bind(this))
 						, new StartDialogue(function() { 
-							//Empty.the.mode = Empty.Mode.PlayerSwitch;
+							Empty.the.showdown = true;
 							Empty.the.renderOverlay = true;
 							Empty.the.overlayColor = Color.fromBytes(0, 0, 0, 0);
 						})

@@ -90,6 +90,7 @@ class Empty extends Game {
 	public var gotTC4 : Bool = false;
 	public var gotPl1 : Bool = false;
 	public var gotan2 : Bool = false;
+	public var showdown : Bool = false;
 	
 	// intro
 	private var professor: Professor;
@@ -415,14 +416,11 @@ class Empty extends Game {
 					// TODO: Stop other actions?
 				}
 			}
-			else
+			if (!showdown)
 			{
 				if (Scheduler.time() >= nextDayChangeTime)
 				{
 					nextPlayer();
-				}
-				else
-				{
 				}
 			}
 		}
@@ -460,6 +458,7 @@ class Empty extends Game {
 	
 	function nextPlayer(): Void {
 		trace ('change day!');
+		playerDlg.cancel();
 		nextDayChangeTime = Math.NaN;
 		mode = PlayerSwitch;
 		if (Player.current() == monsterPlayer) {
@@ -595,8 +594,10 @@ class Empty extends Game {
 			g.font = font;
 			var b = Math.round(100 + 125 * Math.pow(Math.sin(0.5 * kha.Sys.getTime()),2));
 			g.color = Color.fromBytes(b, b, b);
-			var str = Localization.getText(Keys_text.CLICK_TO_START);
-			g.drawString(str, 0.5 * (width - font.stringWidth(str)), 650);
+			if (playerDlg.isEmpty()) {
+				var str = Localization.getText(Keys_text.CLICK_TO_START);
+				g.drawString(str, 0.5 * (width - font.stringWidth(str)), 650);
+			}
 		case Loading:
 		case AgentWins:
 			g.font = font;

@@ -75,9 +75,19 @@ class Dialogues {
 	}
 	static function howToPlay() {
 		Empty.the.playerDlg.insert([
-			new BlaWithChoices(Keys_text.MENU_HOW_TO_PLAY, null, [
+			new BlaWithChoices(Keys_text.MENU_HOW_TO_PLAY_BAD_VERSION, null, [
 				[] //  OK
-				, [] // Nicht OK
+				, [ // Nicht OK
+					new BlaWithChoices(Keys_text.MENU_HOW_TO_PLAY_GOOD_VERSION, null, [
+						[] //  OK
+						, [] // Sehr Gut!
+						, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/")), new StartDialogue(howToPlay)]
+						, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/mountainbrew/")), new StartDialogue(howToPlay)]
+						, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/interdimensionalliquids/")), new StartDialogue(howToPlay)]
+						, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/justanordinaryday/")), new StartDialogue(howToPlay)]
+						, [new StartDialogue(Loader.the.loadURL.bind("http://10upunity.robdangero.us/")), new StartDialogue(howToPlay)]
+					])
+				]
 				, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/")), new StartDialogue(howToPlay)]
 				, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/mountainbrew/")), new StartDialogue(howToPlay)]
 				, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/interdimensionalliquids/")), new StartDialogue(howToPlay)]
