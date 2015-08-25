@@ -437,7 +437,7 @@ class Empty extends Game {
 			}
 		}
 		else if (mode == FischmanWins) {
-			fancyMonsterAnimation -= deltaTime / 10;
+			fancyMonsterAnimation -= deltaTime / 7;
 		}
 		
 		var index = npcDlgs.length - 1;
