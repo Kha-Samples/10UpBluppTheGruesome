@@ -109,7 +109,7 @@ class Empty extends Game {
 	var nextDayChangeTime: Float = Math.NaN;
 	
 	public function new() {
-		super("10Up");
+		super("10Up: Blupp the Gruesome");
 		the = this;
 		lastTime = Scheduler.time();
 	}
