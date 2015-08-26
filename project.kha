@@ -106,7 +106,12 @@
 		{
 			"file": "sprites/10up-logo.png",
 			"name": "10up-logo",
-			"type": "image"
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
 			"file": "sprites/computer.png",
