@@ -243,16 +243,16 @@ The other player plays as {Agent}. In his youth he was a vicitm of these experim
 </en>
 </menu_how_to_play_bad_version>
 <menu_how_to_play_good_version>
-	<de>{Title} ist ein rundenbasiertes Echzeit-Detektievspiel für zwei Spieler.
+	<de>{Title} ist ein rundenbasiertes Echzeit-Detektivspiel für zwei Spieler.
 
 Ein Spieler spielt {Fischmensch}, das tragische Opfer eines Experimentes.
 Nachts ist er unterwegs und sucht alle Teile der Dimensionskanone um in seine Heimat zu kommen (siehe 10Up: Interdimensional Liquids).
-[Tipp: Untersuche als {Fischmensch} Bücherschränke und Computer um hinweise zu finden, wie dieses Ziel zu erreichen ist.]
+[Tipp: Untersuche als {Fischmensch} Bücherschränke und Computer um Hinweise zu finden, wie dieses Ziel zu erreichen ist.]
 
 Der andere Spieler spielt {Agent}. In seiner Jugend war er selbst das Opfer von Experimenten (Siehe 10Up: Mountain Brew).
 Dennoch wurde er zu einem wertvollem Mitglied der 10Up Spezialeinheit (siehe 10Up).
 Nachdem er von den neuesten Experimenten des Professors erfahren hat (siehe 10Up: Unity) setzt er alles daran um andere von diesem Schicksal zu erlösen.
-[Tipp: Beobachte als {Agent} die anderen Mitarbeiter und die Umgebung genau, um hinweise zu finden, wer von ihnen das Opfer dieser Experimente ist.]
+[Tipp: Beobachte als {Agent} die anderen Mitarbeiter und die Umgebung genau, um Hinweise zu finden, wer von ihnen das Opfer dieser Experimente ist.]
 
 [WICHTIG: Für ein optimales Spielerlebnis spielt {Title} zu zweit und schaut euch nicht gegenseitig über die Schulter.]
 
@@ -264,6 +264,26 @@ Nachdem er von den neuesten Experimenten des Professors erfahren hat (siehe 10Up
 6. [Play Just an ordinary Day (10Up edition)]
 7. [Play 10Up: Unity]
 </de>
+	<en>{Title} is a turn-based real-time detective-thriller for two players.
+
+One player is {Fischmensch}, victim of a gruesome experiment. Being a normal worker at day, he searches for parts of an dimensional cannon at night in order to return to his home planet (see 10Up: Interdimensional Liquids).
+
+[Tip: As {Fischmensch}, investigate bookshelves and computers in order to find clues on how to reach that goal.]
+
+The other player plays as {Agent}. In his youth he was a vicitm of these experiments himself (see 10Up: Mountain Brew), but nevertheless became a valueable member of the 10up special unit (see 10Up). After hearing from the newest experiments (see 10Up: Unity) he is determined to put the newest victim to rest.
+
+[Tip: As {Agent} observe all workers and their surroundings in order to identify the victim.]
+
+[IMPORTANT: For the best experience play {Title} with another player, but do not look at the monitor during his / her turn.]
+
+1. OK
+2. Not OK
+3. [Play 10Up]
+4. [Play 10Up: Mountain Brew]
+5. [Play 10Up: Interdimensional Liquids]
+6. [Play Just an ordinary Day (10Up edition)]
+7. [Play 10Up: Unity]
+</en>
 </menu_how_to_play_good_version>
 
 <!-- Intro -->
