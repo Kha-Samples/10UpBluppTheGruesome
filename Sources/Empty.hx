@@ -124,11 +124,11 @@ class Empty extends Game {
 	function initFirst() {
 		backbuffer = Image.createRenderTarget(1024, 768);
 		
-		font = Loader.the.loadFont("Arial", new FontStyle(false, false, false), 12);
+		font = Loader.the.loadFont("LiberationSans", new FontStyle(false, false, false), 12);
 		
 		Configuration.setScreen(this);
 		
-		font = Loader.the.loadFont("arial", FontStyle.Default, 34);
+		font = Loader.the.loadFont("LiberationSans", FontStyle.Default, 34);
 		Localization.init("localizations");
 		
 		Cfg.init();
@@ -159,7 +159,7 @@ class Empty extends Game {
 		mode = StartScreen;
 		
 		Localization.language = Cfg.language;
-		Localization.buildKeys("../Assets/text.xml","text");
+		Localization.buildKeys("../Assets/data/text.xml","text");
 		
 		var logo = new Sprite( Loader.the.getImage( "10up-logo" ) );
 		logo.x = 0.5 * width - 0.5 * logo.width;
