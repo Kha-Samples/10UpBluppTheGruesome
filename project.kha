@@ -1,7 +1,7 @@
 {
 	"format": 3,
 	"game": {
-		"name": "Empty",
+		"name": "10up - Blupp the Gruesome",
 		"width": 1024,
 		"height": 768
 	},
@@ -10,40 +10,7 @@
 	],
 	"assets": [
 		{
-			"file": "Backfrau.png",
-			"name": "Backfrau",
-			"type": "image",
-			"scale": 2,
-			"background": {
-				"red": 255,
-				"green": 174,
-				"blue": 201
-			}
-		},
-		{
-			"file": "boss.png",
-			"name": "boss",
-			"type": "image",
-			"scale": 2,
-			"background": {
-				"red": 255,
-				"green": 174,
-				"blue": 201
-			}
-		},
-		{
-			"file": "boss_hurt.png",
-			"name": "boss_hurt",
-			"type": "image",
-			"scale": 2,
-			"background": {
-				"red": 255,
-				"green": 174,
-				"blue": 201
-			}
-		},
-		{
-			"file": "fishy.png",
+			"file": "sprites/fishy.png",
 			"name": "fishy",
 			"type": "image",
 			"background": {
@@ -53,7 +20,7 @@
 			}
 		},
 		{
-			"file": "agent.png",
+			"file": "sprites/agent.png",
 			"name": "agent",
 			"type": "image",
 			"scale": 2,
@@ -64,7 +31,7 @@
 			}
 		},
 		{
-			"file": "mechanic.png",
+			"file": "sprites/mechanic.png",
 			"name": "mechanic",
 			"type": "image",
 			"scale": 2,
@@ -75,7 +42,7 @@
 			}
 		},
 		{
-			"file": "nullachtsechzehnmann.png",
+			"file": "sprites/nullachtsechzehnmann.png",
 			"name": "nullachtsechzehnmann",
 			"type": "image",
 			"background": {
@@ -85,18 +52,7 @@
 			}
 		},
 		{
-			"file": "old_boss.png",
-			"name": "old_boss",
-			"type": "image",
-			"scale": 2,
-			"background": {
-				"red": 255,
-				"green": 174,
-				"blue": 201
-			}
-		},
-		{
-			"file": "professor.png",
+			"file": "sprites/professor.png",
 			"name": "professor",
 			"type": "image",
 			"scale": 1,
@@ -107,7 +63,7 @@
 			}
 		},
 		{
-			"file": "rowdy.png",
+			"file": "sprites/rowdy.png",
 			"name": "rowdy",
 			"type": "image",
 			"scale": 2,
@@ -118,97 +74,27 @@
 			}
 		},
 		{
-			"file": "testlevel.map",
+			"file": "data/testlevel.map",
 			"name": "testlevel.map",
 			"type": "blob"
 		},
 		{
-			"file": "tileset.png",
+			"file": "sprites/tileset.png",
 			"name": "tileset",
 			"type": "image"
 		},
 		{
-			"file": "localizations.xml",
+			"file": "data/localizations.xml",
 			"name": "localizations",
 			"type": "blob"
 		},
 		{
-			"file": "text.xml",
+			"file": "data/text.xml",
 			"name": "text",
 			"type": "blob"
 		},
 		{
-			"file": "localizations.xml",
-			"name": "localizations.xml",
-			"type": "blob"
-		},
-		{
-			"file": "text.xml",
-			"name": "text.xml",
-			"type": "blob"
-		},
-		{
-			"file": "wache.png",
-			"name": "wache",
-			"type": "image"
-		},
-		{
-			"file": "ZornigeFrau.png",
-			"name": "ZornigeFrau",
-			"type": "image"
-		},
-		{
-			"file": "0.png",
-			"name": "0",
-			"type": "image"
-		},
-		{
-			"file": "1.png",
-			"name": "1",
-			"type": "image"
-		},
-		{
-			"file": "2.png",
-			"name": "2",
-			"type": "image"
-		},
-		{
-			"file": "3.png",
-			"name": "3",
-			"type": "image"
-		},
-		{
-			"file": "4.png",
-			"name": "4",
-			"type": "image"
-		},
-		{
-			"file": "5.png",
-			"name": "5",
-			"type": "image"
-		},
-		{
-			"file": "6.png",
-			"name": "6",
-			"type": "image"
-		},
-		{
-			"file": "7.png",
-			"name": "7",
-			"type": "image"
-		},
-		{
-			"file": "8.png",
-			"name": "8",
-			"type": "image"
-		},
-		{
-			"file": "9.png",
-			"name": "9",
-			"type": "image"
-		},
-		{
-			"file": "elevator.png",
+			"file": "sprites/elevator.png",
 			"name": "elevator",
 			"type": "image",
 			"background": {
@@ -218,28 +104,17 @@
 			}
 		},
 		{
-			"file": "Arial.ttf",
-			"name": "Arial",
-			"type": "font",
-			"size": "12"
-		},
-		{
-			"file": "10up-logo.png",
+			"file": "sprites/10up-logo.png",
 			"name": "10up-logo",
-			"type": "image"
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
 		},
 		{
-			"file": "Liberation Sans20.kravur",
-			"name": "Liberation Sans20.kravur",
-			"type": "blob"
-		},
-		{
-			"file": "arial34.kravur",
-			"name": "arial34.kravur",
-			"type": "blob"
-		},
-		{
-			"file": "computer.png",
+			"file": "sprites/computer.png",
 			"name": "computer",
 			"type": "image",
 			"background": {
@@ -249,7 +124,7 @@
 			}
 		},
 		{
-			"file": "door.png",
+			"file": "sprites/door.png",
 			"name": "door",
 			"type": "image",
 			"scale": 2,
@@ -260,7 +135,7 @@
 			}
 		},
 		{
-			"file": "wooddoor.png",
+			"file": "sprites/wooddoor.png",
 			"name": "wooddoor",
 			"type": "image",
 			"scale": 2,
@@ -271,17 +146,7 @@
 			}
 		},
 		{
-			"file": "elevatorbuttons.png",
-			"name": "elevatorbuttons",
-			"type": "image",
-			"background": {
-				"red": 255,
-				"green": 174,
-				"blue": 201
-			}
-		},
-		{
-			"file": "floorlevel.png",
+			"file": "sprites/floorlevel.png",
 			"name": "floorlevel",
 			"type": "image",
 			"background": {
@@ -291,7 +156,7 @@
 			}
 		},
 		{
-			"file": "zzzzz.png",
+			"file": "sprites/zzzzz.png",
 			"name": "zzzzz",
 			"type": "image",
 			"scale": 2,
@@ -302,7 +167,7 @@
 			}
 		},
 		{
-			"file": "fishy_attack.png",
+			"file": "sprites/fishy_attack.png",
 			"name": "fishy_attack",
 			"type": "image",
 			"background": {
@@ -312,17 +177,7 @@
 			}
 		},
 		{
-			"file": "broetchen1.png",
-			"name": "broetchen1",
-			"type": "image"
-		},
-		{
-			"file": "broetchen2.png",
-			"name": "broetchen2",
-			"type": "image"
-		},
-		{
-			"file": "bookshelf.png",
+			"file": "sprites/bookshelf.png",
 			"name": "bookshelf",
 			"type": "image",
 			"background": {
@@ -332,67 +187,12 @@
 			}
 		},
 		{
-			"file": "coffee.png",
+			"file": "sprites/coffee.png",
 			"name": "coffee",
 			"type": "image"
 		},
 		{
-			"file": "gasflow.png",
-			"name": "gasflow",
-			"type": "image"
-		},
-		{
-			"file": "lavaflow.png",
-			"name": "lavaflow",
-			"type": "image"
-		},
-		{
-			"file": "Martin/Buerofrau - Kopie.png",
-			"name": "Martin/Buerofrau - Kopie",
-			"type": "image"
-		},
-		{
-			"file": "Martin/Buerofrau.png",
-			"name": "Martin/Buerofrau",
-			"type": "image"
-		},
-		{
-			"file": "Martin/fishwork-kpaint-a.png",
-			"name": "Martin/fishwork-kpaint-a",
-			"type": "image"
-		},
-		{
-			"file": "Martin/fishwork-kpaint.png",
-			"name": "Martin/fishwork-kpaint",
-			"type": "image"
-		},
-		{
-			"file": "Martin/fishwork.png",
-			"name": "Martin/fishwork",
-			"type": "image"
-		},
-		{
-			"file": "Martin/monster.png",
-			"name": "Martin/monster",
-			"type": "image"
-		},
-		{
-			"file": "Martin/monster2.png",
-			"name": "Martin/monster2",
-			"type": "image"
-		},
-		{
-			"file": "Martin/monster3.png",
-			"name": "Martin/monster3",
-			"type": "image"
-		},
-		{
-			"file": "noflow.png",
-			"name": "noflow",
-			"type": "image"
-		},
-		{
-			"file": "nullachtsechzehn-gruen.png",
+			"file": "sprites/nullachtsechzehn-gruen.png",
 			"name": "nullachtsechzehn-gruen",
 			"type": "image",
 			"background": {
@@ -402,7 +202,7 @@
 			}
 		},
 		{
-			"file": "nullachtsechzehnfrau.png",
+			"file": "sprites/nullachtsechzehnfrau.png",
 			"name": "nullachtsechzehnfrau",
 			"type": "image",
 			"scale": 2,
@@ -413,7 +213,7 @@
 			}
 		},
 		{
-			"file": "nullachtsechzehnmann-rot.png",
+			"file": "sprites/nullachtsechzehnmann-rot.png",
 			"name": "nullachtsechzehnmann-rot",
 			"type": "image",
 			"background": {
@@ -423,23 +223,7 @@
 			}
 		},
 		{
-			"file": "timecannon.png",
-			"name": "timecannon",
-			"type": "image"
-		},
-		{
-			"file": "waterflow.png",
-			"name": "waterflow",
-			"type": "image"
-		},
-		{
-			"file": "Kahlesv2.ttf",
-			"name": "Kahlesv2",
-			"type": "font",
-			"size": "70"
-		},
-		{
-			"file": "tc-1.png",
+			"file": "sprites/tc-1.png",
 			"name": "tc-1",
 			"type": "image",
 			"background": {
@@ -449,7 +233,7 @@
 			}
 		},
 		{
-			"file": "tc-2.png",
+			"file": "sprites/tc-2.png",
 			"name": "tc-2",
 			"type": "image",
 			"background": {
@@ -459,7 +243,7 @@
 			}
 		},
 		{
-			"file": "tc-3.png",
+			"file": "sprites/tc-3.png",
 			"name": "tc-3",
 			"type": "image",
 			"background": {
@@ -469,7 +253,7 @@
 			}
 		},
 		{
-			"file": "tc-4.png",
+			"file": "sprites/tc-4.png",
 			"name": "tc-4",
 			"type": "image",
 			"background": {
@@ -479,19 +263,43 @@
 			}
 		},
 		{
-			"file": "pl.png",
+			"file": "sprites/pl.png",
 			"name": "pl",
 			"type": "image"
 		},
 		{
-			"file": "an.png",
+			"file": "sprites/an.png",
 			"name": "an",
 			"type": "image"
 		},
 		{
-			"file": "lab.png",
+			"file": "sprites/lab.png",
 			"name": "lab",
 			"type": "image"
+		},
+		{
+			"file": "fonts/LiberationSans-Regular.ttf",
+			"name": "LiberationSans",
+			"type": "font",
+			"size": "12"
+		},
+		{
+			"file": "fonts/LiberationSans-Regular.ttf",
+			"name": "LiberationSans",
+			"type": "font",
+			"size": "20"
+		},
+		{
+			"file": "fonts/LiberationSans-Regular.ttf",
+			"name": "LiberationSans",
+			"type": "font",
+			"size": "34"
+		},
+		{
+			"file": "fonts/Kahlesv2.ttf",
+			"name": "Kahlesv2",
+			"type": "font",
+			"size": "70"
 		}
 	],
 	"rooms": [
@@ -505,9 +313,9 @@
 				"localizations",
 				"text",
 				"10up-logo",
-				"Liberation Sans20.kravur",
-				"arial34.kravur",
-				"Arial12.kravur",
+				"LiberationSans12.kravur",
+				"LiberationSans20.kravur",
+				"LiberationSans34.kravur",
 				"Kahlesv270.kravur"
 			]
 		},
@@ -531,22 +339,11 @@
 			"assets": [
 				"testlevel.map",
 				"tileset",
-				"nullachtsechzehnmann",
 				"localizations",
 				"text",
 				"fishy",
 				"fishy_attack",
 				"agent",
-				"0",
-				"1",
-				"2",
-				"3",
-				"4",
-				"5",
-				"6",
-				"7",
-				"8",
-				"9",
 				"tc-1",
 				"tc-2",
 				"tc-3",
@@ -555,23 +352,21 @@
 				"an",
 				"bookshelf",
 				"elevator",
-				"Liberation Sans20.kravur",
-				"arial34.kravur",
-				"Arial12.kravur",
 				"computer",
-				"elevatorbuttons",
 				"floorlevel",
 				"door",
 				"wooddoor",
 				"zzzzz",
 				"coffee",
-				"broetchen1",
-				"broetchen2",
 				"rowdy",
 				"mechanic",
+				"nullachtsechzehnmann",
 				"nullachtsechzehn-gruen",
 				"nullachtsechzehnmann-rot",
 				"nullachtsechzehnfrau",
+				"LiberationSans12.kravur",
+				"LiberationSans20.kravur",
+				"LiberationSans34.kravur",
 				"Kahlesv270.kravur"
 			]
 		}

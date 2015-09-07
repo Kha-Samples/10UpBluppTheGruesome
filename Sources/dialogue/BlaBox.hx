@@ -40,7 +40,7 @@ class BlaBox {
 	
 	public function setText(text: String, minWidth: Float = -1, minHeight: Float = -1): Void {
 		if (text != null) {
-			if (font == null) font = Loader.the.loadFont("Liberation Sans", FontStyle.Default, 20);
+			if (font == null) font = Loader.the.loadFont("LiberationSans", FontStyle.Default, 20);
 			var maxWidth = this.maxWidth - 2 * padding;
 			this.text = new Array();
 			width = minWidth < 0 ? 200 : minWidth;
