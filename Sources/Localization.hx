@@ -5,7 +5,8 @@ import haxe.xml.Parser;
 
 #if !macro
 
-import kha.Loader;
+import kha.Assets;
+import kha.Blob;
 
 #end
 
@@ -17,9 +18,9 @@ class Localization
 	static public var availableLanguages(default, null) : Map<String, String>;
 	static var texts : Map <String, Map <String, String>> = null;
 	
-	static public function init(initFilename : String, startingLanguage = "en") {
+	static public function init(initFile : Blob, startingLanguage = "en") {
 		availableLanguages = new Map();
-		var xml = Parser.parse(Loader.the.getBlob(initFilename).toString());
+		var xml = Parser.parse(initFile.toString());
 		var languages = xml.firstElement();
 		if (languages.nodeName.toLowerCase() == "languages") {
 			for (language in languages.elements()) {
@@ -43,7 +44,7 @@ class Localization
 			texts = new Map();
 		}
 		
-		var xml = Parser.parse(Loader.the.getBlob(filename).toString());
+		var xml = Parser.parse(Reflect.field(Assets.blobs, filename).toString());
 		for (item in xml.elements()) {
 			var key = item.nodeName;
 			if (key == "DefaultLanguage") {

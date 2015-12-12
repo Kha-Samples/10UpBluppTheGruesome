@@ -2,7 +2,7 @@ package sprites;
 
 import kha.graphics2.Graphics;
 import kha.Image;
-import kha.Rectangle;
+import kha2d.Rectangle;
 import kha.Rotation;
 import kha.math.Vector2;
 import kha2d.Animation;

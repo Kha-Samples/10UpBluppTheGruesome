@@ -1,6 +1,6 @@
 package sprites;
 
-import kha.Loader;
+import kha.Assets;
 import kha.math.Random;
 import kha.math.Vector2;
 import kha.Rotation;
@@ -11,7 +11,7 @@ class Blood extends Sprite {
 	private var count = 30;
 	
 	public function new(x: Float, y: Float) {
-		super(Loader.the.getImage("blood"), 4 * 2, 4 * 2);
+		super(null /*Assets.images.blood*/, 4 * 2, 4 * 2);
 		this.x = x;
 		this.y = y;
 		collides = false;

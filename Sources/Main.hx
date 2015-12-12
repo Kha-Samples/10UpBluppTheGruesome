@@ -1,10 +1,11 @@
 package;
+import kha.System;
 
-import kha.Starter;
 
 class Main {
 	public static function main() {
-		var starter = new Starter();
-		starter.start(new Empty());
+		System.init("10Up", 1024, 768, function () {
+			new Empty();
+		});
 	}
 }

@@ -4,7 +4,7 @@ import dialogue.Bla;
 import dialogue.BlaWithChoices;
 import dialogue.DialogueItem;
 import dialogue.StartDialogue;
-import kha.Loader;
+import kha.Assets;
 import kha2d.Animation;
 import kha2d.Direction;
 import kha2d.Sprite;
@@ -20,7 +20,7 @@ class Computer extends IdLoggerSprite {
 	var plan : Int = -1;
 	
 	public function new(x: Float, y: Float, active: Bool, plan : Int) {
-		super(Keys_text.COMPUTER, Loader.the.getImage("computer"), 192, 128, 0);
+		super(Keys_text.COMPUTER, Assets.images.computer, 192, 128, 0);
 		this.x = x;
 		this.y = y;
 		this.plan = plan;
@@ -38,10 +38,10 @@ class Computer extends IdLoggerSprite {
 			var part : UseableSprite;
 			switch (plan) {
 				case 0:
-					part = new UseableSprite(Localization.getText(Keys_text.PLAN1), Loader.the.getImage("pl"), 0, 0, 60, 60, 0);
+					part = new UseableSprite(Localization.getText(Keys_text.PLAN1), Assets.images.pl, 0, 0, 60, 60, 0);
 					Empty.the.gotPl1 = true;
 				case 1:
-					part = new UseableSprite(Localization.getText(Keys_text.PLAN2), Loader.the.getImage("an"), 0, 0, 60, 60, 0);
+					part = new UseableSprite(Localization.getText(Keys_text.PLAN2), Assets.images.an, 0, 0, 60, 60, 0);
 					Empty.the.gotan2 = true;
 				default:
 					trace("invalid plan part");

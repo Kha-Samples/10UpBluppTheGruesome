@@ -4,9 +4,9 @@ import dialogue.*;
 import Cfg;
 import haxe.macro.Expr.Var;
 import kha.Color;
-import kha.Loader;
 import kha.math.Random;
 import kha.math.Vector2;
+import kha.System;
 import kha2d.Scene;
 import kha2d.Sprite;
 import sprites.IdSystem;
@@ -81,18 +81,18 @@ class Dialogues {
 					new BlaWithChoices(Keys_text.MENU_HOW_TO_PLAY_GOOD_VERSION, null, [
 						[] //  OK
 						, [] // Sehr Gut!
-						, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/")), new StartDialogue(howToPlay)]
-						, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/mountainbrew/")), new StartDialogue(howToPlay)]
-						, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/interdimensionalliquids/")), new StartDialogue(howToPlay)]
-						, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/justanordinaryday/")), new StartDialogue(howToPlay)]
-						, [new StartDialogue(Loader.the.loadURL.bind("http://10upunity.robdangero.us/")), new StartDialogue(howToPlay)]
+						, [new StartDialogue(System.loadUrl.bind("http://10up.robdangero.us/")), new StartDialogue(howToPlay)]
+						, [new StartDialogue(System.loadUrl.bind("http://10up.robdangero.us/mountainbrew/")), new StartDialogue(howToPlay)]
+						, [new StartDialogue(System.loadUrl.bind("http://10up.robdangero.us/interdimensionalliquids/")), new StartDialogue(howToPlay)]
+						, [new StartDialogue(System.loadUrl.bind("http://10up.robdangero.us/justanordinaryday/")), new StartDialogue(howToPlay)]
+						, [new StartDialogue(System.loadUrl.bind("http://10upunity.robdangero.us/")), new StartDialogue(howToPlay)]
 					])
 				]
-				, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/")), new StartDialogue(howToPlay)]
-				, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/mountainbrew/")), new StartDialogue(howToPlay)]
-				, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/interdimensionalliquids/")), new StartDialogue(howToPlay)]
-				, [new StartDialogue(Loader.the.loadURL.bind("http://10up.robdangero.us/justanordinaryday/")), new StartDialogue(howToPlay)]
-				, [new StartDialogue(Loader.the.loadURL.bind("http://10upunity.robdangero.us/")), new StartDialogue(howToPlay)]
+				, [new StartDialogue(System.loadUrl.bind("http://10up.robdangero.us/")), new StartDialogue(howToPlay)]
+				, [new StartDialogue(System.loadUrl.bind("http://10up.robdangero.us/mountainbrew/")), new StartDialogue(howToPlay)]
+				, [new StartDialogue(System.loadUrl.bind("http://10up.robdangero.us/interdimensionalliquids/")), new StartDialogue(howToPlay)]
+				, [new StartDialogue(System.loadUrl.bind("http://10up.robdangero.us/justanordinaryday/")), new StartDialogue(howToPlay)]
+				, [new StartDialogue(System.loadUrl.bind("http://10upunity.robdangero.us/")), new StartDialogue(howToPlay)]
 			])
 		], true);
 	}
@@ -103,10 +103,9 @@ class Dialogues {
 			, new Action(null, ActionType.FADE_TO_BLACK)
 			, new StartDialogue(function() {
 				Empty.the.mode = PlayerSwitch;
-				kha.Configuration.setScreen(new kha.LoadingScreen());
 				//Loader.the.loadRoom("testlevel", Empty.the.initLevel);
 				Empty.the.renderOverlay = false;
-				Loader.the.loadRoom("intro", Empty.the.initIntro);
+				Empty.the.initIntro();
 			})
 		]);
 	}

@@ -2,8 +2,8 @@ package sprites;
 
 import dialogue.BlaWithChoices;
 import dialogue.StartDialogue;
-import kha.Loader;
-import kha.Rectangle;
+import kha.Assets;
+import kha2d.Rectangle;
 import kha.Scheduler;
 import kha2d.Animation;
 import kha2d.Direction;
@@ -21,7 +21,7 @@ class Door extends DestructibleSprite {
 	public var idLogger: IdLogger;
 	
 	public function new(x: Int, y: Int) {
-		super(100, Loader.the.getImage("door"), 32 * 2, 64 * 2, 0);
+		super(100, Assets.images.door, 32 * 2, 64 * 2, 0);
 		this.x = x;
 		this.y = y;
 		accy = 0;

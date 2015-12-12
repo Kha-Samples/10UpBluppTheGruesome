@@ -1,13 +1,13 @@
 package sprites;
 
-import kha.Loader;
+import kha.Assets;
 import kha2d.Animation;
 import sprites.IdSystem.IdCard;
 
 class Rowdy extends RandomGuy {
 	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool) {
 		super(stuff, youarethemonster, true);
-		image = Loader.the.getImage("rowdy");
+		image = Assets.images.rowdy;
 		w = Std.int(410 * 2 / 10);
 		h = Std.int(455 * 2 / 7);
 		standLeft = Animation.create(10);

@@ -1,5 +1,6 @@
 package sprites;
-import kha.Loader;
+
+import kha.Assets;
 import kha2d.Animation;
 import kha2d.Sprite;
 
@@ -8,7 +9,7 @@ class ElevatorIndicator extends Sprite
 	var floorAnimations : Array<Animation>;
 	
 	public function new(x : Float, y : Float) {
-		super(Loader.the.getImage("floorlevel"), 32, 32, 0);
+		super(Assets.images.floorlevel, 32, 32, 0);
 		this.x = x + 96 - 32 / 2;
 		this.y = y - 32;
 		floorAnimations = new Array<Animation>();
