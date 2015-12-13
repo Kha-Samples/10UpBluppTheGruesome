@@ -157,7 +157,7 @@ class Empty {
 		mode = StartScreen;
 		
 		Localization.language = Cfg.language;
-		Localization.buildKeys("../Assets/data/text.xml", "text");
+		Localization.buildKeys("../Assets/data/text.xml", "text_xml");
 		
 		var logo = new Sprite(Assets.images._10up_logo);
 		logo.x = 0.5 * width - 0.5 * logo.width;
