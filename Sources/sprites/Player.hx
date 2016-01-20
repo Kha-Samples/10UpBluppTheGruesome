@@ -247,7 +247,7 @@ class Player extends DestructibleSprite {
 			super.render(g);
 		}
 		#if debug
-		g.set_color( kha.Color.fromBytes(255,0,0) );
+		g.color = kha.Color.fromBytes(255,0,0);
 		var rect = collisionRect();
 		g.drawRect( rect.x, rect.y, rect.width, rect.height );
 		g.color = Color.Black;

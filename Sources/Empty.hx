@@ -20,6 +20,7 @@ import kha.math.Vector2;
 import kha.Scaler;
 import kha.Scheduler;
 import kha.ScreenCanvas;
+import kha.Shaders;
 import kha.System;
 import kha2d.Scene;
 import kha.Score;
