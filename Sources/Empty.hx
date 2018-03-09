@@ -116,6 +116,7 @@ class Empty {
 		Assets.loadEverything(function () {
 			System.notifyOnRender(render);
 			Scheduler.addTimeTask(update, 0, 1 / 60);
+			Scene.the.setSize(width, height);
 			initFirst();
 		});
 	}
@@ -126,7 +127,7 @@ class Empty {
 		font = Assets.fonts.LiberationSans_Regular;
 		fontSize = 34;
 		
-		Localization.init("localizations");
+		Localization.init("localizations_xml");
 		
 		Cfg.init();
 		
