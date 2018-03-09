@@ -109,7 +109,8 @@ class Localization
 #end
 
 	macro static public inline function buildKeys(file: String, assetName: String) : haxe.macro.Expr {
-		trace ('Building keys for "$file"');
+		// trace ('Building keys for "$file"');
+		assetName = assetName.substr(0, assetName.length - 4);
 		var f = haxe.macro.Context.getPosInfos(haxe.macro.Context.currentPos()).file;
 		var dir = Path.directory(f) + "/";
 		var name = 'Keys_$assetName';

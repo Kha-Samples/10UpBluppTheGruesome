@@ -1,10 +1,10 @@
 package;
-import kha.System;
 
+import kha.System;
 
 class Main {
 	public static function main() {
-		System.init("10Up", 1024, 768, function () {
+		System.init({title: "Blupp the Gruesome", width: 1024, height: 768}, function () {
 			new Empty();
 		});
 	}

@@ -12,7 +12,7 @@ import kha.graphics4.TextureFormat;
 import kha.Image;
 import kha.input.Gamepad;
 import kha.input.Keyboard;
-import kha.Key;
+import kha.input.KeyCode;
 import kha.math.FastMatrix3;
 import kha.math.Matrix3;
 import kha.math.Random;
@@ -23,7 +23,6 @@ import kha.ScreenCanvas;
 import kha.Shaders;
 import kha.System;
 import kha2d.Scene;
-import kha.Score;
 import kha.ScreenRotation;
 import kha.Storage;
 import kha2d.Sprite;
@@ -703,74 +702,53 @@ class Empty {
 		}*/
 	}
 	
-	private function keyboardDown(key: Key, char: String): Void {
+	private function keyboardDown(key: KeyCode): Void {
 		if (mode != Game) return;
 		if (!playerDlg.isEmpty()) return;
 		
 		switch (key) {
-			case LEFT:
+			case Left, A:
 				Player.current().left = true;
 				Player.current().right = false;
-			case RIGHT:
+			case Right, D:
 				Player.current().right = true;
 				Player.current().left = false;
-			case UP:
+			case Up, W:
 				Player.current().setUp();
-			case Key.CHAR:
-				switch(char) {
-					case 'w':
-						Player.current().setUp();
-					case 'a':
-						Player.current().left = true;
-						Player.current().right = false;
-					case 'd':
-						Player.current().right = true;
-						Player.current().left = false;
-					case 'q':
-						Player.current().attack();
-				#if debug
-					case 'p':
-						mode = ProfessorWins;
-					case 'm':
-						mode = FischmanWins;
-					case 'n':
-						// TODO: FIXME! IMPORTANT: REMOVE FOR RELEASE VERSION!!!!!11!11elf
-						nextPlayer();
-				#end
-				}
+			case Q:
+				Player.current().attack();
+			#if debug
+			case P:
+				mode = ProfessorWins;
+			case M:
+				mode = FischmanWins;
+			case N:
+				// TODO: FIXME! IMPORTANT: REMOVE FOR RELEASE VERSION!!!!!11!11elf
+				nextPlayer();
+			#end
 			default:
-				
 		}
 	}
 	
-	private function keyboardUp(key: Key, char: String): Void {
+	private function keyboardUp(key: KeyCode): Void {
 		switch (mode) {
 		case Game:
 			if (!playerDlg.isEmpty()) return;
 			switch (key) {
-			case LEFT:
+			case Left, A:
 				Player.current().left = false;
-			case RIGHT:
+			case Right, D:
 				Player.current().right = false;
-			case UP:
+			case Up, W:
 				Player.current().up = false;
-			case Key.CHAR:
-				switch(char) {
-				case "e":
-					Player.current().use();
-				case 'w':
-					Player.current().up = false;
-				case 'a':
-					Player.current().left = false;
-				case 'd':
-					Player.current().right = false;
-				}
+			case E:
+				Player.current().use();
 			default:
 				
 			}
 		case StartScreen:
 			switch (key) {
-			case Key.ESC:
+			case Escape:
 				Dialogues.escMenu();
 			default:
 				if (playerDlg.isEmpty())
@@ -781,10 +759,11 @@ class Empty {
 			}
 		case Intro:
 			switch (key) {
-			case Key.ESC:
+			case Escape:
 				playerDlg.cancel();
+			case Space:
+				BlaBox.boxes.remove(playerDlg.blaBox);
 			default:
-				if (char == " ") BlaBox.boxes.remove(playerDlg.blaBox);
 			}
 		default:
 		}
