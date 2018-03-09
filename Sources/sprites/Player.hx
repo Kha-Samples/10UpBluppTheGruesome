@@ -1,13 +1,12 @@
 package sprites;
 
+import kha.Assets;
 import kha.Color;
 import kha.graphics2.Graphics;
 import kha.Image;
-import kha.Loader;
 import kha.math.FastMatrix3;
 import kha.math.Vector2;
-import kha.Music;
-import kha.Rectangle;
+import kha2d.Rectangle;
 import kha.Rotation;
 import kha.Sound;
 import kha2d.Animation;
@@ -45,7 +44,7 @@ class Player extends DestructibleSprite {
 	var muzzlePoint : Vector2;
 	
 	public function new(id: Int, x: Float, y: Float, image: String, width: Int, height: Int, maxHealth: Int = 50) {
-		super(maxHealth, Loader.the.getImage(image), width, height, 1);
+		super(maxHealth, Assets.images.get(image), width, height, 1);
 		this.id = id;
 		this.x = x;
 		this.y = y;
@@ -65,8 +64,8 @@ class Player extends DestructibleSprite {
 		killed = false;
 		jumpcount = 0;
 		isRepairable = true;
-		hitSound = Loader.the.getSound("hit");
-		zzzzz = Loader.the.getImage("zzzzz");
+		hitSound = null; // Assets.sounds.hit;
+		zzzzz = Assets.images.zzzzz;
 	}
 	
 	public static inline function current(): Player {
@@ -248,7 +247,7 @@ class Player extends DestructibleSprite {
 			super.render(g);
 		}
 		#if debug
-		g.set_color( kha.Color.fromBytes(255,0,0) );
+		g.color = Color.fromBytes(255,0,0);
 		var rect = collisionRect();
 		g.drawRect( rect.x, rect.y, rect.width, rect.height );
 		g.color = Color.Black;

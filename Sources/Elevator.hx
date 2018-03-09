@@ -3,12 +3,12 @@ package;
 import dialogue.BlaWithChoices;
 import dialogue.DialogueItem;
 import dialogue.StartDialogue;
+import kha.Assets;
 import kha.math.Vector2;
 import kha2d.Animation;
 import kha.audio1.Audio;
 import kha2d.Direction;
-import kha.Loader;
-import kha.Rectangle;
+import kha2d.Rectangle;
 import kha.Sound;
 import kha2d.Sprite;
 import sprites.IdSystem.IdLoggerSprite;
@@ -22,7 +22,7 @@ class Elevator extends IdLoggerSprite {
 	public var open(default, set_open) : Bool;
 	
 	public function new(x : Float, y : Float, level : Int) {
-		super(Keys_text.ELEVATOR, Loader.the.getImage("elevator"), 192, 128, 0);
+		super(Keys_text.ELEVATOR, Assets.images.elevator, 192, 128, 0);
 		this.x = x;
 		this.y = y;
 		this.level = level;

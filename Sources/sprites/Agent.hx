@@ -1,7 +1,6 @@
 package sprites;
 
-import kha.Loader;
-import kha.Rectangle;
+import kha2d.Rectangle;
 import kha2d.Animation;
 import kha2d.Direction;
 import sprites.IdSystem.IdCard;

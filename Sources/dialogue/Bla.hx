@@ -1,7 +1,7 @@
 package dialogue;
 
 import kha.input.Keyboard;
-import kha.Key;
+import kha.input.KeyCode;
 import kha2d.Sprite;
 
 using StringTools;
@@ -20,9 +20,9 @@ class Bla implements DialogueItem {
 	}
 	
 	var dlg: Dialogue;
-	private function keyDownListener(key:Key, char: String) {
+	private function keyPressListener(char: String) {
 		trace ('KEY UP: $char');
-		Keyboard.get().remove(keyDownListener, null);
+		Keyboard.get().remove(null, null, keyPressListener);
 		kha.Scheduler.addTimeTask( function() { 
 			finished = true;
 		}, 0.5);
@@ -34,7 +34,7 @@ class Bla implements DialogueItem {
 			dlg.blaBox = new BlaBox(text, speaker, persistent);
 			if (persistent)
 			{
-				Keyboard.get().notify(keyDownListener, null);
+				Keyboard.get().notify(null, null, keyPressListener);
 			}
 			BlaBox.boxes.push(dlg.blaBox);
 		} else {
@@ -44,7 +44,7 @@ class Bla implements DialogueItem {
 	
 	public function cancel(dlg: Dialogue) : Void
 	{
-		Keyboard.get().remove(keyDownListener, null);
+		Keyboard.get().remove(null, null, keyPressListener);
 		BlaBox.boxes.remove(dlg.blaBox);
 		dlg.blaBox = null;
 	}

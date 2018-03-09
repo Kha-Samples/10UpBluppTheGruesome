@@ -1,11 +1,11 @@
 package sprites;
 
+import kha.Assets;
 import kha.Color;
 import kha.graphics2.Graphics;
 import kha.Image;
-import kha.Loader;
 import kha.math.FastMatrix3;
-import kha.Rectangle;
+import kha2d.Rectangle;
 import kha2d.Animation;
 import kha2d.Direction;
 import sprites.IdSystem.IdCard;
@@ -29,7 +29,7 @@ class Fishman extends Player implements IdCardOwner {
 		jumpRight = Animation.create(17);
 		setAnimation(walkLeft);
 		collider = new Rectangle(20, 25, (594 * 2 / 9) - 40, ((146 * 2 / 2) - 1) - 25);
-		attackImage = Loader.the.getImage("fishy_attack");
+		attackImage = Assets.images.fishy_attack;
 		IdCard = RandomGuy.monsterId();
 	}
 	
