@@ -44,7 +44,7 @@ class Localization
 			texts = new Map();
 		}
 		
-		var xml = Parser.parse(Reflect.field(Assets.blobs, filename).toString());
+		var xml = Parser.parse(Reflect.field(Assets.blobs, filename + "_xml").toString());
 		for (item in xml.elements()) {
 			var key = item.nodeName;
 			if (key == "DefaultLanguage") {

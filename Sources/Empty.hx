@@ -117,13 +117,14 @@ class Empty {
 		ElevatorManager.init(new ElevatorManager());
 		Assets.loadEverything(function () {
 			System.notifyOnRender(render);
-			Scheduler.addTimeTask(update, 1 / 60);
+			Scheduler.addTimeTask(update, 0, 1 / 60);
 			initFirst();
 		});
 	}
 	
 	function initFirst() {
 		backbuffer = Image.createRenderTarget(1024, 768);
+		Scene.the.setSize(1024, 768);
 		
 		font = Assets.fonts.LiberationSans_Regular;
 		fontSize = 34;
