@@ -1,0 +1,374 @@
+{
+	"format": 3,
+	"game": {
+		"name": "10up - Blupp the Gruesome",
+		"width": 1024,
+		"height": 768
+	},
+	"libraries": [
+		"Kha2D"
+	],
+	"assets": [
+		{
+			"file": "sprites/fishy.png",
+			"name": "fishy",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/agent.png",
+			"name": "agent",
+			"type": "image",
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/mechanic.png",
+			"name": "mechanic",
+			"type": "image",
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/nullachtsechzehnmann.png",
+			"name": "nullachtsechzehnmann",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/professor.png",
+			"name": "professor",
+			"type": "image",
+			"scale": 1,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/rowdy.png",
+			"name": "rowdy",
+			"type": "image",
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "data/testlevel.map",
+			"name": "testlevel.map",
+			"type": "blob"
+		},
+		{
+			"file": "sprites/tileset.png",
+			"name": "tileset",
+			"type": "image"
+		},
+		{
+			"file": "data/localizations.xml",
+			"name": "localizations",
+			"type": "blob"
+		},
+		{
+			"file": "data/text.xml",
+			"name": "text",
+			"type": "blob"
+		},
+		{
+			"file": "sprites/elevator.png",
+			"name": "elevator",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/10up-logo.png",
+			"name": "10up-logo",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/computer.png",
+			"name": "computer",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/door.png",
+			"name": "door",
+			"type": "image",
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/wooddoor.png",
+			"name": "wooddoor",
+			"type": "image",
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/floorlevel.png",
+			"name": "floorlevel",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/zzzzz.png",
+			"name": "zzzzz",
+			"type": "image",
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/fishy_attack.png",
+			"name": "fishy_attack",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/bookshelf.png",
+			"name": "bookshelf",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/coffee.png",
+			"name": "coffee",
+			"type": "image"
+		},
+		{
+			"file": "sprites/nullachtsechzehn-gruen.png",
+			"name": "nullachtsechzehn-gruen",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/nullachtsechzehnfrau.png",
+			"name": "nullachtsechzehnfrau",
+			"type": "image",
+			"scale": 2,
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/nullachtsechzehnmann-rot.png",
+			"name": "nullachtsechzehnmann-rot",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/tc-1.png",
+			"name": "tc-1",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/tc-2.png",
+			"name": "tc-2",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/tc-3.png",
+			"name": "tc-3",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/tc-4.png",
+			"name": "tc-4",
+			"type": "image",
+			"background": {
+				"red": 255,
+				"green": 174,
+				"blue": 201
+			}
+		},
+		{
+			"file": "sprites/pl.png",
+			"name": "pl",
+			"type": "image"
+		},
+		{
+			"file": "sprites/an.png",
+			"name": "an",
+			"type": "image"
+		},
+		{
+			"file": "sprites/lab.png",
+			"name": "lab",
+			"type": "image"
+		},
+		{
+			"file": "fonts/LiberationSans-Regular.ttf",
+			"name": "LiberationSans",
+			"type": "font",
+			"size": "12"
+		},
+		{
+			"file": "fonts/LiberationSans-Regular.ttf",
+			"name": "LiberationSans",
+			"type": "font",
+			"size": "20"
+		},
+		{
+			"file": "fonts/LiberationSans-Regular.ttf",
+			"name": "LiberationSans",
+			"type": "font",
+			"size": "34"
+		},
+		{
+			"file": "fonts/Kahlesv2.ttf",
+			"name": "Kahlesv2",
+			"type": "font",
+			"size": "70"
+		}
+	],
+	"rooms": [
+		{
+			"name": "titlescreen",
+			"parent": null,
+			"neighbours": [
+				"intro"
+			],
+			"assets": [
+				"localizations",
+				"text",
+				"10up-logo",
+				"LiberationSans12.kravur",
+				"LiberationSans20.kravur",
+				"LiberationSans34.kravur",
+				"Kahlesv270.kravur"
+			]
+		},
+		{
+			"name": "intro",
+			"parent": null,
+			"neighbours": [
+				"testlevel"
+			],
+			"assets": [
+				"lab",
+				"professor",
+				"fishy",
+				"Kahlesv270.kravur"
+			]
+		},
+		{
+			"name": "testlevel",
+			"parent": null,
+			"neighbours": [],
+			"assets": [
+				"testlevel.map",
+				"tileset",
+				"localizations",
+				"text",
+				"fishy",
+				"fishy_attack",
+				"agent",
+				"tc-1",
+				"tc-2",
+				"tc-3",
+				"tc-4",
+				"pl",
+				"an",
+				"bookshelf",
+				"elevator",
+				"computer",
+				"floorlevel",
+				"door",
+				"wooddoor",
+				"zzzzz",
+				"coffee",
+				"rowdy",
+				"mechanic",
+				"nullachtsechzehnmann",
+				"nullachtsechzehn-gruen",
+				"nullachtsechzehnmann-rot",
+				"nullachtsechzehnfrau",
+				"LiberationSans12.kravur",
+				"LiberationSans20.kravur",
+				"LiberationSans34.kravur",
+				"Kahlesv270.kravur"
+			]
+		}
+	]
+}

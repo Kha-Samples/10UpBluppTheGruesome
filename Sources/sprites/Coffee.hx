@@ -4,7 +4,7 @@ import dialogue.Bla;
 import dialogue.BlaWithChoices;
 import dialogue.DialogueItem;
 import dialogue.StartDialogue;
-import kha.Assets;
+import kha.Loader;
 import kha2d.Animation;
 import kha2d.Direction;
 import kha2d.Sprite;
@@ -17,7 +17,7 @@ class Coffee extends InteractiveSprite {
 	var defaultAnimation : Animation;
 	
 	public function new(x: Float, y: Float) {
-		super(Assets.images.coffee, 32, 64, 0);
+		super(Loader.the.getImage("coffee"), 32, 64, 0);
 		this.x = x;
 		this.y = y + 2;
 		this.isUseable = true;

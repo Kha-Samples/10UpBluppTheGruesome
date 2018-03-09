@@ -2,7 +2,9 @@ package;
 
 import kha2d.Animation;
 import kha.Color;
+import kha.Game;
 import kha.graphics2.Graphics;
+import kha.Loader;
 import kha.math.Vector2;
 import manipulatables.UseableSprite;
 import sprites.Player;
@@ -21,7 +23,7 @@ class Inventory {
 	public static function init() {
 		items = new Array();
 		selected = -1;
-		y = Empty.the.height - itemHeight - 2 * spacing;
+		y = Game.the.height - itemHeight - 2 * spacing;
 	}
 	
 	public static function isEmpty() : Bool {
@@ -74,7 +76,7 @@ class Inventory {
 		var itemX = spacing;
 		var itemY = y + spacing;
 		g.color = Color.Black;
-		g.fillRect(0, y, Empty.the.width, itemHeight + 2 * spacing);
+		g.fillRect(0, y, Game.the.width, itemHeight + 2 * spacing);
 		g.color = Color.White;
 		for (i in offset...items.length) {
 			items[i].renderForInventory(g, itemX, itemY, itemWidth, itemHeight);
@@ -100,7 +102,7 @@ class Inventory {
 				}
 				g.color = Color.White;
 				var text = "Press E to use " + thing;
-				g.drawString("Press E to use " + thing, Empty.the.width - g.font.width(g.fontSize, text) - 10, y + (itemHeight + 2 * spacing) / 2 - g.font.height(g.fontSize) / 2);
+				g.drawString("Press E to use " + thing, Game.the.width - g.font.stringWidth(text) - 10, y + (itemHeight + 2 * spacing) / 2 - g.font.getHeight() / 2);
 			}
 		}
 	}

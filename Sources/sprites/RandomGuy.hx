@@ -6,14 +6,14 @@ import dialogue.Bla;
 import dialogue.BlaWithChoices;
 import dialogue.SpawnNpcDialog;
 import dialogue.StartDialogue;
-import kha.Assets;
 import kha.Color;
 import kha.graphics2.Graphics;
 import kha.Image;
+import kha.Loader;
 import kha.math.FastMatrix3;
 import kha.math.Random;
 import kha.math.Vector2;
-import kha2d.Rectangle;
+import kha.Rectangle;
 import kha2d.Animation;
 import kha2d.Sprite;
 import schedule.BlaTask;
@@ -57,11 +57,11 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 	public static var greenused = false;
 	
 	public function new(stuff: Array<InteractiveSprite>, youarethemonster: Bool, customlook: Bool = false) {
-		super(Assets.images.nullachtsechzehnmann, Std.int(720 / 9), Std.int(256 / 2));
+		super(Loader.the.getImage("nullachtsechzehnmann"), Std.int(720 / 9), Std.int(256 / 2));
 		collider = new Rectangle(-20, 0, width + 40, height);
 		isUseable = true;
 		if (Empty.the.interactiveSprites != null) Empty.the.interactiveSprites.push(this);
-		zzzzz = Assets.images.zzzzz;
+		zzzzz = Loader.the.getImage("zzzzz");
 		zzzzzAnim = Animation.createRange(0, 2, 8);
 		this.youarethemonster = youarethemonster;
 		standLeft = Animation.create(9);
@@ -97,7 +97,7 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 		
 		if (!customlook) {
 			if (name == "Rebecca") {
-				image = Assets.images.nullachtsechzehnfrau;
+				image = Loader.the.getImage("nullachtsechzehnfrau");
 				w = 820 / 10;
 				h = 402 / 3;
 				standLeft = Animation.create(10);
@@ -110,11 +110,11 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 					whiteused = true;
 				}
 				else if (!redused) {
-					image = Assets.images.nullachtsechzehnmann_rot;
+					image = Loader.the.getImage("nullachtsechzehnmann-rot");
 					redused = true;
 				}
 				else if (!greenused) {
-					image = Assets.images.nullachtsechzehn_gruen;
+					image = Loader.the.getImage("nullachtsechzehn-gruen");
 					greenused = true;
 				}
 			}
@@ -310,7 +310,7 @@ class RandomGuy extends InteractiveSprite implements IdCardOwner {
 		else {
 			super.render(g);
 			#if debug
-			g.color = kha.Color.fromBytes(255,0,0);
+			g.set_color( kha.Color.fromBytes(255,0,0) );
 			var rect = collisionRect();
 			g.drawRect( rect.x, rect.y, rect.width, rect.height );
 			g.color = Color.Black;

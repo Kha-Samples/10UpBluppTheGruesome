@@ -1,7 +1,7 @@
 package sprites;
 
-import kha.Assets;
-import kha2d.Rectangle;
+import kha.Loader;
+import kha.Rectangle;
 import kha2d.Animation;
 import kha2d.Direction;
 import sprites.IdSystem.IdCard;
@@ -11,7 +11,7 @@ class Agent extends Player implements IdCardOwner {
 	public var IdCard(default, null): IdCard;
 	
 	public function new(x: Float, y: Float) {
-		super(1, x, y, Assets.images.agent, Std.int(410 / 10) * 2, Std.int(455 / 7) * 2, 0);
+		super(1, x, y, "agent", Std.int(410 / 10) * 2, Std.int(455 / 7) * 2, 0);
 		standing = false;
 		walkLeft = Animation.createRange(11, 18, 4);
 		walkRight = Animation.createRange(1, 8, 4);

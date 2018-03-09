@@ -1,11 +1,11 @@
 package sprites;
 
-import kha.Assets;
 import kha.Color;
 import kha.graphics2.Graphics;
 import kha.Image;
+import kha.Loader;
 import kha.math.FastMatrix3;
-import kha2d.Rectangle;
+import kha.Rectangle;
 import kha2d.Animation;
 import kha2d.Direction;
 import sprites.IdSystem.IdCard;
@@ -17,7 +17,7 @@ class Fishman extends Player implements IdCardOwner {
 	public var IdCard(default, null): IdCard;
 	
 	public function new(x: Float, y: Float) {
-		super(0, x, y, Assets.images.fishy, Std.int(594 * 2 / 9), Std.int(146 * 2 / 2));
+		super(0, x, y, 'fishy', Std.int(594 * 2 / 9), Std.int(146 * 2 / 2));
 		this.x = x;
 		this.y = y;
 		speedx = -3;
@@ -29,7 +29,7 @@ class Fishman extends Player implements IdCardOwner {
 		jumpRight = Animation.create(17);
 		setAnimation(walkLeft);
 		collider = new Rectangle(20, 25, (594 * 2 / 9) - 40, ((146 * 2 / 2) - 1) - 25);
-		attackImage = Assets.images.fishy_attack;
+		attackImage = Loader.the.getImage("fishy_attack");
 		IdCard = RandomGuy.monsterId();
 	}
 	

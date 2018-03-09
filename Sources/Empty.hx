@@ -2,27 +2,33 @@ package;
 
 import haxe.io.Bytes;
 import haxe.Utf8;
-import kha.Assets;
 import kha.audio1.Audio;
+import kha.audio1.MusicChannel;
+import kha.Button;
 import kha.Color;
 import kha.Font;
 import kha.FontStyle;
 import kha.Framebuffer;
+import kha.Game;
 import kha.graphics4.TextureFormat;
+import kha.HighscoreList;
 import kha.Image;
 import kha.input.Gamepad;
 import kha.input.Keyboard;
-import kha.input.KeyCode;
+import kha.Key;
+import kha.Loader;
+import kha.LoadingScreen;
 import kha.math.FastMatrix3;
 import kha.math.Matrix3;
 import kha.math.Random;
 import kha.math.Vector2;
+import kha.Music;
 import kha.Scaler;
 import kha.Scheduler;
 import kha.ScreenCanvas;
-import kha.Shaders;
-import kha.System;
 import kha2d.Scene;
+import kha.Score;
+import kha.Configuration;
 import kha.ScreenRotation;
 import kha.Storage;
 import kha2d.Sprite;
@@ -57,7 +63,7 @@ enum Mode {
 	AgentWins;
 }
 
-class Empty {
+class Empty extends Game {
 	public static var the(default, null): Empty;
 	private var tileColissions: Array<Tile>;
 	private var map : Array<Array<Int>>;
@@ -102,33 +108,28 @@ class Empty {
 	
 	var nextDayChangeTime: Float = Math.NaN;
 	
-	public var width: Int = 1024;
-	public var height: Int = 768;
-	private var fontSize: Int;
-	
 	public function new() {
+		super("10Up: Blupp the Gruesome");
 		the = this;
 		lastTime = Scheduler.time();
-		init();
 	}
 	
-	private function init(): Void {
-		Random.init(Std.int(System.time * 100));
+	public override function init(): Void {
+		Configuration.setScreen(new LoadingScreen());
+		Random.init(Std.int(kha.Sys.getTime() * 100));
 		ElevatorManager.init(new ElevatorManager());
-		Assets.loadEverything(function () {
-			System.notifyOnRender(render);
-			Scheduler.addTimeTask(update, 0, 1 / 60);
-			initFirst();
-		});
+		Loader.the.loadRoom("titlescreen", initFirst);
 	}
 	
 	function initFirst() {
 		backbuffer = Image.createRenderTarget(1024, 768);
-		Scene.the.setSize(1024, 768);
 		
-		font = Assets.fonts.LiberationSans_Regular;
-		fontSize = 34;
-		Localization.init(Assets.blobs.localizations_xml);
+		font = Loader.the.loadFont("LiberationSans", new FontStyle(false, false, false), 12);
+		
+		Configuration.setScreen(this);
+		
+		font = Loader.the.loadFont("LiberationSans", FontStyle.Default, 34);
+		Localization.init("localizations");
 		
 		Cfg.init();
 		
@@ -158,14 +159,15 @@ class Empty {
 		mode = StartScreen;
 		
 		Localization.language = Cfg.language;
-		Localization.buildKeys("../Assets/data/text.xml", "text_xml");
+		Localization.buildKeys("../Assets/data/text.xml","text");
 		
-		var logo = new Sprite(Assets.images._10up_logo);
+		var logo = new Sprite( Loader.the.getImage( "10up-logo" ) );
 		logo.x = 0.5 * width - 0.5 * logo.width;
 		logo.y = 0.5 * height - 0.5 * logo.height;
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(0, 0, 0));
 		Scene.the.addHero( logo );
+		Configuration.setScreen(this);
 		
 		if (Keyboard.get() != null) Keyboard.get().notify(keyboardDown, keyboardUp);
 		if (Gamepad.get() != null) Gamepad.get().notify(axisListener, buttonListener);
@@ -176,15 +178,14 @@ class Empty {
 		for (i in 0...1024) {
 			tileColissions.push(new Tile(i, isCollidable(i)));
 		}
-		var blob = Assets.blobs.testlevel_map;
-		var pos: Int = 0;
-		var levelWidth: Int = blob.readS32BE(pos); pos += 4;
-		var levelHeight: Int = blob.readS32BE(pos); pos += 4;
+		var blob = Loader.the.getBlob("testlevel.map");
+		var levelWidth: Int = blob.readS32BE();
+		var levelHeight: Int = blob.readS32BE();
 		originalmap = new Array<Array<Int>>();
 		for (x in 0...levelWidth) {
 			originalmap.push(new Array<Int>());
 			for (y in 0...levelHeight) {
-				originalmap[x].push(blob.readS32BE(pos)); pos += 4;
+				originalmap[x].push(blob.readS32BE());
 			}
 		}
 		map = new Array<Array<Int>>();
@@ -194,12 +195,12 @@ class Empty {
 				map[x].push(0);
 			}
 		}
-		var spriteCount = blob.readS32BE(pos); pos += 4;
+		var spriteCount = blob.readS32BE();
 		var sprites = new Array<Int>();
 		for (i in 0...spriteCount) {
-			sprites.push(blob.readS32BE(pos)); pos += 4;
-			sprites.push(blob.readS32BE(pos)); pos += 4;
-			sprites.push(blob.readS32BE(pos)); pos += 4;
+			sprites.push(blob.readS32BE());
+			sprites.push(blob.readS32BE());
+			sprites.push(blob.readS32BE());
 		}
 		startGame(spriteCount, sprites);
 	}
@@ -209,6 +210,7 @@ class Empty {
 		professor.setPosition(new Vector2(200, 470));
 		monster = new Fishman(750, 478);
 		mode = Intro;
+		Configuration.setScreen(this);
 		
 		playerDlg.insert([
 			new Bla(Localization.getText(Keys_text.INTRO_1_BLUB), monster, false),
@@ -222,7 +224,7 @@ class Empty {
 		Inventory.init();
 		Scene.the.clear();
 		Scene.the.setBackgroundColor(Color.fromBytes(255, 255, 255));
-		var tilemap = new Tilemap(Assets.images.tileset, 32, 32, map, tileColissions);
+		var tilemap = new Tilemap("tileset", 32, 32, map, tileColissions);
 		Scene.the.setColissionMap(tilemap);
 		Scene.the.addBackgroundTilemap(tilemap, 1);
 		var TILE_WIDTH: Int = 32;
@@ -311,6 +313,7 @@ class Empty {
 		agentPlayer = new Agent(agentSpawn.x, agentSpawn.y);
 		setMainPlayer(agentPlayer, agentSpawn);
 		onDayBegin();
+		Configuration.setScreen(this);
 		
 		Dialogues.dusk();
 	}
@@ -395,7 +398,9 @@ class Empty {
 	
 	private var dayTimesLeft = 13;
 	
-	public function update() {
+	public override function update() {
+		super.update();
+		
 		var deltaTime = Scheduler.time() - lastTime;
 		lastTime = Scheduler.time();
 		
@@ -424,8 +429,9 @@ class Empty {
 			if (playerDlg.isEmpty())
 			{
 				Empty.the.mode = PlayerSwitch;
+				kha.Configuration.setScreen(new kha.LoadingScreen());
 				Empty.the.renderOverlay = true;
-				Empty.the.initLevel();
+				Loader.the.loadRoom("testlevel", Empty.the.initLevel);
 			}
 		}
 		else if (mode == FischmanWins) {
@@ -516,13 +522,11 @@ class Empty {
 	}
 	
 	public var fancyMonsterAnimation : Float = 1;
-	
-	public function render(frame: Framebuffer) {
-		if (title == null && Assets.fonts.Kahlesv2 != null) {
+	public override function render(frame: Framebuffer) {
+		if (title == null && Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70) != null) {
 			title = Image.createRenderTarget(512, 512);
 			title.g2.begin(true, Color.fromBytes(0, 0, 0, 0));
-			title.g2.font = Assets.fonts.Kahlesv2;
-			title.g2.fontSize = 70;
+			title.g2.font = Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70);
 			title.g2.color = Color.Magenta;
 			title.g2.drawString("Blupp", 150, 0);
 			title.g2.drawString("The Gruesome", 0, 60);
@@ -542,7 +546,7 @@ class Empty {
 			g.color = Color.Black;
 			g.fillRect(0, 0, width, height);
 			g.color = Color.White;
-			var lab = Assets.images.lab;
+			var lab = Loader.the.getImage("lab");
 			g.drawImage(lab, width / 2 - lab.width / 2, height / 2 - lab.height / 2);
 			professor.render(g);
 			monster.render(g);
@@ -553,7 +557,7 @@ class Empty {
 			g.transformation = FastMatrix3.identity();
 			if (Player.currentPlayer == monsterPlayer) {
 				// Night, make it dark
-				g.color = Color.fromBytes(0, 0, 0, 191);
+				g.set_color(Color.fromBytes(0, 0, 0, 191));
 				g.fillRect(0, 0, width, height);
 			}
 			
@@ -563,7 +567,7 @@ class Empty {
 			var hoursLeft = (nextDayChangeTime - Scheduler.time()) / 60 * 12;
 			if (dayTimesLeft % 2 == 1) hoursLeft += 12;
 			var text = Std.int(hoursLeft) + " hours and " + daysLeft + " days left";
-			g.drawString(text, width - g.font.width(g.fontSize, text) - 10, 10);
+			g.drawString(text, width - g.font.stringWidth(text) - 10, 10);
 			
 			/*g.transformation = FastMatrix3.identity();
 			g.color = Color.Black;
@@ -586,13 +590,13 @@ class Empty {
 		case StartScreen:
 			Scene.the.render(g);
 			g.color = Color.White;
-			g.drawImage(title, 3 * (150 + 10 * Math.cos(0.3 * System.time)), 3 * (140 + 10 * Math.sin(0.6 * System.time)));
+			g.drawImage(title, 3 * (150 + 10 * Math.cos(0.3 * kha.Sys.getTime())), 3 * (140 + 10 * Math.sin(0.6 * kha.Sys.getTime())));
 			g.font = font;
-			var b = Math.round(100 + 125 * Math.pow(Math.sin(0.5 * System.time),2));
+			var b = Math.round(100 + 125 * Math.pow(Math.sin(0.5 * kha.Sys.getTime()),2));
 			g.color = Color.fromBytes(b, b, b);
 			if (playerDlg.isEmpty()) {
 				var str = Localization.getText(Keys_text.CLICK_TO_START);
-				g.drawString(str, 0.5 * (width - font.width(fontSize, str)), 650);
+				g.drawString(str, 0.5 * (width - font.stringWidth(str)), 650);
 			}
 		case Loading:
 		case AgentWins:
@@ -601,8 +605,7 @@ class Empty {
 			g.transformation = FastMatrix3.identity();
 			g.color = Color.fromBytes(0, 0, 0, 180);
 			g.fillRect(0, 0, width, 200);
-			g.font = Assets.fonts.Kahlesv2;
-			g.fontSize = 70;
+			g.font = Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70);
 			g.color = Color.Orange;
 			g.drawString(Localization.getText(Keys_text.AGENT), 150, 20);
 			g.drawString("Wins", 250, 100);
@@ -612,13 +615,12 @@ class Empty {
 			g.transformation = FastMatrix3.identity();
 			
 			// Night, make it dark
-			g.color = Color.fromBytes(0, 0, 0, 191);
+			g.set_color(Color.fromBytes(0, 0, 0, 191));
 			g.fillRect(0, 0, width, height);
 			
 			g.color = Color.fromBytes(0, 0, 0, 180);
 			g.fillRect(0, 0, width, 200);
-			g.font = Assets.fonts.Kahlesv2;
-			g.fontSize = 70;
+			g.font = Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70);
 			g.color = Color.Orange;
 			g.drawString(Localization.getText(Keys_text.FISCHMENSCH), 150, 20);
 			g.drawString("Wins", 250, 100);
@@ -628,8 +630,7 @@ class Empty {
 			g.transformation = FastMatrix3.identity();
 			g.color = Color.fromBytes(0, 0, 0, 180);
 			g.fillRect(0, 0, width, 200);
-			g.font = Assets.fonts.Kahlesv2;
-			g.fontSize = 70;
+			g.font = Loader.the.loadFont("Kahlesv2", new FontStyle(false, false, false), 70);
 			g.color = Color.Orange;
 			g.drawString(Localization.getText(Keys_text.PROFESSOR), 150, 20);
 			g.drawString("Wins", 250, 100);
@@ -652,9 +653,9 @@ class Empty {
 		
 		g.end();
 		
-		frame.g2.begin();
-		Scaler.scale(backbuffer, frame, System.screenRotation);
-		frame.g2.end();
+		startRender(frame);
+		Scaler.scale(backbuffer, frame, kha.Sys.screenRotation);
+		endRender(frame);
 	}
 	
 	private function axisListener(axis: Int, value: Float): Void {
@@ -703,53 +704,74 @@ class Empty {
 		}*/
 	}
 	
-	private function keyboardDown(key: KeyCode): Void {
+	private function keyboardDown(key: Key, char: String): Void {
 		if (mode != Game) return;
 		if (!playerDlg.isEmpty()) return;
 		
 		switch (key) {
-			case Left, A:
+			case LEFT:
 				Player.current().left = true;
 				Player.current().right = false;
-			case Right, D:
+			case RIGHT:
 				Player.current().right = true;
 				Player.current().left = false;
-			case Up, W:
+			case UP:
 				Player.current().setUp();
-			case Q:
-				Player.current().attack();
-			#if debug
-			case P:
-				mode = ProfessorWins;
-			case M:
-				mode = FischmanWins;
-			case N:
-				// TODO: FIXME! IMPORTANT: REMOVE FOR RELEASE VERSION!!!!!11!11elf
-				nextPlayer();
-			#end
+			case Key.CHAR:
+				switch(char) {
+					case 'w':
+						Player.current().setUp();
+					case 'a':
+						Player.current().left = true;
+						Player.current().right = false;
+					case 'd':
+						Player.current().right = true;
+						Player.current().left = false;
+					case 'q':
+						Player.current().attack();
+				#if debug
+					case 'p':
+						mode = ProfessorWins;
+					case 'm':
+						mode = FischmanWins;
+					case 'n':
+						// TODO: FIXME! IMPORTANT: REMOVE FOR RELEASE VERSION!!!!!11!11elf
+						nextPlayer();
+				#end
+				}
 			default:
+				
 		}
 	}
 	
-	private function keyboardUp(key: KeyCode): Void {
+	private function keyboardUp(key: Key, char: String): Void {
 		switch (mode) {
 		case Game:
 			if (!playerDlg.isEmpty()) return;
 			switch (key) {
-			case Left, A:
+			case LEFT:
 				Player.current().left = false;
-			case Right, D:
+			case RIGHT:
 				Player.current().right = false;
-			case Up, W:
+			case UP:
 				Player.current().up = false;
-			case E:
-				Player.current().use();
+			case Key.CHAR:
+				switch(char) {
+				case "e":
+					Player.current().use();
+				case 'w':
+					Player.current().up = false;
+				case 'a':
+					Player.current().left = false;
+				case 'd':
+					Player.current().right = false;
+				}
 			default:
 				
 			}
 		case StartScreen:
 			switch (key) {
-			case Escape:
+			case Key.ESC:
 				Dialogues.escMenu();
 			default:
 				if (playerDlg.isEmpty())
@@ -760,11 +782,10 @@ class Empty {
 			}
 		case Intro:
 			switch (key) {
-			case Escape:
+			case Key.ESC:
 				playerDlg.cancel();
-			case Space:
-				BlaBox.boxes.remove(playerDlg.blaBox);
 			default:
+				if (char == " ") BlaBox.boxes.remove(playerDlg.blaBox);
 			}
 		default:
 		}

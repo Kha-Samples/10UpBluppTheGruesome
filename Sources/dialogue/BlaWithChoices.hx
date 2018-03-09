@@ -3,7 +3,7 @@ package dialogue;
 import dialogue.Dialogue;
 import Dialogues;
 import kha.input.Keyboard;
-import kha.input.KeyCode;
+import kha.Key;
 import kha2d.Sprite;
 
 using StringTools;
@@ -24,11 +24,11 @@ class BlaWithChoices extends Bla {
 		this.finished = false;
 	}
 	
-	override function keyPressListener(char: String) {
+	override function keyDownListener(key:Key, char: String) {
 		trace ('KEY UP: $char');
 		var choice = char.fastCodeAt(0) - '1'.fastCodeAt(0);
 		if (choice >= 0 && choice < choices.length) {
-			Keyboard.get().remove(null, null, keyPressListener);
+			Keyboard.get().remove(keyDownListener, null);
 			finished = true;
 			dlg.insert(choices[choice], true);
 		}

@@ -2,8 +2,8 @@ package sprites;
 
 import dialogue.BlaWithChoices;
 import dialogue.StartDialogue;
-import kha.Assets;
-import kha2d.Rectangle;
+import kha.Loader;
+import kha.Rectangle;
 import kha.Scheduler;
 import kha2d.Animation;
 import kha2d.Direction;
@@ -20,7 +20,7 @@ class Wooddoor extends DestructibleSprite {
 	private var destroyedAnim: Animation;
 	
 	public function new(x: Int, y: Int) {
-		super(100, Assets.images.wooddoor, 32 * 2, 64 * 2, 0);
+		super(100, Loader.the.getImage("wooddoor"), 32 * 2, 64 * 2, 0);
 		this.x = x;
 		this.y = y;
 		accy = 0;

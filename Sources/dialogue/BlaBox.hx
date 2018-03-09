@@ -1,9 +1,9 @@
 package dialogue;
 
-import kha.Assets;
 import kha.Color;
 import kha.Font;
 import kha.FontStyle;
+import kha.Loader;
 import kha.graphics2.Graphics;
 import kha2d.Scene;
 import kha2d.Sprite;
@@ -15,7 +15,6 @@ class BlaBox {
 	private var padding = 15;
 	private var maxWidth = 800;
 	private var font: Font;
-	private var fontSize: Int;
 	private var width : Float;
 	private var height : Float;
 	private var speaker: Sprite;
@@ -41,25 +40,22 @@ class BlaBox {
 	
 	public function setText(text: String, minWidth: Float = -1, minHeight: Float = -1): Void {
 		if (text != null) {
-			if (font == null) {
-				font = Assets.fonts.LiberationSans_Regular;
-				fontSize = 20;
-			}
+			if (font == null) font = Loader.the.loadFont("LiberationSans", FontStyle.Default, 20);
 			var maxWidth = this.maxWidth - 2 * padding;
 			this.text = new Array();
 			width = minWidth < 0 ? 200 : minWidth;
 			text = Localization.getText(text);
 			var lines = text.split("\n");
 			for (line in lines) {
-				var tw = font.width(fontSize, line);
+				var tw = font.stringWidth(line);
 				if (tw > maxWidth) {
 					var words = Lambda.list(line.split(" "));
 					while (!words.isEmpty()) {
 						line = words.pop();
-						tw = font.width(fontSize, line);
+						tw = font.stringWidth(line);
 						width = Math.max(width, tw);
 						var nextWord = words.pop();
-						while (nextWord != null && (tw = font.width(fontSize, line + " " + nextWord)) <= maxWidth) {
+						while (nextWord != null && (tw = font.stringWidth(line + " " + nextWord)) <= maxWidth) {
 							width = Math.max(width, tw);
 							line += " " + nextWord;
 							nextWord = words.pop();
@@ -75,7 +71,7 @@ class BlaBox {
 				}
 			}
 			width += 2 * padding;
-			height = Math.max(minHeight, (font.height(fontSize) * this.text.length) + 2 * padding);
+			height = Math.max(minHeight, (font.getHeight() * this.text.length) + 2 * padding);
 		} else {
 			this.text = null;
 		}
@@ -111,10 +107,10 @@ class BlaBox {
 		}
 		
 		if (x < 0) {
-			x = (speaker == null) ? (0.5 * (Empty.the.width - width)) : sx - 0.3 * width;
+			x = (speaker == null) ? (0.5 * (kha.Game.the.width - width)) : sx - 0.3 * width;
 			
-			if (x + width > Empty.the.width) {
-				x -= 30 + x + width - Empty.the.width;
+			if (x + width > kha.Game.the.width) {
+				x -= 30 + x + width - kha.Game.the.width;
 			}
 			if (x < 0) {
 				x = 30;
@@ -122,7 +118,7 @@ class BlaBox {
 		}
 		
 		if (y < 0) {
-			y = (speaker == null) ? (0.3 * (Empty.the.height - height)) : sy - 30 - height;
+			y = (speaker == null) ? (0.3 * (kha.Game.the.height - height)) : sy - 30 - height;
 			if (y < 0) {
 				sy += speaker.height + 15;
 				y = sy + 30;
@@ -158,12 +154,12 @@ class BlaBox {
 		for (line in text) {
 			lastLine = line;
 			g.drawString(line, tx, ty);
-			ty += font.height(fontSize);
+			ty += font.getHeight();
 		}
 		if (isInput) {
 			if ((Std.int(kha.Scheduler.time() * 1.67) % 2) == 0) {
-				tx += font.width(fontSize, lastLine) + 1;
-				g.drawLine(tx, ty, tx, ty - font.height(fontSize), 2);
+				tx += font.stringWidth(lastLine) + 1;
+				g.drawLine(tx, ty, tx, ty - font.getHeight(), 2);
 			}
 		}
 	}
